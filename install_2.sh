@@ -8,6 +8,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 dpkg -i /tmp/u-boot-rpi.deb
+echo "u-boot-rpi hold" | dpkg --set-selections
 rm /tmp/u-boot-rpi.deb
 
 apt update
@@ -17,7 +18,7 @@ apt install $kernel -y
 
 apt install console-setup locales keyboard-configuration sudo curl wget dbus usbutils ca-certificates crda less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools network-manager apt-file tzdata -y
 apt-file update
-apt remove ssh* openssh* -y
+apt remove ssh* openssh* rpcbind -y
 
 echo "Adesso configuriamo la lingua. Premere invio per continuare."
 read dummy
