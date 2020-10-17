@@ -17,6 +17,26 @@ apt install console-setup locales keyboard-configuration libpolkit-agent-1-0 sud
 apt-file update
 apt remove ssh* openssh* rpcbind -y
 
+echo "1. SystemD
+2. Sysv
+3. runit
+Quale init si desidera utilizzare?"
+read init
+
+case $init in
+1) apt install systemd
+apt remove sysv-core runit-init
+;;
+2) apt install sysv-core
+apt remove systemd runit-init
+;;
+3) apt install runit-init
+apt remove systemd sysv-core
+;;
+*) echo "Scelta non corretta, si resta con quello già fornito"
+;;
+esac
+
 echo "Adesso configuriamo la lingua. Premere invio per continuare."
 read dummy
 dpkg-reconfigure locales
