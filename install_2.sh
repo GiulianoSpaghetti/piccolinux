@@ -7,16 +7,12 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-dpkg -i /tmp/u-boot-rpi.deb
-echo "u-boot-rpi hold" | dpkg --set-selections
-rm /tmp/u-boot-rpi.deb
-
 apt update
 apt upgrade
 kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
-apt install $kernel -y
+apt install u-boot-rpi $kernel -y
 
-apt install console-setup locales keyboard-configuration sudo curl wget dbus usbutils ca-certificates crda less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools network-manager apt-file tzdata -y
+apt install console-setup locales keyboard-configuration libpolkit-agent-1-0 sudo curl wget dbus usbutils ca-certificates crda less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools network-manager apt-file tzdata unattended-upgrades -y
 apt-file update
 apt remove ssh* openssh* rpcbind -y
 
@@ -26,9 +22,6 @@ dpkg-reconfigure locales
 echo "Adesso configuriamo il fuso orario. Premere invio per continuare."
 read dummy
 dpkg-reconfigure tzdata
-echo "Adesso configuriamo la tastiera. Premere invio per continuare."
-read dummy
-dpkg-reconfigure keyboard-configuration
 
 echo "Inserire il nome dell'utente da aggiungere"
 read user
@@ -422,11 +415,21 @@ esac
 
 if [ $desktop != 1 ]; then
 apt install task-$desktop-desktop
+#mv /mnt/buster /tmp/
+#dpkg -i /tmp/buster/libdrm/*.deb
+#dpkg -i /tmp/buster/mesa/*.deb
+#rm -rf /tmp/buster
 else
 echo "Si continua senza desktop. Premere invio per continuare."
 read dummy;
 fi
-echo "Debian è pronto. Adesso partiziona la microsd in due partizioni: la prima fat32 da massimo 500 MB e la seconda ext4 occupante tutto il resto dello spazio. Poi segnati il dispositivo a blocchi relativo la microsd intera (nonn le singole partizioni) e digita exit."
+
+echo "Adesso configuriamo la tastiera. Premere invio per continuare."
+read dummy
+dpkg-reconfigure keyboard-configuration
+
+rm -rf /tmp/piccolinux
+echo "Debian è pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita digita exit."
 rm /install_2.sh
 apt clean
 

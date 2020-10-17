@@ -14,9 +14,25 @@ fi
 
 apt install qemu-user-static debootstrap rsync wget -y
 
+echo "Inserire il dispositivo a blocchi relativo la scheda microsd già partiuzionata da montare."
+read sd
+
+mkdir /media/piccolinux
+mkdir /media/piccolinuxboot
+
+umount /dev/${sd}1
+umount /dev/${sd}2
+
+echo "Attendi 5 secondi"
+sleep 5
+
+mount /dev/${sd}2 /media/piccolinux
+echo "Attendi 5 secondi"
+sleep 5
+mount /dev/${sd}1 /media/piccolinuxboot
+
 echo "1: buster
 2: bullseye
-3: sid
 Indicare su quale debian si vuole basare il piccolinux: "
 
 read quale
@@ -24,12 +40,35 @@ read quale
 case $quale in
 
 1) quale=buster
-wget http://ftp.it.debian.org/debian/pool/main/u/u-boot/u-boot-rpi_2016.11+dfsg1-4_arm64.deb -O /tmp/u-boot-rpi.deb
+#mkdir -p /tmp/buster/libdrm
+#mkdir -p /tmp/buster/mesa
+#wget -O /tmp/buster/libdrm/libdrm-amdgpu1_2.4.101~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm-amdgpu1_2.4.101~git_arm64.deb?raw=true
+#wget -O /tmp/buster/libdrm/libdrm-common_2.4.101~git_all.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm-common_2.4.101~git_all.deb?raw=true
+#wget -O /tmp/buster/libdrm/libdrm-dev_2.4.101~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm-dev_2.4.101~git_arm64.deb?raw=true
+#wget -O /tmp/buster/libdrm/libdrm-etnaviv1_2.4.101~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm-etnaviv1_2.4.101~git_arm64.deb?raw=true
+#wget -O /tmp/buster/libdrm/libdrm-freedreno1_2.4.101~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm-freedreno1_2.4.101~git_arm64.deb?raw=true
+#wget -O /tmp/buster/libdrm/libdrm-kms_2.4.101~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm-kms_2.4.101~git_arm64.deb?raw=true
+#wget -O /tmp/buster/libdrm/libdrm-nouveau2_2.4.101~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm-nouveau2_2.4.101~git_arm64.deb?raw=true
+#wget -O /tmp/buster/libdrm/libdrm-radeon1_2.4.101~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm-radeon1_2.4.101~git_arm64.deb?raw=true
+#wget -O /tmp/buster/libdrm/libdrm-tegra0_2.4.101~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm-tegra0_2.4.101~git_arm64.deb?raw=true
+#wget -O /tmp/buster/libdrm/libdrm2_2.4.101~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/libdrm/libdrm2_2.4.101~git_arm64.deb?raw=true
+
+#wget -O /tmp/buster/mesa/libegl1-mesa_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libegl1-mesa_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libegl1_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libegl1_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libgbm1_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libgbm1_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libgbm1_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libgbm1_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libgbm1_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libgbm1_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libgl1_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libgl1_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libglapi-mesa_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libglapi-mesa_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libgles1_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libgles1_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libgles2-mesa_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libgles2-mesa_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libgles2-mesa_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libgles2-mesa_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/libgles2-mesa_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/libgles2-mesa_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/mesa-va-drivers_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/mesa-va-drivers_20.0.6~git_arm64.deb?raw=true
+#wget -O /tmp/buster/mesa/mesa-vdpau-drivers_20.0.6~git_arm64.deb https://github.com/numerunix/piccolinux/blob/main/piccolinux/buster/mesa/mesa-vdpau-drivers_20.0.6~git_arm64.deb?raw=true
 ;;
+
 2) quale=bullseye
-wget http://ftp.it.debian.org/debian/pool/main/u/u-boot/u-boot-rpi_2019.01+dfsg-7_arm64.deb -O /tmp/u-boot-rpi.deb
-;;
-3) quale=sid
 ;;
 *)
 echo Parametro non valido
@@ -37,22 +76,27 @@ exit
 ;;
 esac
 
-debootstrap --arch=arm64 $quale ${1}
+debootstrap --arch=arm64 $quale /media/piccolinux
 
-mount -o bind /proc ${1}/proc
-mount -o bind /sys ${1}/sys
-mount -o bind /dev ${1}/dev
-mount -o bind /dev/pts ${1}/dev/pts
+umount /media/piccolinux/proc
+umount /media/piccolinux/sys
+umount /media/piccolinux/dev
+umount /media/piccolinux/dev/pts
 
-rm ${1}/etc/fstab
-rm ${1}/etc/hostname
-rm ${1}/etc/apt/sources.list
+mount -o bind /proc /media/piccolinux/proc
+mount -o bind /sys /media/piccolinux/sys
+mount -o bind /dev /media/piccolinux/dev
+mount -o bind /dev/pts /media/piccolinux/dev/pts
+
+rm /media/piccolinux/etc/fstab
+rm /media/piccolinux/etc/hostname
+rm /media/piccolinux/etc/apt/sources.list
 
 echo "proc            /proc           proc    defaults          0       0
 /dev/mmcblk0p1  /boot           vfat    defaults          0       2
-/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1" >> ${1}/etc/fstab
+/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1" >> /media/piccolinux/etc/fstab
 
-echo "$quale-rpi64" >> ${1}/etc/hostname
+echo "$quale-rpi64" >> /media/piccolinux/etc/hostname
 
 echo "deb http://debian.fastweb.it/debian/ $quale main contrib non-free
 deb-src http://debian.fastweb.it/debian/ $quale main contrib non-free
@@ -60,54 +104,40 @@ deb-src http://debian.fastweb.it/debian/ $quale main contrib non-free
 deb http://debian.fastweb.it/debian/ $quale-updates main contrib non-free
 deb-src http://debian.fastweb.it/debian/ $quale-updates main contrib non-free
 
-deb http://security.org/debian-security $quale-updates main contrib non-free
-deb-src http://security.debian.org/debian-security $quale-updates main contrib non-free
+deb http://security.debian.org/debian-security  $quale/updates main contrib
+deb-src http://security.debian.org/debian-security  $quale/updates main contrib
 
 deb http://debian.fastweb.it/debian $quale-backports main contrib non-free
-deb-src http://debian.fastweb.it/debian $quale-backports main contrib non-free" >> ${1}/etc/apt/sources.list
+deb-src http://debian.fastweb.it/debian $quale-backports main contrib non-free" >> /media/piccolinux/etc/apt/sources.list
 
-cp ./install_2.sh ${1}/install_2.sh
+cp ./install_2.sh /media/piccolinux/install_2.sh
 echo Eseguire lo script install_2.sh
 
-mv /tmp/u-boot-rpi.deb ${1}/tmp/
+#mv /tmp/u-boot-rpi.deb /media/piccolinux/tmp/
+#mv /tmp/buster /media/piccolinux/mnt
 
-chroot ${1}
+chroot /media/piccolinux
 
 echo "Attendi 10 secondi"
 sleep 10
 
-umount ${1}/dev/pts
-umount ${1}/dev
-umount ${1}/sys
-umount ${1}/proc
+umount /media/piccolinux/dev/pts
+umount /media/piccolinux/dev
+umount /media/piccolinux/sys
+umount /media/piccolinux/proc
 
-echo "Inserire il dispositivo a blocchi relativo la scheda microsd già partiuzionata da montare."
-read sd
 
-mkdir /media/piccolinux
-mkdir /media/piccolinuxboot
-
-echo "Attendi 5 secondi"
-sleep 5
-
-sudo umount /dev/sd/${sd}1
-sudo umount /dev/sd/${sd}2
-
-echo "Attendi 5 secondi"
-sleep 5
-
-sudo mount /dev/${sd}2 /media/piccolinux
-sudo mount /dev/${sd}1 /media/piccolinuxboot
-
-rsync -avh ${1}/boot/* /media/piccolinuxboot
-rsync -avh --exclude "boot" ${1}/* /media/piccolinux/
-
-echo "Attendi 15 secondi"
-sleep 15
+rsync -avh /media/piccolinux/boot/* /media/piccolinuxboot
+rm -rf /media/piccolinux/boot/*
 
 umount /dev/${sd}2
 umount /dev/${sd}1
+
+echo "Attendere 10 secondi"
+echo "Attendi 15 secondi"
+sleep 15
+
 rmdir /media/piccolinux
-rmdir /media/piccolinuxboot
-echo "Tutto fatto. La microsd è stata smontata. Metterla nel raspberry per vederne i risultati.
+rmdir /media/piccolinuxbooy
+echo "Tutto fatto. La microsd è stata smontata. Metterla nel raspberry per vederne i risultati. Ricordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.
 Happy Hacking :)"
