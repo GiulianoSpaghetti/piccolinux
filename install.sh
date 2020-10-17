@@ -1,11 +1,6 @@
 #!/bin/bash
 # Autore: Giulio Sorrentino <gsorre84@gmail.com>
 
-if [ $# -ne 1 ]; then
-echo "Errore: indicare la path dove salvare i files."
-exit
-fi
-
 # Make sure only root can run our script
 if [[ $EUID -ne 0 ]]; then
    echo "Lo script deve essere avviato da root" 1>&2
@@ -138,6 +133,6 @@ echo "Attendi 15 secondi"
 sleep 15
 
 rmdir /media/piccolinux
-rmdir /media/piccolinuxbooy
+rmdir /media/piccolinuxboot
 echo "Tutto fatto. La microsd è stata smontata. Metterla nel raspberry per vederne i risultati. Ricordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.
 Happy Hacking :)"
