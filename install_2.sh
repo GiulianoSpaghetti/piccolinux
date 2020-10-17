@@ -7,15 +7,15 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-apt update
-apt upgrade
+apt-get update
+apt-get upgrade
 kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
-apt install u-boot-rpi $kernel -y
+apt-get install u-boot-rpi $kernel -y
 
-apt install console-setup locales keyboard-configuration libpolkit-agent-1-0 sudo curl wget dbus usbutils ca-certificates crda less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata -y
-#apt install network-manager unattended-upgrades #da aggiungere quando systemd sarà apposto
+apt-get install console-setup locales keyboard-configuration libpolkit-agent-1-0 sudo curl wget dbus usbutils ca-certificates crda less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata -y
+#apt-get install network-manager unattended-upgrades #da aggiungere quando systemd sarà apposto
 apt-file update
-apt remove ssh* openssh* rpcbind -y
+apt-get remove ssh* openssh* rpcbind -y
 
 echo "1. SystemD
 2. Sysv
@@ -24,14 +24,14 @@ Quale init si desidera utilizzare?"
 read init
 
 case $init in
-1) apt install systemd
-apt remove sysv-core runit-init
+1) apt-get install systemd
+apt-get remove sysv-core runit-init
 ;;
-2) apt install sysv-core
-apt remove systemd runit-init
+2) apt-get install sysv-core
+apt-get remove systemd runit-init
 ;;
-3) apt install runit-init
-apt remove systemd sysv-core
+3) apt-get install runit-init
+apt-get remove systemd sysv-core
 ;;
 *) echo "Scelta non corretta, si resta con quello già fornito"
 ;;
@@ -435,7 +435,7 @@ case $desktop in
 esac
 
 if [ $desktop != 1 ]; then
-apt install task-$desktop-desktop
+apt-get install task-$desktop-desktop
 #mv /mnt/buster /tmp/
 #dpkg -i /tmp/buster/libdrm/*.deb
 #dpkg -i /tmp/buster/mesa/*.deb
@@ -450,7 +450,8 @@ read dummy
 dpkg-reconfigure keyboard-configuration
 
 rm -rf /tmp/piccolinux
-echo "Debian è pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita digita exit."
 rm /install_2.sh
-apt clean
+apt-get autoremove
+apt-get clean
+echo "Debian è pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit."
 

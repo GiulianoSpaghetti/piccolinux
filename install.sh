@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-apt install qemu-user-static debootstrap rsync wget -y
+apt-get install qemu-user-static debootstrap rsync wget -y
 
 echo "Inserire il dispositivo a blocchi relativo la scheda microsd già partiuzionata da montare."
 read sd
@@ -28,6 +28,7 @@ mount /dev/${sd}1 /media/piccolinuxboot
 
 echo "1: buster
 2: bullseye
+3: stretch
 Indicare su quale debian si vuole basare il piccolinux: "
 
 read quale
@@ -65,8 +66,10 @@ case $quale in
 
 2) quale=bullseye
 ;;
+3) quale=stretch
+;;
 *)
-echo Parametro non valido
+echo "Parametro non valido"
 exit
 ;;
 esac
@@ -106,7 +109,7 @@ deb http://debian.fastweb.it/debian $quale-backports main contrib non-free
 deb-src http://debian.fastweb.it/debian $quale-backports main contrib non-free" >> /media/piccolinux/etc/apt/sources.list
 
 cp ./install_2.sh /media/piccolinux/install_2.sh
-echo Eseguire lo script install_2.sh
+echo "Eseguire lo script install_2.sh"
 
 #mv /tmp/u-boot-rpi.deb /media/piccolinux/tmp/
 #mv /tmp/buster /media/piccolinux/mnt
@@ -128,7 +131,6 @@ rm -rf /media/piccolinux/boot/*
 umount /dev/${sd}2
 umount /dev/${sd}1
 
-echo "Attendere 10 secondi"
 echo "Attendi 15 secondi"
 sleep 15
 
