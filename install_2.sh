@@ -12,7 +12,7 @@ apt-get upgrade
 kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
 apt-get install u-boot-rpi $kernel -y
 
-apt-get install console-setup locales keyboard-configuration libpolkit-agent-1-0 sudo curl wget dbus usbutils ca-certificates crda less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata -y
+apt-get install console-setup locales keyboard-configuration libpolkit-agent-1-0 sudo curl wget dbus usbutils ca-certificates less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions -y
 #apt-get install network-manager unattended-upgrades #da aggiungere quando systemd sarà apposto
 apt-file update
 apt-get remove ssh* openssh* rpcbind -y
