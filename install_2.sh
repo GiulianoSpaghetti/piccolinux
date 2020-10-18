@@ -10,23 +10,22 @@ fi
 apt-get update
 apt-get upgrade
 
-sistema=`cat /etc/apt/sources.list | grep bullseye`
-if [[ -z $sistema ]] ; then #non è bullseye
-	sistema=`cat /etc/apt/sources.list | grep buster`
-	if [[ -z $sistema ]]
-	 then sistema=stretch
-	else sistema=buster
-	fi
-else
+read -d / sistema < /etc/debian_version
+
+if [ $sistema = "bullseye" ]; then
 	apt-get install dialog sysvinit-core
 	apt-get remove --purge systemd -y
-	echo "systemd hold" | dpkg --set-selections;
-	sistema=bullseye;
+	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
+	sistema=11
+else
+	read d . sistema < /etc/debian_version
 fi
+
+
 kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
 apt-get install u-boot-rpi $kernel -y
 
-apt-get install console-setup locales keyboard-configuration libpolkit-agent-1-0 sudo curl wget dbus usbutils ca-certificates less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions -y
+apt-get install console-setup locales keyboard-configuration libpolkit-agent-1-0 sudo curl wget dbus usbutils ca-certificates iptables net-tools less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions -y
 #apt-get install network-manager unattended-upgrades #da aggiungere quando systemd sarà apposto
 apt-file update
 apt-get remove --purge ssh* openssh* rpcbind -y
@@ -36,16 +35,14 @@ echo "1. SystemD
 3. runit
 Quale init si desidera utilizzare?"
 read init
-
-case $init in
-1)
-if [[ "$sistema" = "bullseye" ]]; then
+if [[ $sistema -eq 11 && $init -eq 1 ]]; then
 	echo "Scelta non valida. In bullseye attualmente systemd è corrotto. Si userà sysv."
 	init=2
-else
+fi
+case $init in
+1)
 	apt-get install systemd
 	apt-get remove --purge sysvinit-core runit-init
-fi
 ;;
 2) apt-get install sysvinit-core
 apt-get remove --purge systemd runit-init
@@ -432,29 +429,41 @@ echo "1. Gnome
 4. LXDE
 5. LXQT
 6. XFCE
+7. IceWM
+8. Openbox
 0. Nessuno
 Quale desktop si desidera installare?"
 read desktop;
+if [ $init -ne 1 ]; then 
+	if [ $desktop -lt 7 ] && [ $desktop -gt 0 ]; then 
+		echo "Scelta non valida. Con init diverso da systemd si può installare solo icewm o openbox. Verrà installato icewm.";
+		desktop=7;
+	fi
+fi 
 
 case $desktop in
-1) desktop=gnome
+1) desktop=task-gnome-deskop
 ;;
-2) desktop=cinnamon
+2) desktop=task-cinnamon-desktop
 ;;
-3) desktop=kde
+3) desktop=task-kde-desktop
 ;;
-4) desktop=lxde
+4) desktop=task-lxde-desktop
 ;;
-5) desktop=lxqt
+5) desktop=task-lxqt-desktop
 ;;
-6) desktop=xfce
+6) desktop=task-xfce-desktop
+;;
+7) desktop=icewm
+;;
+8) desktop=openbox
 ;;
 *) desktop=1
 ;;
 esac
 
 if [ $desktop != 1 ]; then
-	apt-get install task-$desktop-desktop
+	apt-get install $desktop
 	apt-get remove --purge network-manager* wicd* lightdm
 	#mv /mnt/buster /tmp/
 	#dpkg -i /tmp/buster/libdrm/*.deb
@@ -462,23 +471,29 @@ if [ $desktop != 1 ]; then
 	#rm -rf /tmp/buster
 	echo "1. GDM3
 2. Lightdm
-3. lxdm
-4 .wdm
+3 .wdm
+4. lxdm
 5. xdm
 Quale login grafico si desidera utilizzare?"
 	read login
+	if [ $init -ne 1 ]; then
+		if [ $login -lt 5 ] && [ $login -gt 0 ]; then
+			echo "Scelta non valida con init diverso da systemd si può installare solo xdm. Verrà installato xdm."
+			login=5
+		fi
+	fi
 	case $login in
 		1) apt-get install gdm3	;;
 		2) apt-get install lightdm ;;
-		3) apt-get install lxdm ;;
-		4) apt-get install wdm 	;;
+		3) apt-get install wdm 	;;
+		4) apt-get install lxdm ;;
 		5) apt-get install xdm 	;;
 		*) echo "Scelta non valida" ;;
 	esac
 	if [ $init -eq 1  ]; then
 		apt-get install network-manager-gtk
 	else
-		apt-get install wicd-gtk
+		apt-get install connman
 	fi
 else
 	echo "Si continua senza desktop. Premere invio per continuare."
@@ -486,7 +501,7 @@ else
 	if [ $init -eq 1 ]; then
 		apt-get install network-manager
 	else
-		apt-get install wicd-curses
+		apt-get install connman
 	fi
 fi
 
@@ -500,17 +515,17 @@ apt-get autoremove
 apt-get clean
 usermod -aG video,audio,cdrom,sudo,plugdev.netdev,lpadmin,scanner,dip $user
 
-echo "1. Si
+if [ $sistema -eq 10 ]; then
+        echo "1. Si
 2. No
 Vuoi installare la briscola?"
-read briscola
-
-if [ $briscola -eq 1 ]; then
-	cd /tmp
-	wget https://github.com/numerunix/wxBriscola/releases/download/0.3.3/wxbriscola_0.3.3-1_arm64.deb
-	dpkg -i ./wxbriscola_0.3.3-1_arm64.deb
-	apt -f install -y
+        read briscola
+        if [ $briscola -eq 1 ]; then
+                cd /tmp
+		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.3/wxbriscola_0.3.3-1_arm64.deb
+		dpkg -i ./wxbriscola_0.3.3-1_arm64.deb
+		apt -f install -y
+	fi
 fi
-
 echo "Debian è pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit."
 
