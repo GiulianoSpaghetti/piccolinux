@@ -9,13 +9,27 @@ fi
 
 apt-get update
 apt-get upgrade
+
+sistema=`cat /etc/apt/sources.list | grep bullseye`
+if [[ -z $sistema ]] ; then #non è bullseye
+	sistema=`cat /etc/apt/sources.list | grep buster`
+	if [[ -z $sistema ]]
+	 then sistema=stretch
+	else sistema=buster
+	fi
+else
+	apt-get install dialog sysvinit-core
+	apt-get remove --purge systemd -y
+	echo "systemd hold" | dpkg --set-selections;
+	sistema=bullseye;
+fi
 kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
 apt-get install u-boot-rpi $kernel -y
 
 apt-get install console-setup locales keyboard-configuration libpolkit-agent-1-0 sudo curl wget dbus usbutils ca-certificates less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions -y
 #apt-get install network-manager unattended-upgrades #da aggiungere quando systemd sarà apposto
 apt-file update
-apt-get remove ssh* openssh* rpcbind -y
+apt-get remove --purge ssh* openssh* rpcbind -y
 
 echo "1. SystemD
 2. Sysv
@@ -24,14 +38,20 @@ Quale init si desidera utilizzare?"
 read init
 
 case $init in
-1) apt-get install systemd
-apt-get remove sysv-core runit-init
+1)
+if [[ "$sistema" = "bullseye" ]]; then
+	echo "Scelta non valida. In bullseye attualmente systemd è corrotto. Si userà sysv."
+	init=2
+else
+	apt-get install systemd
+	apt-get remove --purge sysvinit-core runit-init
+fi
 ;;
-2) apt-get install sysv-core
-apt-get remove systemd runit-init
+2) apt-get install sysvinit-core
+apt-get remove --purge systemd runit-init
 ;;
 3) apt-get install runit-init
-apt-get remove systemd sysv-core
+apt-get remove --purge systemd sysvinit-core
 ;;
 *) echo "Scelta non corretta, si resta con quello già fornito"
 ;;
@@ -48,7 +68,6 @@ echo "Inserire il nome dell'utente da aggiungere"
 read user
 
 adduser $user
-usermod -aG video,audio,cdrom,sudo $user
 
 echo "Adesso configuriamo la password di root. Premere invio per continuare."
 read dummy
@@ -435,14 +454,40 @@ case $desktop in
 esac
 
 if [ $desktop != 1 ]; then
-apt-get install task-$desktop-desktop
-#mv /mnt/buster /tmp/
-#dpkg -i /tmp/buster/libdrm/*.deb
-#dpkg -i /tmp/buster/mesa/*.deb
-#rm -rf /tmp/buster
+	apt-get install task-$desktop-desktop
+	apt-get remove --purge network-manager* wicd* lightdm
+	#mv /mnt/buster /tmp/
+	#dpkg -i /tmp/buster/libdrm/*.deb
+	#dpkg -i /tmp/buster/mesa/*.deb
+	#rm -rf /tmp/buster
+	echo "1. GDM3
+2. Lightdm
+3. lxdm
+4 .wdm
+5. xdm
+Quale login grafico si desidera utilizzare?"
+	read login
+	case $login in
+		1) apt-get install gdm3	;;
+		2) apt-get install lightdm ;;
+		3) apt-get install lxdm ;;
+		4) apt-get install wdm 	;;
+		5) apt-get install xdm 	;;
+		*) echo "Scelta non valida" ;;
+	esac
+	if [ $init -eq 1  ]; then
+		apt-get install network-manager-gtk
+	else
+		apt-get install wicd-gtk
+	fi
 else
-echo "Si continua senza desktop. Premere invio per continuare."
-read dummy;
+	echo "Si continua senza desktop. Premere invio per continuare."
+	read dummy;
+	if [ $init -eq 1 ]; then
+		apt-get install network-manager
+	else
+		apt-get install wicd-curses
+	fi
 fi
 
 echo "Adesso configuriamo la tastiera. Premere invio per continuare."
@@ -453,5 +498,19 @@ rm -rf /tmp/piccolinux
 rm /install_2.sh
 apt-get autoremove
 apt-get clean
+usermod -aG video,audio,cdrom,sudo,plugdev.netdev,lpadmin,scanner,dip $user
+
+echo "1. Si
+2. No
+Vuoi installare la briscola?"
+read briscola
+
+if [ $briscola -eq 1 ]; then
+	cd /tmp
+	wget https://github.com/numerunix/wxBriscola/releases/download/0.3.3/wxbriscola_0.3.3-1_arm64.deb
+	dpkg -i ./wxbriscola_0.3.3-1_arm64.deb
+	apt -f install -y
+fi
+
 echo "Debian è pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit."
 

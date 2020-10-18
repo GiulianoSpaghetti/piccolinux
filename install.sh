@@ -9,7 +9,7 @@ fi
 
 apt-get install qemu-user-static debootstrap rsync wget -y
 
-echo "Inserire il dispositivo a blocchi relativo la scheda microsd già partiuzionata da montare."
+echo "Inserire il dispositivo a blocchi relativo la scheda microsd già partizionata da montare."
 read sd
 
 mkdir /media/piccolinux
@@ -125,8 +125,8 @@ umount /media/piccolinux/sys
 umount /media/piccolinux/proc
 
 
-rsync -avh /media/piccolinux/boot/* /media/piccolinuxboot
-rm -rf /media/piccolinux/boot/*
+rsync -avh --remove-source-files /media/piccolinux/boot/* /media/piccolinuxboot
+rmdir /media/piccolinux/boot/overlays
 
 umount /dev/${sd}2
 umount /dev/${sd}1
