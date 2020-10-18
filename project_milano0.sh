@@ -108,7 +108,7 @@ deb-src http://security.debian.org/debian-security  $quale/updates main contrib
 deb http://debian.fastweb.it/debian $quale-backports main contrib non-free
 deb-src http://debian.fastweb.it/debian $quale-backports main contrib non-free" >> /media/piccolinux/etc/apt/sources.list
 
-cp ./install_2.sh /media/piccolinux/install_2.sh
+cp ./project_milano1.sh /media/piccolinux/install_2.sh
 echo "Eseguire lo script install_2.sh"
 
 #mv /tmp/u-boot-rpi.deb /media/piccolinux/tmp/
