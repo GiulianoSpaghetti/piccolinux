@@ -10,6 +10,7 @@ Siccome il filesystem di GNU/Linux è in continua evoluzione, bisogna prima prep
 # Errori noti
 Durante l'installazione si ottengono errori relativi al linguaggio, che vengono risolti con la configurazione dello stesso.
 Al momento sia buster che bullseye per arm64 sono imputtanati, per cui i sistemi non funzionano corettamente e bisogna aspettare che debian risolva.
+SU bullseye si può installare l'interfaccia grafica, ma attualmente manca il server xorg, che è stato portato solo su systemd, che attualmente non funziona.
 
 
 # Video esplificativi
