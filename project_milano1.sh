@@ -510,7 +510,7 @@ read dummy
 dpkg-reconfigure keyboard-configuration
 
 rm -rf /tmp/piccolinux
-rm /install_2.sh
+rm /project_milano1.sh
 apt-get autoremove
 apt-get clean
 usermod -aG video,audio,cdrom,sudo,plugdev.netdev,lpadmin,scanner,dip $user
