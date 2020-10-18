@@ -14,3 +14,4 @@ Al momento sia buster che bullseye per arm64 sono imputtanati, per cui i sistemi
 # Video esplificativi
 
 https://youtu.be/V-cluqFi4Cw
+https://www.youtube.com/watch?v=0fWG4x99j_M
