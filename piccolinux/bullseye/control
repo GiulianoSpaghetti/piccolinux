@@ -1,0 +1,12 @@
+Source: userland
+Maintainer: Giulio Sorrentini <gsorre84@gmail.com>
+Build-Depends:
+Standards-Version: 1.0
+Section: utils
+
+Package: userland
+Priority: extra  
+Architecture: arm64
+Depends: ${shlibs:Depends}, ${misc:Depends}  
+Description: This package provides the userland files for managing the raspberry pi.
+
