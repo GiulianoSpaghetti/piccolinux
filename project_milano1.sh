@@ -147,10 +147,12 @@ fi
 
 echo "1. Si
 2. No
-Vuoi installare la lingua italiana per le applicazioni più comuni?"
+Vuoi installare le traduzioni per le applicazioni più comuni?"
         read lingua
         if [ $lingua -eq 1 ]; then
-		apt install firefox-esr-l10n-it thunderbird-l10n-it libreoffice-l10n-it lightning-l10n-it aspell-it hunspell-it manpages-it libreoffice-help-it
+
+		lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
+		apt install firefox-esr-l10n-$lang thunderbird-l10n-$lang libreoffice-l10n-$lang lightning-l10n-$lang aspell-$lang hunspell-$lang manpages-$lang libreoffice-help-$lang
 	fi
 
 
