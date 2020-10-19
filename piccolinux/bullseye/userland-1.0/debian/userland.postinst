@@ -1,0 +1,1 @@
+echo 'SUBSYSTEM=="vchiq", GROUP="video", MODE="0660"' > /etc/udev/rules.d/99-input.rules
