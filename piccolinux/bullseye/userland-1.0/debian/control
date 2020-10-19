@@ -1,5 +1,5 @@
 Source: userland
-Maintainer: Giulio Sorrentini <gsorre84@gmail.com>
+Maintainer: Giulio Sorrentino <gsorre84@gmail.com>
 Build-Depends:
 Standards-Version: 1.0
 Section: utils
