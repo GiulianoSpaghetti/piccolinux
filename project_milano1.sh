@@ -15,7 +15,7 @@ read -d / sistema < /etc/debian_version
 if [ $sistema = "bullseye" ]; then
 	sistema=11
 else
-	read d . sistema < /etc/debian_version
+	read -d . sistema < /etc/debian_version
 fi
 
 
@@ -26,6 +26,10 @@ Quale init si desidera utilizzare?"
 read init
 if [[ $sistema -eq 11 && $init -eq 1 ]]; then
 	echo "Scelta non valida. In bullseye attualmente systemd è corrotto. Si userà sysv."
+	init=2
+fi
+if [[ $sistema -eq 9 && $init -eq 3 ]]; then
+	echo "Scelta non valida. In stretch runit non è disponibile. Si userà sysv."
 	init=2
 fi
 case $init in
@@ -58,7 +62,7 @@ echo "Adesso verrà configurata la lingua. Premere invio per continuare."
 read dummy;
 dpkg-reconfigure locales
 
-apt-get install console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates net-tools less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades $initstr -y
+apt-get install console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates net-tools nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades $initstr -y
 #apt-get install network-manager #da aggiungere quando systemd sarà apposto
 apt-file update
 
@@ -140,6 +144,15 @@ else
 		apt-get install connman $initstr
 	fi
 fi
+
+echo "1. Si
+2. No
+Vuoi installare la lingua italiana per le applicazioni più comuni?"
+        read lingua
+        if [ $lingua -eq 1 ]; then
+		apt install firefox-esr-l10n-it thunderbird-l10n-it libreoffice-l10n-it lightning-l10n-it aspell-it hunspell-it manpages-it libreoffice-help-it
+	fi
+
 
 apt-get remove --purge ssh* openssh* rpcbind -y
 
@@ -532,7 +545,7 @@ rm /project_milano1.sh
 apt-get autoremove
 apt-get clean
 
-if [ $sistema -eq 10 ]; then
+if [ $sistema -lt 11 ]; then
         echo "1. Si
 2. No
 Vuoi installare la briscola?"

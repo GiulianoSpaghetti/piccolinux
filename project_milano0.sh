@@ -54,7 +54,7 @@ rm ${1}/etc/apt/sources.list
 
 echo "proc            /proc           proc    defaults          0       0
 /dev/mmcblk0p1  /boot           vfat    defaults          0       2
-/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1" >> /media/piccolinux/etc/fstab
+/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1" >> ${1}/etc/fstab
 
 echo "$quale-rpi64" >> ${1}/etc/hostname
 
@@ -100,7 +100,6 @@ mount /dev/${sd}2 /media/piccolinux
 
 
 rsync -avh --remove-source-files ${1}/boot/* /media/piccolinuxboot
-rmdir ${1}/boot/overlays
 umount /dev/${sd}1
 
 echo "Attendi 5 secondi"
@@ -114,7 +113,9 @@ umount /dev/${sd}2
 echo "Attendi 15 secondi"
 sleep 15
 
-rmdir /media/piccolinux
+find ${1} -type d -empty -delete
+rd /media/piccolinux
+
 echo "Tutto fatto. La microsd è stata smontata. Metterla nel raspberry per vederne i risultati. Ricordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.
 Happy Hacking :)"
 
