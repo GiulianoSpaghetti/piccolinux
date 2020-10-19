@@ -157,7 +157,7 @@ Description: Userspace interface to radeon-specific kernel DRM services -- runti
  services.  DRM stands for "Direct Rendering Manager", which is the
  kernelspace portion of the "Direct Rendering Infrastructure" (DRI).
  The DRI is currently used on Linux to provide hardware-accelerated
- OpenGL drivers.
+ OpenGL drivers. 
 
 Package: libdrm-omap1
 Architecture: any-arm
