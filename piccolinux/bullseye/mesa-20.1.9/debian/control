@@ -172,23 +172,23 @@ Multi-Arch: same
 Description: transitional dummy package
  This is a transitional dummy package, it can be safely removed.
 
-#Package: libegl1-mesa-dev
-#Section: libdevel
-#Architecture: any
-#Depends:
-# libegl-dev,
-# ${misc:Depends},
-#Breaks:
-# libglvnd-dev,
-#Multi-Arch: same
-#Description: free implementation of the EGL API -- development files
-# This package contains the development environment required for compiling
-# programs against EGL native platform graphics interface library.
-# EGL provides a platform-agnostic mechanism for creating rendering surfaces
-# for use with other graphics libraries, such as OpenGL|ES.
-# .
-# This package provides the development environment for compiling programs
-# against the EGL library.
+Package: libegl1-mesa-dev
+Section: libdevel
+Architecture: any
+Depends:
+ libegl-dev,
+ ${misc:Depends},
+Breaks:
+ libglvnd-dev,
+Multi-Arch: same
+Description: free implementation of the EGL API -- development files
+ This package contains the development environment required for compiling
+ programs against EGL native platform graphics interface library.
+ EGL provides a platform-agnostic mechanism for creating rendering surfaces
+ for use with other graphics libraries, such as OpenGL|ES.
+ .
+ This package provides the development environment for compiling programs
+ against the EGL library.
 
 Package: libwayland-egl1-mesa
 Section: oldlibs
