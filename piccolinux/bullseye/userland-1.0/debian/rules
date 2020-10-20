@@ -19,3 +19,9 @@ override_dh_auto_build:
 override_dh_auto_test:
 override_dh_auto_install:
 	dh_auto_install --builddirectory=/mnt/userland-1.0
+	rm debian/userland/usr/include/EGL/egl.h
+	rm debian/userland/usr/include/EGL/eglext.h
+	rm debian/userland/usr/include/EGL/eglplatform.h
+	rm -rf debian/userland/usr/include/GLES
+	rm -rf debian/userland/usr/include/GLES2
+	rm -rf debian/userland/usr/include/KHR
