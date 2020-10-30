@@ -24,10 +24,6 @@ echo "1. SystemD
 3. runit
 Quale init si desidera utilizzare?"
 read init
-if [[ $sistema -eq 11 && $init -eq 1 ]]; then
-	echo "Scelta non valida. In bullseye attualmente systemd è corrotto. Si userà sysv."
-	init=2
-fi
 if [[ $sistema -eq 9 && $init -eq 3 ]]; then
 	echo "Scelta non valida. In stretch runit non è disponibile. Si userà sysv."
 	init=2
@@ -51,6 +47,7 @@ case $init in
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
 ;;
 *) echo "Scelta non corretta, si resta con quello già fornito"
+	init=1
 ;;
 esac
 
@@ -175,24 +172,6 @@ usermod -aG video,audio,cdrom,sudo,plugdev.netdev,lpadmin,scanner,dip $user
 echo "Adesso configuriamo la password di root. Premere invio per continuare."
 read dummy
 passwd
-
-echo "1. Si
-2. No
-Vuoi scaricare i driver PROPRIETARI della scheda di rete?"
-read drivers
-
-if [ $drivers -eq 1 ]; then
-	mkdir /tmp/brcm
-	cd /tmp/brcm
-	wget https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.bin
-	wget https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.clm_blob
-	wget https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43430-sdio.txt
-	wget https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.bin
-	wget https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.clm_blob
-	wget https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.txt 
-	mv /tmp/brcm /lib/firmware
-fi
-
 
 echo "1. Si
 2. No
@@ -453,10 +432,60 @@ if [ $boot -eq 1 ]; then
 	rm -rf /tmp/boot
 fi
 
+echo "1. Si
+2. No
+Vuoi scaricare i driver per l'accelerazione 3d?"
+read kms
+
+if [ $sistema -eq 11 ]; then
+	if [ $kms -eq 1 ]; then
+		mkdir -p /tmp/libdrm
+		cd /tmp/libdrm
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-amdgpu1_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-common_2.4.102-1_all.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-etnaviv1_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-freedreno1_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-libkms_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-nouveau2_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-radeon1_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-tegra0_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-tests_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm2_2.4.102-1_arm64.deb
+		dpkg -i /tmp/libdrm/*.deb
+		apt-get -f install
+		cd
+		rm -rf /tmp/libdrm
+		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-libkms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
+
+
+		mkdir -p /tmp/mesa
+		cd /tmp/mesa
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libegl1-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libegl1_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgbm1_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgl1-mesa-dri_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgl1-mesa-glx_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgl1_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libglapi-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgles1_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgles2-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgles2_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libwayland-egl1-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/mesa-va-drivers_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/mesa-vdpau-drivers_20.1.9-1_arm64.deb
+		dpkg -i /tmp/mesa/*.deb
+		apt-get -f install
+		cd
+		rm -rf /tmp/mesa
+		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
+	fi
+else
+	echo "L'accelerazione 3d per il tuo sistema non è ancora pronta. Porta pazienza."
+fi
 echo "#!/bin/bash
 #Authore: Giulio Sorrentino <gsorre84@gmail.com>
-iptables -A INPUT -j REJECT
-iptables -A FORWARD -j REJECT" > /usr/sbin/firewall.sh
+iptables --policy INPUT DROP
+iptables --policy FORWARD DROP" > /usr/sbin/firewall.sh
 
 echo "[Unit]
 Description=Firewall rules
@@ -537,7 +566,7 @@ arm_64bit=1
 kernel=kernel8.img
 
 [all]
-dtoverlay=vc4-fkms-v3d
+dtoverlay=vc4-kms-v3d-p4
 start_x=1
 gpu_mem=256
 hdmi_enable_4kp60=0" > /boot/config.txt
@@ -554,8 +583,14 @@ Vuoi installare la briscola?"
         read briscola
         if [ $briscola -eq 1 ]; then
                 cd /tmp
-		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.3/wxbriscola_0.3.3-1_arm64.deb
-		dpkg -i ./wxbriscola_0.3.3-1_arm64.deb
+		if [ $sistema -eq 10 ]; then
+			wget https://github.com/numerunix/wxBriscola/releases/download/0.3.5/wxbriscola_0.3.5_buster_arm64.deb
+		else
+			wget https://github.com/numerunix/wxBriscola/releases/download/0.3.5/wxbriscola_0.3.5_bullseye_arm64.deb
+		fi
+		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.5/wxbriscola-i18n_0.3.5_all.deb
+		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.5/wxbriscola-mazzi-hd-dr-francy_0.3.5_all.deb
+		dpkg -i ./wxbriscola*.deb
 		apt -f install -y
 	fi
 fi

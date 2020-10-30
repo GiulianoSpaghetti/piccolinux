@@ -114,7 +114,7 @@ echo "Attendi 15 secondi"
 sleep 15
 
 find ${1} -type d -empty -delete
-rd /media/piccolinux
+rmdir /media/piccolinux
 
 echo "Tutto fatto. La microsd è stata smontata. Metterla nel raspberry per vederne i risultati. Ricordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.
 Happy Hacking :)"
