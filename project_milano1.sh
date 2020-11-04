@@ -92,7 +92,7 @@ case $desktop in
 ;;
 5) desktop=task-lxqt-desktop
 ;;
-6) desktop=task-xfce-desktop
+6) desktop=task-xfce-desktop gvfs-backends
 ;;
 7) desktop=icewm
 ;;
