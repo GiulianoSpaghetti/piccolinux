@@ -167,7 +167,7 @@ echo "Inserire il nome dell'utente da aggiungere"
 read user
 
 adduser $user
-usermod -aG video,audio,cdrom,sudo,plugdev.netdev,lpadmin,scanner,dip $user
+usermod -aG video,audio,cdrom,sudo,plugdev,netdev,lpadmin,scanner,dip $user
 
 echo "Adesso configuriamo la password di root. Premere invio per continuare."
 read dummy
@@ -461,19 +461,15 @@ case $sistema in
 
 		mkdir -p /tmp/mesa
 		cd /tmp/mesa
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libegl1-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libegl1_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgbm1_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgl1-mesa-dri_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgl1-mesa-glx_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgl1_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libglapi-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgles1_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgles2-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libgles2_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/libwayland-egl1-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/mesa-va-drivers_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/20.1.9/mesa-vdpau-drivers_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libegl1-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgbm1_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgl1-mesa-dri_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgl1-mesa-glx_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libglapi-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgles2-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libwayland-egl1-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/mesa-va-drivers_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/mesa-vdpau-drivers_20.1.9-1_arm64.deb
 		dpkg -i /tmp/mesa/*.deb
 		apt-get -f install
 		cd
