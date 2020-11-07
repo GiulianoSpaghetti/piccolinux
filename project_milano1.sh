@@ -92,7 +92,7 @@ case $desktop in
 ;;
 5) desktop=task-lxqt-desktop
 ;;
-6) desktop=task-xfce-desktop gvfs-backends
+6) desktop="task-xfce-desktop gvfs-backends"
 ;;
 7) desktop=icewm
 ;;
@@ -102,13 +102,13 @@ case $desktop in
 ;;
 esac
 
-if [ $desktop != 1 ]; then
+if [ "$desktop" != 1 ]; then
 	apt-get install $desktop $initstr
 	apt-get remove --purge network-manager* wicd* lightdm
 
 	echo "1. GDM3
 2. Lightdm
-3 .wdm
+3. wdm
 4. lxdm
 5. xdm
 Quale login grafico si desidera utilizzare?"
@@ -128,7 +128,7 @@ Quale login grafico si desidera utilizzare?"
 		*) echo "Scelta non valida" ;;
 	esac
 	if [ $init -eq 1  ]; then
-		apt-get install network-manager-gtk
+		apt-get install network-manager-gnome
 	else
 		apt-get install connman-gtk $initstr
 	fi
@@ -437,7 +437,8 @@ echo "1. Si
 Vuoi scaricare i driver per l'accelerazione 3d?"
 read kms
 
-if [ $sistema -eq 11 ]; then
+case $sistema in
+11)
 	if [ $kms -eq 1 ]; then
 		mkdir -p /tmp/libdrm
 		cd /tmp/libdrm
@@ -479,9 +480,63 @@ if [ $sistema -eq 11 ]; then
 		rm -rf /tmp/mesa
 		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
 	fi
-else
-	echo "L'accelerazione 3d per il tuo sistema non è ancora pronta. Porta pazienza."
-fi
+;;
+10)
+	if [ $kms -eq 1 ]; then
+		mkdir -p /tmp/libdrm
+		cd /tmp/libdrm
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-amdgpu1_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-common_2.4.102-1_all.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-etnaviv1_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-freedreno1_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-libkms_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-nouveau2_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-radeon1_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-tegra0_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-tests_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm2_2.4.102-1_arm64.deb
+		dpkg -i /tmp/libdrm/*.deb
+		apt-get -f install
+		cd
+		rm -rf /tmp/libdrm
+		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-libkms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
+
+		mkdir -p /tmp/libglvnd
+		cd /tmp/libglvnd
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libegl1_1.3.2-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libgl1_1.3.2-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libgles1_1.3.2-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libgles2_1.3.2-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libglvnd0_1.3.2-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libopengl0_1.3.2-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libglx0_1.3.2-1_arm64.deb
+		dpkg -i /tmp/libglvnd/*.deb
+		apt-get -f install
+		cd
+		rm -rf /tmp/libglvnd
+		apt-mark hold libgel1 libgl1 libgles1 libgles2 linglvnd-core-dev libglvnd0 libopengl0
+
+		mkdir -p /tmp/mesa
+		cd /tmp/mesa
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libegl1-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libopengl0_1.3.2-1_arm64.deb/libegl1-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libgl1-mesa-dri_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libgl1-mesa-glx_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libglapi-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libgles2-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libwayland-egl1-mesa_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/mesa-va-drivers_20.1.9-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/mesa-vdpau-drivers_20.1.9-1_arm64.deb
+		dpkg -i /tmp/mesa/*.deb
+		apt-get -f install
+		cd
+		rm -rf /tmp/mesa
+		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
+	fi
+;;
+*)	echo "Per stretch i driver per l'accelerazione 3d non sono disponibili perché troppo vecchio. Grazie per la collaborazione"
+;;
+esac
 echo "#!/bin/bash
 #Authore: Giulio Sorrentino <gsorre84@gmail.com>
 iptables --policy INPUT DROP
