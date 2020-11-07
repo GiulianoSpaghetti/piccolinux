@@ -2,7 +2,7 @@ Source: mesa
 Section: graphics
 Priority: optional
 Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
-Uploaders: Giulio Sorrentino  <gsorre84@gmail.com>
+Uploaders: Giulio Sorrentino <gsorre84@gmail.com>
 Standards-Version: 4.1.4
 Build-Depends:
  debhelper-compat (= 12),
@@ -48,9 +48,8 @@ Build-Depends:
  libclc-dev (>= 0.2.0+git20190827-5~) [amd64 arm64 armel armhf i386 kfreebsd-amd64 kfreebsd-i386 mips64el mipsel powerpc ppc64 ppc64el s390x sparc64],
  wayland-protocols (>= 1.9),
  zlib1g-dev,
+ libglvnd-dev (>= 1.3.0),
  valgrind [amd64 arm64 armhf i386 mips64el mipsel powerpc ppc64 ppc64el s390x],
-#Breaks:
-# libglvnd-dev (>= 1.3.0),
 Vcs-Git: https://salsa.debian.org/xorg-team/lib/mesa.git
 Vcs-Browser: https://salsa.debian.org/xorg-team/lib/mesa
 Homepage: https://mesa3d.org/
@@ -177,9 +176,8 @@ Section: libdevel
 Architecture: any
 Depends:
  libegl-dev,
- ${misc:Depends},
-Breaks:
  libglvnd-dev,
+ ${misc:Depends},
 Multi-Arch: same
 Description: free implementation of the EGL API -- development files
  This package contains the development environment required for compiling
@@ -217,9 +215,8 @@ Section: oldlibs
 Architecture: any
 Depends:
  libgles-dev,
- ${misc:Depends},
-Breaks:
  libglvnd-dev,
+ ${misc:Depends},
 Multi-Arch: same
 Description: transitional dummy package
  This is a transitional dummy package, it can be safely removed.
@@ -270,7 +267,7 @@ Section: oldlibs
 Architecture: any
 Depends:
  libgl1,
-# libglx-mesa0,
+ libglx-mesa0,
  ${misc:Depends},
 Multi-Arch: same
 Description: transitional dummy package
@@ -300,9 +297,8 @@ Section: oldlibs
 Architecture: any
 Depends:
  libgl-dev,
- ${misc:Depends},
-Breaks:
  libglvnd-dev,
+ ${misc:Depends},
 Multi-Arch: same
 Description: transitional dummy package
  This is a transitional dummy package, it can be safely removed.
@@ -430,122 +426,5 @@ Description: Mesa VDPAU video acceleration drivers
 # Language) library, which is intended for use with an ICD loader. OpenCL
 # provides a standardized interface for computational analysis on graphical
 # processing units.
-
-Package: libegl1
-Architecture: any
-Pre-Depends: ${misc:Pre-Depends},
-Depends:
- ${shlibs:Depends},
- ${misc:Depends},
-Breaks:
- libglvnd0 (= ${binary:Version}),
-Multi-Arch: same
-Description: Vendor neutral GL dispatch library -- EGL support
- This is an implementation of the vendor-neutral dispatch layer for
- arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
- .
- This package contains support for EGL.
-
-Package: libegl-dev
-Architecture: any
-Depends:
- libegl1 (= ${binary:Version}),
- libgl-dev,
- libx11-dev,
- ${misc:Depends},
-Breaks:
- libglvnd-dev (<< 1.3.0-1),
-Multi-Arch: same
-Description: Vendor neutral GL dispatch library -- EGL development files
- This is an implementation of the vendor-neutral dispatch layer for
- arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
- .
- This package provides the development environment for compiling programs
- against the EGL library.
-
-Package: libgles1
-Architecture: any
-Pre-Depends: ${misc:Pre-Depends},
-Depends:
- ${shlibs:Depends},
- ${misc:Depends},
-Multi-Arch: same
-Description: Vendor neutral GL dispatch library -- GLESv1 support
- This is an implementation of the vendor-neutral dispatch layer for
- arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
- .
- This package contains support for GLESv1.
-
-Package: libgles2
-Architecture: any
-Pre-Depends: ${misc:Pre-Depends},
-Depends:
- ${shlibs:Depends},
- ${misc:Depends},
-Breaks:
- libglvnd0 (= ${binary:Version}),
-Multi-Arch: same
-Description: Vendor neutral GL dispatch library -- GLESv2 support
- This is an implementation of the vendor-neutral dispatch layer for
- arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
- .
- This package contains support for GLESv2.
-
-Package: libgles-dev
-Architecture: any
-Depends:
- libegl-dev,
- libgl-dev,
- libgles1 (= ${binary:Version}),
- libgles2 (= ${binary:Version}),
- ${misc:Depends},
-Replaces:
- libgles2-mesa-dev (<< 19.3.0~rc6-1),
-Breaks:
- libgles2-mesa-dev (<< 19.3.0~rc6-1),
- libglvnd-dev (<< 1.3.0-1),
-Multi-Arch: same
-Description: Vendor neutral GL dispatch library -- GLES development files
- This is an implementation of the vendor-neutral dispatch layer for
- arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
- .
- This package provides the development environment for compiling programs
- against the GLES libraries.
-
-Package: libgl1
-Architecture: any
-Pre-Depends: ${misc:Pre-Depends},
-Depends:
- ${shlibs:Depends},
- ${misc:Depends},
- libglx0,
-Replaces:
- libglvnd0 (= ${binary:Version}),
-Multi-Arch: same
-Description: Vendor neutral GL dispatch library -- legacy GL support
- This is an implementation of the vendor-neutral dispatch layer for
- arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
- .
- This package contains support for old libGL for compatibility reasons.
-
-Package: libgl-dev
-Architecture: any
-Depends:
- libgl1 (= ${binary:Version}),
- libglx-dev,
- ${misc:Depends},
-Replaces:
- mesa-common-dev (<< 19.3.0~rc6-1),
-Breaks:
- libgl1-mesa-dev (<< 19.3.0~rc6-1),
- libglvnd-dev (<< 1.3.0-1),
- mesa-common-dev (<< 19.3.0~rc6-1),
-Multi-Arch: same
-Description: Vendor neutral GL dispatch library -- GL development files
- This is an implementation of the vendor-neutral dispatch layer for
- arbitrating OpenGL API calls between multiple vendors on a per-screen basis.
- .
- This package provides the development environment for compiling programs
- against the GL library.
 
 # vim: tw=0
