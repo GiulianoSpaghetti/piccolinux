@@ -635,12 +635,12 @@ Vuoi installare la briscola?"
         if [ $briscola -eq 1 ]; then
                 cd /tmp
 		if [ $sistema -eq 10 ]; then
-			wget https://github.com/numerunix/wxBriscola/releases/download/0.3.5/wxbriscola_0.3.5_buster_arm64.deb
+			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_buster_arm64.deb
 		else
-			wget https://github.com/numerunix/wxBriscola/releases/download/0.3.5/wxbriscola_0.3.5_bullseye_arm64.deb
+			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_bullseye_arm64.deb
 		fi
-		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.5/wxbriscola-i18n_0.3.5_all.deb
-		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.5/wxbriscola-mazzi-hd-dr-francy_0.3.5_all.deb
+		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-i18n_0.3.6_all.deb
+		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-mazzi-4k-dr-francy_0.3.6_all.deb
 		dpkg -i ./wxbriscola*.deb
 		apt -f install -y
 	fi
