@@ -131,7 +131,7 @@ case $? in
 ;;
 *)
 	dialog --title "Errore" \
-	--backtitle "Errorei" \
+	--backtitle "Errore" \
 	--msgbox "Parametro non valido" 7 60
 exit 1
 ;;
@@ -183,7 +183,7 @@ umount /dev/${sd}1
 attendi 5
 rmdir /media/piccolinuxboot
 
-rsync -a --info=progress2 --remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
+rsync -avh -remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
 chmod 755 /media/piccolinux
 umount /dev/${sd}2
 
@@ -194,6 +194,6 @@ rmdir /media/piccolinux
 
 dialog --title "Tutto fatto" \
 	--backtitle "OK" \
-	--msgbox "La microsd e' stata smontata. Metterla nel raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nHappy Hacking :)" 40 60
+	--msgbox "La microsd e' stata smontata. Metterla nel raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nHappy Hacking :)" 40 60
 
 

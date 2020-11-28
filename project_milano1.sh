@@ -60,12 +60,13 @@ return $desktop
 
 function selezionaLogin {
 dialog --backtitle "Quale schermata di login utilizzare" \
---radiolist "Quale schermata di login utilizzare" 20 40 5 \
+--radiolist "Quale schermata di login utilizzare" 20 40 6 \
 1 "GDM3" off \
-2 "Lightdm" on \
-3 "Wdm" off \
-4 "LXdm" off \
-5 "Xdm" off > /dev/tty 2>/tmp/result.txt
+2 "SDDM" off \
+3 "Lightdm" on \
+4 "Wdm" off \
+5 "LXdm" off \
+6 "Xdm" off > /dev/tty 2>/tmp/result.txt
 if [ $? -eq 0 ]; then
 	login=`cat /tmp/result.txt`
 else
@@ -370,7 +371,7 @@ function getLibDrmBullseye {
 		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-libkms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
 }
 
-function getLibMesaBullseye {
+function getLibMesaFrancyBullseye {
 		mkdir -p /tmp/mesa
 		cd /tmp/mesa
 		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libegl1-mesa_20.1.9-1_arm64.deb
@@ -426,7 +427,7 @@ function getLibGlvndBuster {
 		apt-mark hold libgel1 libgl1 libgles1 libgles2 linglvnd-core-dev libglvnd0 libopengl0
 }
 
-function getMesaBuster {
+function getMesaFrancyBuster {
 		mkdir -p /tmp/mesa
 		cd /tmp/mesa
 		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libegl1-mesa_20.1.9-1_arm64.deb
@@ -443,6 +444,52 @@ function getMesaBuster {
 		cd
 		rm -rf /tmp/mesa
 		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
+}
+
+function getMesaChiacchioBullsye {
+	mkdir -p /tmp/mesa
+	cd /tmp/mesa
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libegl1-mesa_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libegl1_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgbm1_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgl1-mesa-dri_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgl1-mesa-glx_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgl1_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libglapi-mesa_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgles1_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgles2-mesa_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgles2_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libwayland-egl1-mesa_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/mesa-va-drivers_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/mesa-vdpau-drivers_20.1.9-1_arm64.deb
+	dpkg -i /tmp/mesa/*.deb
+	apt-get -f install
+	cd
+	rm -rf /tmp/mesa
+	apt-mark hold libegl-mesa0 libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libglx-mesa0 libwayland-egl1 mesa-va-drivers mesa-vdpau-drivers
+}
+function getMesaChiacchioBuster {
+	mkdir -p /tmp/mesa
+	cd /tmp/mesa
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libegl-mesa0_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libegl1-mesa_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libegl1_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgbm1_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgl1-mesa-dri_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgl1-mesa-glx_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgl1_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libglapi-mesa_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgles1_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgles2-mesa_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libglx-mesa0_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libwayland-egl1-mesa_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/mesa-va-drivers_20.1.9-1_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/mesa-vdpau-drivers_20.1.9-1_arm64.deb
+	dpkg -i /tmp/mesa/*.deb
+	apt-get -f install
+	cd
+	rm -rf /tmp/mesa
+	apt-mark hold libegl-mesa0 libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libglx-mesa0 libwayland-egl1 mesa-va-drivers mesa-vdpau-drivers
 }
 
 function createFirewallScript {
@@ -668,22 +715,27 @@ if [ "$desktop" != 1 ]; then
 dialog --title "Errore" \
 	--backtitle "Errore" \
 	--msgbox "Con init diverso da systemd si puo' installare non si puo' installare GDM.\nVerra' installato XDM." 7 60
-		login=5
+		login=6
 		fi
 	fi
 	case $login in
 		1) apt-get install gdm3	 $initstr;;
-		2) apt-get install lightdm  $initstr;;
-		3) apt-get install wdm 	 $initstr;;
-		4) apt-get install lxdm  $initstr;;
-		5) apt-get install xdm 	 $initstr;;
+		2) apt-get install sddm $initstr;;
+		3) apt-get install lightdm  $initstr;;
+		4) apt-get install wdm 	 $initstr;;
+		5) apt-get install lxdm  $initstr;;
+		6) apt-get install xdm 	 $initstr;;
 		*) dialog --title "Errore" \
 	--backtitle "Errore" \
 	--msgbox "Scelta non valida\nSi continua senza login grafico." 7 60
 
 	esac
 	if [ $init -eq 1  ]; then
-		apt-get install network-manager-gnome
+		if [[ $desktop == "task-kde-desktop" || $desktop == "task-lxqt-desktop" ]]; then
+			apt-get install plasma-nm
+		else
+			apt-get install network-manager-gnome
+		fi
 	else
 		apt-get install connman-gtk $initstr
 	fi
@@ -692,7 +744,7 @@ else
 	--backtitle "Errore" \
 	--msgbox "Si continua senza desktop" 7 60
 	if [ $init -eq 1 ]; then
-		apt-get install network-manager
+			apt-get install network-manager
 	else
 		apt-get install connman $initstr
 	fi
@@ -703,7 +755,13 @@ lingua=$?
         if [ $lingua -eq 0 ]; then
 
 		lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
-		apt install firefox-esr-l10n-$lang thunderbird-l10n-$lang libreoffice-l10n-$lang lightning-l10n-$lang aspell-$lang hunspell-$lang manpages-$lang libreoffice-help-$lang
+		apt install firefox-esr-l10n-$lang thunderbird-l10n-$lang libreoffice-l10n-$lang lightning-l10n-$lang aspell-$lang hunspell-$lang manpages-$lang libreoffice-help-$lang maint-guide-$lang fortunes-$lang debian-reference-$lang
+		if [ $desktop != 1 ]; then
+			apt-get install mythes-$lang
+		fi
+		if [[ $desktop == "task-kde-desktop" || $desktop == "task-lxqt-desktop" ]]; then
+			apt-get install kde-l10n-$lang
+		fi
 	fi
 
 
@@ -752,12 +810,20 @@ if [ $kms -eq 0 ]; then
 case $sistema in
 11)
 		getLibDrmBullseye
-		getLibMesaBullseye
+		if [[ $desktop == "task-gnome-desktop" || $desktop == "task-kde-desktop" || $desktop == "task-lxqt-desktop" ]]; then
+			getMesaChiacchioBullseye
+		else
+			getMesaFrancyBullseye
+		fi
 ;;
 10)
 		getLibDrmBuster
-		getLibGlvndBuster
-		getMesaBuster
+		if [[ $desktop == "task-gnome-desktop" || $desktop == "task-kde-desktop" || $desktop == "task-lxqt-desktop" ]]; then
+			getMesaChiacchioBuster
+		else
+			getLibGlvndBuster
+			getMesaFrancyBuster
+		fi
 ;;
 *)	dialog --title "Errore" \
 	--backtitle "Errore" \
@@ -781,6 +847,6 @@ if [ $briscola -eq 0 ]; then
 fi
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
-	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit." 7 60
+	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
 
 rm /project_milano1.sh
