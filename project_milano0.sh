@@ -154,7 +154,7 @@ cp ./project_milano1.sh ${1}
 	--backtitle "Informazione" \
 	--msgbox "Eseguire lo script project_milano1.sh" 7 60
 
-schroot ${1}
+chroot ${1}
 
 umountSystem $1
 getSd
