@@ -1,15 +1,17 @@
 #! /bin/bash
 # Autore: Giulio Sorrentino <gsorre84@gmail.com>
 
-# Make sure only root can run our script
+function notRoot {
 if [[ $EUID -ne 0 ]]; then
-   echo "Lo script deve essere avviato da root" 1>&2
-   exit 1
+	dialog --title "Errore" \
+	--backtitle "Errorei" \
+	--msgbox "Lo script deve essere avviato da root" 7 60
+   	return 1
 fi
+	return 0
+}
 
-apt-get update
-apt-get upgrade
-
+function checkSystem {
 read -d / sistema < /etc/debian_version
 
 if [ $sistema = "bullseye" ]; then
@@ -17,168 +19,77 @@ if [ $sistema = "bullseye" ]; then
 else
 	read -d . sistema < /etc/debian_version
 fi
+return $sistema
+}
 
-
-echo "1. SystemD
-2. Sysv
-3. runit
-Quale init si desidera utilizzare?"
-read init
-if [[ $sistema -eq 9 && $init -eq 3 ]]; then
-	echo "Scelta non valida. In stretch runit non è disponibile. Si userà sysv."
-	init=2
-fi
-case $init in
-1)
-	apt-get install systemd
-	apt-get remove --purge sysvinit-core runit-init
-	initstr=systemd
-;;
-2) apt-get install sysvinit-core
-	apt-get remove --purge systemd runit-init
-	initstr=sysvinit-core
-	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
-	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
-;;
-3) apt-get install runit-init
-	apt-get remove --purge systemd sysvinit-core
-	initstr=runit-init
-	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
-	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
-;;
-*) echo "Scelta non corretta, si resta con quello già fornito"
-	init=1
-;;
-esac
-
-kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
-apt-get install u-boot-rpi $kernel -y
-
-apt-get install locales
-echo "Adesso verrà configurata la lingua. Premere invio per continuare."
-read dummy;
-dpkg-reconfigure locales
-
-apt-get install console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates net-tools nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades $initstr -y
-#apt-get install network-manager #da aggiungere quando systemd sarà apposto
-apt-file update
-
-echo "1. Gnome
-2. Cinnamon
-3. KDE
-4. LXDE
-5. LXQT
-6. XFCE
-7. IceWM
-8. Openbox
-0. Nessuno
-Quale desktop si desidera installare?"
-read desktop;
-if [ $init -ne 1 ]; then 
-	if [ $desktop -lt 3 ] && [ $desktop -gt 0 ]; then 
-		echo "Scelta non valida. Con init diverso da systemd si può installare non si possono installare kde, gnome e cinnamon. Verrà installato xfce.";
-		desktop=6;
-	fi
-fi 
-
-case $desktop in
-1) desktop=task-gnome-deskop
-;;
-2) desktop=task-cinnamon-desktop
-;;
-3) desktop=task-kde-desktop
-;;
-4) desktop=task-lxde-desktop
-;;
-5) desktop=task-lxqt-desktop
-;;
-6) desktop="task-xfce-desktop gvfs-backends"
-;;
-7) desktop=icewm
-;;
-8) desktop=openbox
-;;
-*) desktop=1
-;;
-esac
-
-if [ "$desktop" != 1 ]; then
-	apt-get install $desktop $initstr
-	apt-get remove --purge network-manager* wicd* lightdm
-
-	echo "1. GDM3
-2. Lightdm
-3. wdm
-4. lxdm
-5. xdm
-Quale login grafico si desidera utilizzare?"
-	read login
-	if [ $init -ne 1 ]; then
-		if [ $login = 1 ]; then
-			echo "Scelta non valida con init diverso da systemd non si può installare gdm. Verrà installato xdm."
-			login=5
-		fi
-	fi
-	case $login in
-		1) apt-get install gdm3	 $initstr;;
-		2) apt-get install lightdm  $initstr;;
-		3) apt-get install wdm 	 $initstr;;
-		4) apt-get install lxdm  $initstr;;
-		5) apt-get install xdm 	 $initstr;;
-		*) echo "Scelta non valida" ;;
-	esac
-	if [ $init -eq 1  ]; then
-		apt-get install network-manager-gnome
-	else
-		apt-get install connman-gtk $initstr
-	fi
+function selezionaInit {
+dialog --backtitle "Quale init selezionare" \
+--radiolist "Quale init selezionare:" 10 40 3 \
+ 1 "System D" on \
+ 2 "SysV" off \
+ 3 "runit" off >/dev/tty 2>/tmp/result.txt 
+if [ $? -eq 0 ]; then
+	init=`cat /tmp/result.txt`
 else
-	echo "Si continua senza desktop. Premere invio per continuare."
-	read dummy;
-	if [ $init -eq 1 ]; then
-		apt-get install network-manager
-	else
-		apt-get install connman $initstr
-	fi
+	init=1
 fi
+rm /tmp/result.txt
+return $init
+}
 
-echo "1. Si
-2. No
-Vuoi installare le traduzioni per le applicazioni più comuni?"
-        read lingua
-        if [ $lingua -eq 1 ]; then
+function selezionaDesktop {
+dialog --backtitle "Quale desktop selezionare" \
+--radiolist "Quale desktop selezionare" 20 40 9 \
+1 "Gnome" off \
+2 "Cinnamon" off \
+3 "KDE" off \
+4 "LXDE" off \
+5 "LXQT" off \
+6 "XFCE" on \
+7 "IceWM" off \
+8 "Openbox" off \
+0 "Nessuno" off > /dev/tty 2>/tmp/result.txt
+if [ $? -eq 0 ]; then
+	desktop=`cat /tmp/result.txt`
+else
+	desktop=0
+fi
+rm /tmp/result.txt
+return $desktop
+}
 
-		lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
-		apt install firefox-esr-l10n-$lang thunderbird-l10n-$lang libreoffice-l10n-$lang lightning-l10n-$lang aspell-$lang hunspell-$lang manpages-$lang libreoffice-help-$lang
-	fi
+function selezionaLogin {
+dialog --backtitle "Quale schermata di login utilizzare" \
+--radiolist "Quale schermata di login utilizzare" 20 40 5 \
+1 "GDM3" off \
+2 "Lightdm" on \
+3 "Wdm" off \
+4 "LXdm" off \
+5 "Xdm" off > /dev/tty 2>/tmp/result.txt
+if [ $? -eq 0 ]; then
+	login=`cat /tmp/result.txt`
+else
+	login=0
+fi
+rm /tmp/result.txt
+return $login
+}
 
+function selezionaInstallazioneLingua {
+dialog --title "Installazione traduzioni" \
+--backtitle "Installazione traduzioni" \
+--yesno "Vuoi installare le traduzioni per le applicazioni piu' comuni?" 7 60
+return $?
+}
 
-apt-get remove --purge ssh* openssh* rpcbind -y
+function selezionaInstallazioneBootLoader {
+dialog --title "Installazione BootLoader" \
+--backtitle "Installazione BootLoder" \
+--yesno "Vuoi installare il bootloader PROPRIETARIO?" 7 60
+return $?
+}
 
-echo "Adesso configuriamo il fuso orario. Premere invio per continuare."
-read dummy
-dpkg-reconfigure tzdata
-
-echo "Adesso configuriamo la tastiera. Premere invio per continuare."
-read dummy
-dpkg-reconfigure keyboard-configuration
-
-echo "Inserire il nome dell'utente da aggiungere"
-read user
-
-adduser $user
-usermod -aG video,audio,cdrom,sudo,plugdev,netdev,lpadmin,scanner,dip $user
-
-echo "Adesso configuriamo la password di root. Premere invio per continuare."
-read dummy
-passwd
-
-echo "1. Si
-2. No
-Vuoi scaricare il boot loader PROPRIETARIO?"
-read boot
-
-if [ $boot -eq 1 ]; then
+function installaBootLoader {
 	mkdir /tmp/boot
 	cd /tmp/boot
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/COPYING.linux
@@ -430,16 +341,16 @@ if [ $boot -eq 1 ]; then
 
 	cp  -r /tmp/boot/* /boot
 	rm -rf /tmp/boot
-fi
+}
 
-echo "1. Si
-2. No
-Vuoi scaricare i driver per l'accelerazione 3d?"
-read kms
+function selezionaDriver {
+dialog --title "Installazione driver" \
+--backtitle "Installazione driver" \
+--yesno "Vuoi scaricare i driver per l'accelerazione 3d?" 7 60
+return $?
+}
 
-case $sistema in
-11)
-	if [ $kms -eq 1 ]; then
+function getLibDrmBullseye {
 		mkdir -p /tmp/libdrm
 		cd /tmp/libdrm
 		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-amdgpu1_2.4.102-1_arm64.deb
@@ -457,8 +368,9 @@ case $sistema in
 		cd
 		rm -rf /tmp/libdrm
 		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-libkms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
+}
 
-
+function getLibMesaBullseye {
 		mkdir -p /tmp/mesa
 		cd /tmp/mesa
 		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libegl1-mesa_20.1.9-1_arm64.deb
@@ -475,10 +387,9 @@ case $sistema in
 		cd
 		rm -rf /tmp/mesa
 		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
-	fi
-;;
-10)
-	if [ $kms -eq 1 ]; then
+}
+
+function getLibDrmBuster {
 		mkdir -p /tmp/libdrm
 		cd /tmp/libdrm
 		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-amdgpu1_2.4.102-1_arm64.deb
@@ -496,7 +407,9 @@ case $sistema in
 		cd
 		rm -rf /tmp/libdrm
 		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-libkms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
+}
 
+function getLibGlvndBuster {
 		mkdir -p /tmp/libglvnd
 		cd /tmp/libglvnd
 		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libegl1_1.3.2-1_arm64.deb
@@ -511,7 +424,9 @@ case $sistema in
 		cd
 		rm -rf /tmp/libglvnd
 		apt-mark hold libgel1 libgl1 libgles1 libgles2 linglvnd-core-dev libglvnd0 libopengl0
+}
 
+function getMesaBuster {
 		mkdir -p /tmp/mesa
 		cd /tmp/mesa
 		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libegl1-mesa_20.1.9-1_arm64.deb
@@ -528,16 +443,16 @@ case $sistema in
 		cd
 		rm -rf /tmp/mesa
 		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
-	fi
-;;
-*)	echo "Per stretch i driver per l'accelerazione 3d non sono disponibili perché troppo vecchio. Grazie per la collaborazione"
-;;
-esac
+}
+
+function createFirewallScript {
 echo "#!/bin/bash
 #Authore: Giulio Sorrentino <gsorre84@gmail.com>
 iptables --policy INPUT DROP
 iptables --policy FORWARD DROP" > /usr/sbin/firewall.sh
+}
 
+function createFirewallUnit {
 echo "[Unit]
 Description=Firewall rules
 
@@ -549,9 +464,13 @@ Type=simple
 
 [Install]
 WantedBy=multi-user.target" > /lib/systemd/system/firewall.service
+}
 
+function configureCmdLine {
 echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait hdmi=1" > /boot/cmdline.txt
+}
 
+function configureConfig {
 echo "# For more options and information see
 # http://rpf.io/configtxt
 # Some settings may impact device functionality. See link above for details
@@ -621,28 +540,247 @@ dtoverlay=vc4-kms-v3d-p4
 start_x=1
 gpu_mem=256
 hdmi_enable_4kp60=0" > /boot/config.txt
+}
 
-rm -rf /tmp/piccolinux
-rm /project_milano1.sh
-apt-get autoremove
-apt-get clean
+function selezionaBriscola {
+dialog --title "Installazione briscola" \
+--backtitle "Installazione briscola" \
+--yesno "Vuoi installare la briscola?" 7 60
+return $?
+}
 
-if [ $sistema -lt 11 ]; then
-        echo "1. Si
-2. No
-Vuoi installare la briscola?"
-        read briscola
-        if [ $briscola -eq 1 ]; then
-                cd /tmp
-		if [ $sistema -eq 10 ]; then
+function installBriscola {
+	if [ $1 -gt 9 ]; then
+		cd /tmp
+		if [ $1 -eq 10 ]; then
 			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_buster_arm64.deb
 		else
 			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_bullseye_arm64.deb
 		fi
 		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-i18n_0.3.6_all.deb
 		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-mazzi-4k-dr-francy_0.3.6_all.deb
+		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-mazzi-4k-gatti_0.3.6_all.deb
+		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-mazzi-4k-napoletano_0.3.6_all.deb
 		dpkg -i ./wxbriscola*.deb
 		apt -f install -y
+	else
+ 		dialog --title "Errore" \
+		--backtitle "Errore" \
+		--msgbox "La briscola non e' disponibile per stretch perche' e' troppo vecchio. Grazie per la collaborazione." 7 60
+fi		
+}
+
+notRoot
+
+if [ $? -eq 1 ]; then
+	exit 1;
+fi
+
+apt-get update
+apt-get upgrade
+apt-get install dialog
+
+checkSystem
+sistema=$?
+
+selezionaInit
+init=$?
+
+case $init in
+1)
+	apt-get install systemd
+	apt-get remove --purge sysvinit-core runit
+	initstr=systemd
+;;
+2) apt-get install sysvinit-core
+	apt-get remove --purge systemd runit
+	initstr=sysvinit-core
+	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
+	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
+;;
+3) apt-get install runit
+	apt-get remove --purge systemd sysvinit-core
+	initstr=runit
+	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
+	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
+;;
+*) dialog --title "Errore" \
+	--backtitle "Errore" \
+	--msgbox "Scelta non corretta. Si resta con quello gia' fornito" 7 60
+	init=1
+	initstr=""
+;;
+esac
+
+kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
+apt-get install u-boot-rpi $kernel -y
+
+apt-get install locales -y
+dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Adesso verra' configurato il linguaggio" 7 60
+dpkg-reconfigure locales
+
+apt-get install console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates net-tools nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades $initstr -y
+apt-file update
+
+selezionaDesktop
+desktop=$?
+
+if [ $init -ne 1 ]; then 
+	if [ $desktop -lt 3 ] && [ $desktop -gt 0 ]; then 
+dialog --title "Errore" \
+	--backtitle "Errore" \
+	--msgbox "Con init diverso da systemd si puo' installare non si possono installare kde, gnome e cinnamon.\nVerra' installato xfce." 7 60
+		desktop=6;
+	fi
+fi 
+
+case $desktop in
+1) desktop=task-gnome-desktop
+;;
+2) desktop=task-cinnamon-desktop
+;;
+3) desktop=task-kde-desktop
+;;
+4) desktop=task-lxde-desktop
+;;
+5) desktop=task-lxqt-desktop
+;;
+6) desktop="task-xfce-desktop gvfs-backends"
+;;
+7) desktop=icewm
+;;
+8) desktop=openbox
+;;
+*) desktop=1
+;;
+esac
+
+if [ "$desktop" != 1 ]; then
+	apt-get install $desktop $initstr
+	apt-get remove --purge network-manager* wicd* lightdm
+
+	selezionaLogin
+	login=$?
+	if [ $init -ne 1 ]; then
+		if [ $login = 1 ]; then
+dialog --title "Errore" \
+	--backtitle "Errore" \
+	--msgbox "Con init diverso da systemd si puo' installare non si puo' installare GDM.\nVerra' installato XDM." 7 60
+		login=5
+		fi
+	fi
+	case $login in
+		1) apt-get install gdm3	 $initstr;;
+		2) apt-get install lightdm  $initstr;;
+		3) apt-get install wdm 	 $initstr;;
+		4) apt-get install lxdm  $initstr;;
+		5) apt-get install xdm 	 $initstr;;
+		*) dialog --title "Errore" \
+	--backtitle "Errore" \
+	--msgbox "Scelta non valida\nSi continua senza login grafico." 7 60
+
+	esac
+	if [ $init -eq 1  ]; then
+		apt-get install network-manager-gnome
+	else
+		apt-get install connman-gtk $initstr
+	fi
+else
+	dialog --title "Errore" \
+	--backtitle "Errore" \
+	--msgbox "Si continua senza desktop" 7 60
+	if [ $init -eq 1 ]; then
+		apt-get install network-manager
+	else
+		apt-get install connman $initstr
 	fi
 fi
-echo "Debian è pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit."
+
+selezionaInstallazioneLingua
+lingua=$?
+        if [ $lingua -eq 0 ]; then
+
+		lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
+		apt install firefox-esr-l10n-$lang thunderbird-l10n-$lang libreoffice-l10n-$lang lightning-l10n-$lang aspell-$lang hunspell-$lang manpages-$lang libreoffice-help-$lang
+	fi
+
+
+apt-get remove --purge ssh* openssh* rpcbind -y
+
+dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Adesso configuriamo il fuso orario" 7 60
+dpkg-reconfigure tzdata
+
+dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Adesso configuriamo la tastiera" 7 60
+
+dpkg-reconfigure keyboard-configuration
+
+result=1
+while [[ $result -eq 1 ]]; do
+dialog --title "inserire Nome Utente" \
+--backtitle "Inserire nome Utente" \
+--inputbox "Inserire il nome utente dell'utente non privilegiato da aggiungere" 8 60 2>/tmp/result.txt
+result=$?
+done
+user=`cat /tmp/result.txt`
+rm /tmp/result.txt
+
+adduser $user
+usermod -aG video,audio,cdrom,sudo,plugdev,netdev,lpadmin,scanner,dip $user
+
+dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Adesso verra' configurata la password di root" 7 60
+
+passwd
+
+selezionaInstallazioneBootLoader
+boot=$?
+if [ $boot -eq 0 ]; then
+	installaBootLoader
+fi
+
+selezionaDriver
+kms=$?
+
+if [ $kms -eq 0 ]; then
+case $sistema in
+11)
+		getLibDrmBullseye
+		getLibMesaBullseye
+;;
+10)
+		getLibDrmBuster
+		getLibGlvndBuster
+		getMesaBuster
+;;
+*)	dialog --title "Errore" \
+	--backtitle "Errore" \
+	--msgbox "Per Stretch i driver non sono disponibili perche' troppo vecchio. Grazie per la collaborazione" 7 60
+
+;;
+esac
+fi
+createFirewallScript
+createFirewallUnit
+configureCmdLine
+configureConfig
+
+apt-get autoremove
+apt-get clean
+
+selezionaBriscola
+briscola=$?
+if [ $briscola -eq 0 ]; then
+	installBriscola $sistema
+fi
+dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit." 7 60
+
+rm /project_milano1.sh

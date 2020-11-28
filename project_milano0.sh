@@ -1,27 +1,126 @@
 #!/bin/bash
 # Autore: Giulio Sorrentino <gsorre84@gmail.com>
 
-# Make sure only root can run our script
-if [[ $EUID -ne 0 ]]; then
-   echo "Lo script deve essere avviato da root" 1>&2
-   exit 1
-fi
+function installPrerequisites {
+apt-get install qemu-user-static debootstrap rsync wget dialog -y
+}
 
-if [ $# -ne 1 ]; then
-	echo "Bisogna passare la directory di installazione. Il programma termina."
+function notRoot {
+if [[ $EUID -ne 0 ]]; then
+	dialog --title "Errore" \
+	--backtitle "Errorei" \
+	--msgbox "Lo script deve essere avviato da root" 7 60
+   	return 1
+fi
+	return 0
+}
+
+function checkParameters {
+if [ $1 -ne 1 ]; then
+	dialog --title "Errore" \
+	--backtitle "Errorei" \
+	--msgbox "Bisogna specificare la directory d'installazione come parametro.\nIl programma sara' terminato" 7 60
+	return 1
+fi
+return 0
+}
+
+function selectDistro {
+dialog --backtitle "Quale init selezionare" \
+--radiolist "Quale init selezionare:" 10 40 3 \
+ 1 "Buster" on \
+ 2 "Bullseye" off \
+ 3 "Stretch" off >/dev/tty 2>/tmp/result.txt 
+if [ $? -eq 0 ]; then
+	quale=`cat /tmp/result.txt`
+else
+	quale=0
+fi
+rm /tmp/result.txt
+return $quale
+}
+
+
+function umountSystem {
+umount ${1}/proc
+umount ${1}/sys
+umount ${1}/dev/pts
+umount ${1}/dev
+}
+
+function mountSystem {
+mount -o bind /proc ${1}/proc
+mount -o bind /sys ${1}/sys
+mount -o bind /dev ${1}/dev
+mount -o bind /dev/pts ${1}/dev/pts
+}
+
+function removeSystemFiles {
+rm ${1}/etc/fstab
+rm ${1}/etc/hostname
+rm ${1}/etc/apt/sources.list
+}
+
+function createfstab {
+echo "proc            /proc           proc    defaults          0       0
+/dev/mmcblk0p1  /boot           vfat    defaults          0       2
+/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1" >> ${1}/etc/fstab
+}
+
+function createhostname {
+echo "${1}-rpi64" >> ${2}/etc/hostname
+}
+
+function createaptsource {
+echo "deb http://debian.fastweb.it/debian/ $quale main contrib non-free
+deb-src http://debian.fastweb.it/debian/ $quale main contrib non-free
+deb http://debian.fastweb.it/debian/ ${1}-updates main contrib non-free
+deb-src http://debian.fastweb.it/debian/ ${1}-updates main contrib non-free
+
+deb http://security.debian.org/debian-security  ${1}/updates main contrib
+deb-src http://security.debian.org/debian-security  ${1}/updates main contrib
+
+deb http://debian.fastweb.it/debian ${1}-backports main contrib non-free
+deb-src http://debian.fastweb.it/debian ${1}-backports main contrib non-free" >> ${2}/etc/apt/sources.list
+}
+
+function getSd {
+result=1;
+while [[ $result -eq 1 ]]; do
+	dialog --title "inserire Dispostivo a blocchi" \
+	--backtitle "Inserire Dispositivo a blocchi" \
+	--inputbox "Inserire il dispositivo a blocchi relativo la scheda microsd gia' partizionata da montare." 8 60 2>/tmp/result.txt
+	result=$?
+done
+}
+
+function umountsd {
+umount /dev/${1}1
+umount /dev/${1}2
+}
+
+function attendi {
+echo "Attendi $1 secondi"
+sleep $1
+}
+
+notRoot
+
+if [ $? -eq 1 ]; then
 	exit 1
 fi
 
-apt-get install qemu-user-static debootstrap rsync wget -y
+checkParameters $#
 
-echo "1: buster
-2: bullseye
-3: stretch
-Indicare su quale debian si vuole basare il piccolinux: "
+if [ $? -eq 1 ]; then
+	exit 1
+fi
 
-read quale
+installPrerequisites
 
-case $quale in
+selectDistro
+
+case $? in
 
 1) quale=buster
 ;;
@@ -31,66 +130,42 @@ case $quale in
 3) quale=stretch
 ;;
 *)
-echo "Parametro non valido"
-exit
+	dialog --title "Errore" \
+	--backtitle "Errorei" \
+	--msgbox "Parametro non valido" 7 60
+exit 1
 ;;
 esac
 
 debootstrap --arch=arm64 $quale ${1}
 
-umount ${1}/proc
-umount ${1}/sys
-umount ${1}/dev
-umount ${1}/dev/pts
+umountSystem $1
+mountSystem $1
 
-mount -o bind /proc ${1}/proc
-mount -o bind /sys ${1}/sys
-mount -o bind /dev ${1}/dev
-mount -o bind /dev/pts ${1}/dev/pts
+removeSystemFiles $1
 
-rm ${1}/etc/fstab
-rm ${1}/etc/hostname
-rm ${1}/etc/apt/sources.list
+createfstab $1
+createhostname $quale $1
+createaptsource $quale $1
 
-echo "proc            /proc           proc    defaults          0       0
-/dev/mmcblk0p1  /boot           vfat    defaults          0       2
-/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1" >> ${1}/etc/fstab
-
-echo "$quale-rpi64" >> ${1}/etc/hostname
-
-echo "deb http://debian.fastweb.it/debian/ $quale main contrib non-free
-deb-src http://debian.fastweb.it/debian/ $quale main contrib non-free
-
-deb http://debian.fastweb.it/debian/ $quale-updates main contrib non-free
-deb-src http://debian.fastweb.it/debian/ $quale-updates main contrib non-free
-
-deb http://security.debian.org/debian-security  $quale/updates main contrib
-deb-src http://security.debian.org/debian-security  $quale/updates main contrib
-
-deb http://debian.fastweb.it/debian $quale-backports main contrib non-free
-deb-src http://debian.fastweb.it/debian $quale-backports main contrib non-free" >> ${1}/etc/apt/sources.list
 
 cp ./project_milano1.sh ${1}
-echo "Eseguire lo script project_milano1.sh"
+	dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Eseguire lo script project_milano1.sh" 7 60
 
-chroot ${1}
+schroot ${1}
 
-umount ${1}/dev/pts
-umount ${1}/dev
-umount ${1}/sys
-umount ${1}/proc
+umountSystem $1
+getSd
+sd=`cat /tmp/result.txt`
+rm /tmp/result.txt
 
-echo "Attendi 10 secondi"
-sleep 10
+attendi 10
 
-echo "Inserire il dispositivo a blocchi relativo la scheda microsd già partizionata da montare."
-read sd
+umountsd $sd
 
-umount /dev/${sd}1
-umount /dev/${sd}2
-
-echo "Attendi 5 secondi"
-sleep 5
+attendi 5
 
 mkdir /media/piccolinux
 mkdir /media/piccolinuxboot
@@ -98,24 +173,27 @@ mkdir /media/piccolinuxboot
 mount /dev/${sd}1 /media/piccolinuxboot
 mount /dev/${sd}2 /media/piccolinux
 
+dialog --title "Informazioni" \
+	--backtitle "Informazioni" \
+	--msgbox "Il software potrebbe dare l'impressione di andare in blocco. E' normale.\nAttendere la fine dell'esecuzione, senza andare in paranoia. Grazie :)" 40 60
 
-rsync -avh --remove-source-files ${1}/boot/* /media/piccolinuxboot
+rsync -a --info=progress2 --remove-source-files ${1}/boot/* /media/piccolinuxboot
 umount /dev/${sd}1
 
-echo "Attendi 5 secondi"
-sleep 5
-
+attendi 5
 rmdir /media/piccolinuxboot
 
-rsync -avh --remove-source-files ${1}/* /media/piccolinux
+rsync -a --info=progress2 --remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
+chmod 755 /media/piccolinux
 umount /dev/${sd}2
 
-echo "Attendi 15 secondi"
-sleep 15
+attendi 15
 
 find ${1} -type d -empty -delete
 rmdir /media/piccolinux
 
-echo "Tutto fatto. La microsd è stata smontata. Metterla nel raspberry per vederne i risultati. Ricordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.
-Happy Hacking :)"
+dialog --title "Tutto fatto" \
+	--backtitle "OK" \
+	--msgbox "La microsd e' stata smontata. Metterla nel raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nHappy Hacking :)" 40 60
+
 
