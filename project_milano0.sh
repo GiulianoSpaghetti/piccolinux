@@ -183,13 +183,14 @@ umount /dev/${sd}1
 attendi 5
 rmdir /media/piccolinuxboot
 
-rsync -avh -remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
+rsync -avh --remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
 chmod 755 /media/piccolinux
 umount /dev/${sd}2
 
 attendi 15
 
 find ${1} -type d -empty -delete
+mkdir ${1}
 rmdir /media/piccolinux
 
 dialog --title "Tutto fatto" \
