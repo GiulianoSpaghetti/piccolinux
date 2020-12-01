@@ -1,0 +1,6 @@
+usr/include/GL/glext.h
+usr/include/GL/gl.h
+usr/include/GL/glcorearb.h
+usr/lib/*/pkgconfig/gl.pc
+
+
