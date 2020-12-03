@@ -1,3 +1,5 @@
-usr/include/EGL
+usr/include/EGL/eglext.h
+usr/include/EGL/egl.h
+usr/include/EGL/eglplatform.h
 usr/lib/*/libEGL.so
 usr/lib/*/pkgconfig/egl.pc
