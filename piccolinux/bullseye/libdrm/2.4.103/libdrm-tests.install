@@ -1,0 +1,9 @@
+usr/bin/drmdevice
+usr/bin/modetest
+usr/bin/vbltest
+usr/bin/kms-steal-crtc
+usr/bin/modeprint
+usr/bin/kms-universal-planes
+usr/bin/proptest
+usr/bin/kmstest
+
