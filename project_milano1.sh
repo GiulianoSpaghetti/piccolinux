@@ -41,14 +41,13 @@ function selezionaDesktop {
 dialog --backtitle "Quale desktop selezionare" \
 --radiolist "Quale desktop selezionare" 20 40 9 \
 1 "Gnome" off \
-2 "Cinnamon" off \
+2 "Cinnamon" on \
 3 "KDE" off \
 4 "LXDE" off \
 5 "LXQT" off \
-6 "XFCE" on \
+6 "XFCE" off \
 7 "IceWM" off \
-8 "Openbox" off \
-0 "Nessuno" off > /dev/tty 2>/tmp/result.txt
+8 "Openbox" off > /dev/tty 2>/tmp/result.txt
 if [ $? -eq 0 ]; then
 	desktop=`cat /tmp/result.txt`
 else
@@ -351,19 +350,24 @@ dialog --title "Installazione driver" \
 return $?
 }
 
-function getLibDrmBullseye {
+function getLibDrmFrancyBullseye {
 		mkdir -p /tmp/libdrm
 		cd /tmp/libdrm
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-amdgpu1_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-common_2.4.102-1_all.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-etnaviv1_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-freedreno1_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-libkms_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-nouveau2_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-radeon1_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-tegra0_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm-tests_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102/libdrm2_2.4.102-1_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-amdgpu1_2.4.104-1-francy_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-common_2.4.104-1-francy_all.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-etnaviv1_2.4.104-1-francy_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-freedreno1_2.4.104-1-francy_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-kms_2.4.104-1-francy_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-nouveau2_2.4.104-1-francy_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-radeon1_2.4.104-1-francy_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-tegra0_2.4.104-1-francy_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-tests_2.4.104-1-francy_arm64.deb
+		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm2_2.4.104-1-francy_arm64.deb
+		dpkg -i /tmp/libdrm/*.deb
+		apt-get -f install
+		cd
+		rm -rf /tmp/libdrm
+		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-kms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
 		dpkg -i /tmp/libdrm/*.deb
 		apt-get -f install
 		cd
@@ -371,24 +375,24 @@ function getLibDrmBullseye {
 		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-libkms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
 }
 
-function getLibMesaFrancyBullseye {
-		mkdir -p /tmp/mesa
-		cd /tmp/mesa
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libegl1-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgbm1_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgl1-mesa-dri_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgl1-mesa-glx_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libglapi-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgles2-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libwayland-egl1-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/mesa-va-drivers_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/mesa-vdpau-drivers_20.1.9-1_arm64.deb
-		dpkg -i /tmp/mesa/*.deb
-		apt-get -f install
-		cd
-		rm -rf /tmp/mesa
-		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
-}
+#function getLibMesaFrancyBullseye {
+#		mkdir -p /tmp/mesa
+#		cd /tmp/mesa
+#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libegl1-mesa_20.1.9-1_arm64.deb
+#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgbm1_20.1.9-1_arm64.deb
+#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgl1-mesa-dri_20.1.9-1_arm64.deb
+#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgl1-mesa-glx_20.1.9-1_arm64.deb
+#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libglapi-mesa_20.1.9-1_arm64.deb
+#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgles2-mesa_20.1.9-1_arm64.deb
+#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libwayland-egl1-mesa_20.1.9-1_arm64.deb
+#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/mesa-va-drivers_20.1.9-1_arm64.deb
+#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/mesa-vdpau-drivers_20.1.9-1_arm64.deb
+#		dpkg -i /tmp/mesa/*.deb
+#		apt-get -f install
+#		cd
+#		rm -rf /tmp/mesa
+#		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
+#}
 
 function getLibDrmBuster {
 		mkdir -p /tmp/libdrm
@@ -669,7 +673,7 @@ dialog --title "Informazione" \
 	--msgbox "Adesso verra' configurato il linguaggio" 7 60
 dpkg-reconfigure locales
 
-apt-get install console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates net-tools nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades $initstr -y
+apt-get install console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates net-tools nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades dpkg-repack $initstr -y
 apt-file update
 
 selezionaDesktop
@@ -810,12 +814,10 @@ kms=$?
 if [ $kms -eq 0 ]; then
 case $sistema in
 11)
-		getLibDrmBullseye
-		if [[ $desktop == "task-gnome-desktop" || $desktop == "task-kde-desktop" || $desktop == "task-lxqt-desktop" ]]; then
-			getMesaChiacchioBullseye
-		else
-			getMesaFrancyBullseye
-		fi
+		getLibDrmFrancyBullseye
+		dialog --title "Attenzione" \
+		--backtitle "Attenzione" \
+		--msgbox "Bullseye già include i loro chiacchio edition, per cui non bisogna installare più nulla, stai installando solo le librerie per il rendering diretto col cuda attivo.\nGrazie per la collaborazione." 7 60		
 ;;
 10)
 		getLibDrmBuster
@@ -848,6 +850,6 @@ if [ $briscola -eq 0 ]; then
 fi
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
-	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nPuoi, per esempio, scaricare project nANNA dal github PICCOLINUX di numerunix per avere il rar sul raspberry.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
+	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
 
 rm /project_milano1.sh

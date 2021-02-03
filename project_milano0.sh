@@ -28,8 +28,8 @@ return 0
 function selectDistro {
 dialog --backtitle "Quale init selezionare" \
 --radiolist "Quale init selezionare:" 10 40 3 \
- 1 "Buster" on \
- 2 "Bullseye" off \
+ 1 "Buster" off \
+ 2 "Bullseye" on \
  3 "Stretch" off >/dev/tty 2>/tmp/result.txt 
 if [ $? -eq 0 ]; then
 	quale=`cat /tmp/result.txt`
