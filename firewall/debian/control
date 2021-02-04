@@ -1,0 +1,13 @@
+Source: numfirewall
+Maintainer: Giulio Sorrentino <gsorre84@gmail.com>
+Build-Depends: meson, ninja-build
+Standards-Version: 1.0
+Section: system
+
+
+Package: numfirewall
+Priority: extra  
+Architecture: all
+Depends: bash, iptables  
+Description: Semplice script per alzare il firewall.
+ Viene configurato come servizio di sistema
