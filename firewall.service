@@ -1,0 +1,11 @@
+#Autore Giulio Sorrentino <gsorre84@gmail.com>
+
+[Unit]
+Description=Firewall
+After=networkonline.target
+
+[Service]
+ExecStart=/bin/firewall.sh
+
+[Install]
+WantedBy=multi-user.target
