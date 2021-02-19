@@ -1,17 +1,10 @@
 #!/bin/sh
 
-#sudo apt install -y dialog jigdo-lite;
+#sudo apt install -y dialog jigdo-lite core-utils;
 
 
-function SelezionaBluRay {
-dialog --title "Download blu ray" \
---backtitle "Download blu ray" \
---yesno "Vuoi scaricare i double layer?" 7 60
-return $?
-}
 
 
-function SelectArch {
 dialog --backtitle "Quale archiettura scegliere" \
 --radiolist "Quale architettura:" 10 40 3 \
  1 "1386" off \
@@ -22,13 +15,10 @@ if [ $? -eq 0 ]; then
 else
 	quale=0
 fi
+
 rm /tmp/result.txt
-return $quale
-}
 
-
-SelectArch
-case $? in
+case $quale in
 1) arch=i386
 numbd=4;;
 2) arch=amd64
@@ -38,7 +28,9 @@ numbd=3;;
 esac
 
 
-SelezionaBluRay
+dialog --title "Download blu ray" \
+--backtitle "Download blu ray" \
+--yesno "Vuoi scaricare i double layer?" 7 60
 if [ $? -eq 1 ]; then
 	sl="bd"
 else
@@ -46,18 +38,17 @@ else
 	numbd=2
 fi
 
-sl1=${sl^^}
-
-
+sl1=`echo $sl | tr [:lower:] [:upper:]`
 i=1;
 
 while [ $i -le $numbd ]; do
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Adesso verra' scaricato il blu ray numero $i di $numbd" 40 60
-	echo https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$((i++)).jigdo
+	jigdo-lite https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo
+	i=`expr $i + 1`
 done
 
-dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nHappy Hacking :)" 40 60
+dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nHappy Hacking :)" 40 60>/dev/tty
 
 
