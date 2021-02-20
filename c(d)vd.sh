@@ -5,8 +5,8 @@ echo "Non sei su debian. Il programma termina."
 exit 1
 fi
 
-#echo "Installiamo le librerie necessarie al funzionamento dello script"
-#sudo apt install -y dialog jigdo-lite core-utils;
+echo "Installiamo le librerie necessarie al funzionamento dello script"
+sudo apt install -y dialog jigdo-lite core-utils;
 
 dialog --title "Download DVD" \
 --backtitle "Download DVD" \
@@ -85,7 +85,7 @@ case $quale in
 	arch="s390x"
 	numbd=14;;
 11) 
-	arch="multi-arch"
+	arch="amd64-i386"
 	numbd=1;;
 12) 
 	arch="source"
@@ -110,11 +110,7 @@ dialog --title "Informazione" \
 	if [ $nome = "" ]; then
 		nome=${suffisso}
 	else
-		if [ $arch = "multi-arch" ]; then
-			nome=${suffisso}-amd64-i386-netinst
-		else
 			nome=${suffisso}-${arch}-${sl1}-$i
-		fi
 	fi
 	if [ $sl = 'cd' ]; then
 		nome=${suffisso}-${arch}-xfce-${sl1}-$i
@@ -126,7 +122,7 @@ dialog --title "Informazione" \
 	if [ $? -ne 1 ]; then
 		i=`expr $i + 1`;
 	else
-		dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60 >/dev/tty
+		#dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60 >/dev/tty
 		exit 1
 	fi	
 done
