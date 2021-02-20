@@ -1,9 +1,12 @@
 #!/bin/sh
 
-#sudo apt install -y dialog jigdo-lite core-utils;
+if [ ! -f "/etc/debian_version" ]; then
+echo "Non sei su debian. Il programma termina."
+exit 1
+fi
 
-
-
+echo "Installiamo le librerie necessarie al funzionamento dello script"
+sudo apt install -y dialog jigdo-lite core-utils;
 
 dialog --backtitle "Quale archiettura scegliere" \
 --radiolist "Quale architettura:" 10 40 3 \
@@ -44,11 +47,16 @@ i=1;
 while [ $i -le $numbd ]; do
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
-	--msgbox "Adesso verra' scaricato il blu ray numero $i di $numbd" 40 60
+	--msgbox "Adesso verra' scaricato il blu ray numero $i di $numbd.Il programma adesso chiedera' se ci sono iso precedenti che possono essere utili per ricavare i files necessari (la iso precedente include altri file, non conta).\nIn caso positivo montatela e date il punto di mount, in caso negativo premete semplicemente invio.\nIn seguito verra' chiesto quale mirror apt usare per scaricare i files non trovati.Poi andate a farvi un giro :)" 40 60
 	jigdo-lite https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo
-	i=`expr $i + 1`
+	if [ $? -ne 1 ]; then
+		i=`expr $i + 1`
+	else
+		dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60>/dev/tty
+		exit 1
+	fi	
 done
 
-dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nHappy Hacking :)" 40 60>/dev/tty
+dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nDedicato a Francesca del centro di igiene mentale (milano? san severino? salerno?).\nHappy Hacking :)" 40 60>/dev/tty
 
 
