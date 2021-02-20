@@ -85,7 +85,7 @@ case $quale in
 	arch="s390x"
 	numbd=14;;
 11) 
-	arch="amd64-i386"
+	arch="multi-arch"
 	numbd=1;;
 12) 
 	arch="source"
@@ -116,7 +116,11 @@ dialog --title "Informazione" \
 		nome=${suffisso}-${arch}-xfce-${sl1}-$i
 	fi
 	if [ $netinst -eq 1 ]; then
-		nome=$suffisso-$arch-netinst
+		if [ $arch = "multi-arch" ]; then
+			nome=$suffisso-amd64-i386-netinst
+		else
+			nome=$suffisso-$arch-netinst
+		fi
 	fi
 	jigdo-lite https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/$nome.jigdo
 	if [ $? -ne 1 ]; then
