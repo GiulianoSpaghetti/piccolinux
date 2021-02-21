@@ -48,15 +48,18 @@ while [ $i -le $numbd ]; do
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Adesso verra' scaricato il blu ray numero $i di $numbd.Il programma adesso chiedera' se ci sono iso precedenti che possono essere utili per ricavare i files necessari (la iso precedente include altri file, non conta).\nIn caso positivo montatela e date il punto di mount, in caso negativo premete semplicemente invio.\nIn seguito verra' chiesto quale mirror apt usare per scaricare i files non trovati.Poi andate a farvi un giro :)" 40 60
-	jigdo-lite https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo
-	if [ $? -ne 1 ]; then
-		i=`expr $i + 1`
-	else
-		dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60>/dev/tty
-		exit 1
+	if [ -f debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.iso ]; then
+		dialog	--msgbox "Il file $i di $numbd esiste già. Si passa al successivo." 40 60 >/dev/tty
+	else 
+		jigdo-lite https://cdimage.debian.org/debian-cd/current/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo
+		if [ $? -eq 1 ]; then
+			dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60>/dev/tty
+			exit 1
+		fi
 	fi	
+	i=`expr $i + 1`
 done
 
-dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nDedicato a Francesca del centro di igiene mentale (milano? san severino? salerno?).\nHappy Hacking :)" 40 60>/dev/tty
+dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nDedicato a Francesca del centro di igiene mentale (milano? san severino? salerno?).\nHappy Hacking :)" 40 60 >/dev/tty
 
 

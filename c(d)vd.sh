@@ -122,13 +122,16 @@ dialog --title "Informazione" \
 			nome=$suffisso-$arch-netinst
 		fi
 	fi
-	jigdo-lite https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/$nome.jigdo
-	if [ $? -ne 1 ]; then
-		i=`expr $i + 1`;
-	else
-		#dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60 >/dev/tty
-		exit 1
-	fi	
+	if [ -f $nome.iso ]; then
+		dialog	--msgbox "Il file $i di $numbd esiste già. Si passa al successivo." 40 60 >/dev/tty
+	else 
+		jigdo-lite https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/$nome.jigdo
+		if [ $? -eq 1 ]; then
+			dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60 >/dev/tty
+			exit 1
+		fi
+	fi
+	i=`expr $i + 1`	
 done
 
 dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nDedicato a Annachiara Milano.\nHappy Hacking :)" 40 60>/dev/tty
