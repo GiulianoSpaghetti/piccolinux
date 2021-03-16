@@ -5,8 +5,38 @@ echo "Non sei su debian. Il programma termina."
 exit 1
 fi
 
+
 echo "Installiamo le librerie necessarie al funzionamento dello script"
-sudo apt install -y dialog jigdo-lite core-utils;
+read -d / sistema < /etc/debian_version
+
+if [ $sistema = "bullseye" ]; then
+    sudo apt install -y dialog jigdo-file coreutils;
+else
+    sudo apt install -y dialog jigdo-lite core-utils;
+fi
+
+dialog --backtitle "Quale sisema scegliere" \
+--radiolist "Quale architettura:" 10 40 2 \
+ 1 "Buster" on \
+ 2 "Bullseye" off >/dev/tty 2>/tmp/result.txt 
+if [ $? -eq 0 ]; then
+	quale=`cat /tmp/result.txt`
+else
+	quale=0
+fi
+
+rm /tmp/result.txt
+
+
+if [ $quale -eq 1 ]; then
+	path="current"
+	url="debian-cd"
+	nome="10.8.0"
+else
+	path="cdimage/bullseye_di_alpha3"
+	url=""
+	nome="bullseye-DI-alpha3"
+fi
 
 dialog --backtitle "Quale archiettura scegliere" \
 --radiolist "Quale architettura:" 10 40 3 \
@@ -51,9 +81,9 @@ dialog --title "Informazione" \
 	if [ -f debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.iso ]; then
 		dialog	--msgbox "Il file $i di $numbd esiste già. Si passa al successivo." 40 60 >/dev/tty
 	else 
-		jigdo-lite https://cdimage.debian.org/debian-cd/current/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo
+	jigdo-lite https://cdimage.debian.org/$url/$path/$arch/jigdo-$sl/debian-$nome-$arch-${sl1}-$i.jigdo
 		if [ $? -eq 1 ]; then
-			dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60>/dev/tty
+			dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/$url/$path/$arch/jigdo-$sl/debian-$nome-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60>/dev/tty
 			exit 1
 		fi
 	fi	
