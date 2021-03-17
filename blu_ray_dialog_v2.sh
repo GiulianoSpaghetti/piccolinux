@@ -7,8 +7,8 @@ fi
 
 
 echo "Installiamo le librerie necessarie al funzionamento dello script"
-read -d / sistema < /etc/debian_version
-
+read sistema < /etc/debian_version
+sistema=`echo $sistema | cut -d / -f 1`
 if [ $sistema = "bullseye" ]; then
     sudo apt install -y dialog jigdo-file coreutils;
 else
@@ -78,7 +78,7 @@ while [ $i -le $numbd ]; do
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Adesso verra' scaricato il blu ray numero $i di $numbd.Il programma adesso chiedera' se ci sono iso precedenti che possono essere utili per ricavare i files necessari (la iso precedente include altri file, non conta).\nIn caso positivo montatela e date il punto di mount, in caso negativo premete semplicemente invio.\nIn seguito verra' chiesto quale mirror apt usare per scaricare i files non trovati.Poi andate a farvi un giro :)" 40 60
-	if [ -f debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.iso ]; then
+	if [ -f debian-$nome-$arch-${sl1}-$i.iso ]; then
 		dialog	--msgbox "Il file $i di $numbd esiste già. Si passa al successivo." 40 60 >/dev/tty
 	else 
 	jigdo-lite https://cdimage.debian.org/$url/$path/$arch/jigdo-$sl/debian-$nome-$arch-${sl1}-$i.jigdo
