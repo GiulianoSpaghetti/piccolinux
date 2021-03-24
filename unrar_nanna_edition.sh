@@ -9,6 +9,6 @@ cd unrar-nonfree-?.?.?
 dpkg-buildpackage
 cd ..
 mv unrar_*.deb ./Scaricati
-mv libunrar*.eb ./Scaricati
+mv libunrar*.deb ./Scaricati
 rm -rf *unrar*
 sudo dpkg -i ./Scaricati/unrar_*.deb
