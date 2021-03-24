@@ -4,9 +4,11 @@
 sudo apt install dpkg-dev devscripts -y
 
 apt source unrar
-cd unrar-*
-debuild -us -uc -nc
+apt build-dep unrar
+cd unrar-nonfree-?.?.?
+dpkg-buildpackage
 cd ..
 mv unrar_*.deb ./Scaricati
-rm -rf *rar*
+mv libunrar*.eb ./Scaricati
+rm -rf *unrar*
 sudo dpkg -i ./Scaricati/unrar_*.deb
