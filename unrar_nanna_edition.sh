@@ -3,8 +3,8 @@
 
 sudo apt install dpkg-dev devscripts -y
 
-apt source unrar
-apt build-dep unrar
+sudo apt source unrar
+sudo apt build-dep unrar
 cd unrar-nonfree-?.?.?
 dpkg-buildpackage
 cd ..
