@@ -3,10 +3,10 @@
 
 sudo apt install dpkg-dev devscripts -y
 
-apt source rar
-cd rar-*
+apt source unrar
+cd unrar-*
 debuild -us -uc -nc
 cd ..
-mv rar_*.deb ./Scaricati
-rm -rf rar*
-sudo dpkg -i ./Scaricati/rar_*.deb
+mv unrar_*.deb ./Scaricati
+rm -rf *rar*
+sudo dpkg -i ./Scaricati/unrar_*.deb
