@@ -7,13 +7,7 @@ fi
 
 
 echo "Installiamo le librerie necessarie al funzionamento dello script"
-read sistema < /etc/debian_version
-sistema=`echo $sistema | cut -d / -f 1`
-if [ $sistema = "bullseye" ]; then
-    sudo apt install -y dialog jigdo-file coreutils;
-else
-    sudo apt install -y dialog jigdo-lite core-utils;
-fi
+sudo apt install -y dialog jigdo-file coreutils;
 
 dialog --backtitle "Quale sisema scegliere" \
 --radiolist "Quale architettura:" 10 40 2 \
@@ -81,7 +75,7 @@ dialog --title "Informazione" \
 	if [ -f debian-$nome-$arch-${sl1}-$i.iso ]; then
 		dialog	--msgbox "Il file $i di $numbd esiste già. Si passa al successivo." 40 60 >/dev/tty
 	else 
-	jigdo-lite https://cdimage.debian.org/$url/$path/$arch/jigdo-$sl/debian-$nome-$arch-${sl1}-$i.jigdo
+		jigdo-lite https://cdimage.debian.org/$url/$path/$arch/jigdo-$sl/debian-$nome-$arch-${sl1}-$i.jigdo
 		if [ $? -eq 1 ]; then
 			dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/$url/$path/$arch/jigdo-$sl/debian-$nome-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60>/dev/tty
 			exit 1
@@ -89,7 +83,6 @@ dialog --title "Informazione" \
 	fi	
 	i=`expr $i + 1`
 done
-
 dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nDedicato a Francesca del centro di igiene mentale (milano? san severino? salerno?).\nHappy Hacking :)" 40 60 >/dev/tty
 
 
