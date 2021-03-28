@@ -6,7 +6,7 @@ exit 1
 fi
 
 echo "Installiamo le librerie necessarie al funzionamento dello script"
-sudo apt install -y dialog jigdo-lite core-utils;
+#sudo apt install -y dialog jigdo-lite core-utils;
 
 dialog --title "Download DVD" \
 --backtitle "Download DVD" \
@@ -26,13 +26,18 @@ if [ $? -eq 1 ]; then
 	 9 "ppc64el" off \
 	 10 "s390x" off \
 	 11 "multi-arch" on>/dev/tty 2>/tmp/result.txt 
-	dialog --title "Download netinst" \
-	--backtitle "Download netinst" \
-	--yesno "Vuoi scaricare il netinst?" 7 60
-	if [ $? -eq 0 ]; then
-		netinst=1
+	$temp=`cat /tmp/result.txt`
+	if [ $temp -ne 11 ]; then
+		dialog --title "Download netinst" \
+		--backtitle "Download netinst" \
+		--yesno "Vuoi scaricare il netinst?" 7 60
+		if [ $? -eq 0 ]; then
+			netinst=1
+		else
+			netinst=0
+		fi
 	else
-		netinst=0
+		netinst=1
 	fi
 else
 	sl="dvd"
