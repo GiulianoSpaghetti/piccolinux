@@ -6,7 +6,7 @@ exit 1
 fi
 
 echo "Installiamo le librerie necessarie al funzionamento dello script"
-#sudo apt install -y dialog jigdo-lite core-utils;
+sudo apt install -y dialog jigdo-lite core-utils;
 
 dialog --title "Download DVD" \
 --backtitle "Download DVD" \
