@@ -6,7 +6,7 @@ exit 1
 fi
 
 echo "Installiamo le librerie necessarie al funzionamento dello script"
-sudo apt install -y dialog jigdo-lite core-utils;
+#sudo apt install -y dialog jigdo-lite core-utils;
 
 dialog --title "Download DVD" \
 --backtitle "Download DVD" \
@@ -56,7 +56,7 @@ rm /tmp/result.txt
 case $quale in
 1) 
 	arch="amd64"
-	numbd=16;;
+	numbd=17;;
 2) 
 	arch="arm64"
 	numbd=15;;
@@ -74,13 +74,13 @@ case $quale in
 	numbd=14;;
 7) 
 	arch="mpis64el"
-	numbd=14;;
+	numbd=15;;
 8)
 	arch="mipsel"
 	numbd=15;;
 9) 
 	arch="ppc64el"
-	numbd=14;;
+	numbd=15;;
 10) 
 	arch="s390x"
 	numbd=14;;
@@ -107,11 +107,7 @@ while [ $i -le $numbd ]; do
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Adesso verra' scaricato il supporto numero $i di $numbd.Il programma adesso chiedera' se ci sono iso precedenti che possono essere utili per ricavare i files necessari (la iso precedente include altri file, non conta).\nIn caso positivo montatela e date il punto di mount, in caso negativo premete semplicemente invio.\nIn seguito verra' chiesto quale mirror apt usare per scaricare i files non trovati.Poi andate a farvi un giro :)" 40 60
-	if [ $nome = "" ]; then
-		nome=${suffisso}
-	else
-			nome=${suffisso}-${arch}-${sl1}-$i
-	fi
+	nome=${suffisso}-${arch}-${sl1}-$i
 	if [ $sl = 'cd' ]; then
 		nome=${suffisso}-${arch}-xfce-${sl1}-$i
 	fi
