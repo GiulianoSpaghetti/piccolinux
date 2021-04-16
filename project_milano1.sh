@@ -375,146 +375,8 @@ function getLibDrmFrancyBullseye {
 		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-libkms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
 }
 
-#function getLibMesaFrancyBullseye {
-#		mkdir -p /tmp/mesa
-#		cd /tmp/mesa
-#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libegl1-mesa_20.1.9-1_arm64.deb
-#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgbm1_20.1.9-1_arm64.deb
-#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgl1-mesa-dri_20.1.9-1_arm64.deb
-#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgl1-mesa-glx_20.1.9-1_arm64.deb
-#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libglapi-mesa_20.1.9-1_arm64.deb
-#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libgles2-mesa_20.1.9-1_arm64.deb
-#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/libwayland-egl1-mesa_20.1.9-1_arm64.deb
-#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/mesa-va-drivers_20.1.9-1_arm64.deb
-#		wget https://github.com/numerunix/piccolinux/releases/download/1.0-buster-francy/mesa-vdpau-drivers_20.1.9-1_arm64.deb
-#		dpkg -i /tmp/mesa/*.deb
-#		apt-get -f install
-#		cd
-#		rm -rf /tmp/mesa
-#		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
-#}
-
 function getLibDrmBuster {
-		mkdir -p /tmp/libdrm
-		cd /tmp/libdrm
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-amdgpu1_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-common_2.4.102-1_all.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-etnaviv1_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-freedreno1_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-libkms_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-nouveau2_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-radeon1_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-tegra0_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm-tests_2.4.102-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.102-1-buster/libdrm2_2.4.102-1_arm64.deb
-		dpkg -i /tmp/libdrm/*.deb
-		apt-get -f install
-		cd
-		rm -rf /tmp/libdrm
-		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-libkms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
-}
-
-function getLibGlvndBuster {
-		mkdir -p /tmp/libglvnd
-		cd /tmp/libglvnd
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libegl1_1.3.2-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libgl1_1.3.2-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libgles1_1.3.2-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libgles2_1.3.2-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libglvnd0_1.3.2-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libopengl0_1.3.2-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libglx0_1.3.2-1_arm64.deb
-		dpkg -i /tmp/libglvnd/*.deb
-		apt-get -f install
-		cd
-		rm -rf /tmp/libglvnd
-		apt-mark hold libgel1 libgl1 libgles1 libgles2 linglvnd-core-dev libglvnd0 libopengl0
-}
-
-function getMesaFrancyBuster {
-		mkdir -p /tmp/mesa
-		cd /tmp/mesa
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libegl1-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/https://github.com/numerunix/piccolinux/releases/download/1.0_libglvnd_francy/libopengl0_1.3.2-1_arm64.deb/libegl1-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libgl1-mesa-dri_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libgl1-mesa-glx_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libglapi-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libgles2-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/libwayland-egl1-mesa_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/mesa-va-drivers_20.1.9-1_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/1.0_francy_mesa_buster-1/mesa-vdpau-drivers_20.1.9-1_arm64.deb
-		dpkg -i /tmp/mesa/*.deb
-		apt-get -f install
-		cd
-		rm -rf /tmp/mesa
-		apt-mark hold libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libgles2 libwayland-egl1-mesa mesa-va-drivers mesa-vdpau-drivers
-}
-
-function getMesaChiacchioBullsye {
-	mkdir -p /tmp/mesa
-	cd /tmp/mesa
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libegl1-mesa_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libegl1_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgbm1_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgl1-mesa-dri_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgl1-mesa-glx_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgl1_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libglapi-mesa_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgles1_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgles2-mesa_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libgles2_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/libwayland-egl1-mesa_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/mesa-va-drivers_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/1.0_chiacchio_bullseye/mesa-vdpau-drivers_20.1.9-1_arm64.deb
-	dpkg -i /tmp/mesa/*.deb
-	apt-get -f install
-	cd
-	rm -rf /tmp/mesa
-	apt-mark hold libegl-mesa0 libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libglx-mesa0 libwayland-egl1 mesa-va-drivers mesa-vdpau-drivers
-}
-function getMesaChiacchioBuster {
-	mkdir -p /tmp/mesa
-	cd /tmp/mesa
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libegl-mesa0_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libegl1-mesa_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libegl1_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgbm1_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgl1-mesa-dri_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgl1-mesa-glx_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgl1_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libglapi-mesa_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgles1_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libgles2-mesa_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libglx-mesa0_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/libwayland-egl1-mesa_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/mesa-va-drivers_20.1.9-1_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/mesa-20.1.9-buster-chiacchio-1/mesa-vdpau-drivers_20.1.9-1_arm64.deb
-	dpkg -i /tmp/mesa/*.deb
-	apt-get -f install
-	cd
-	rm -rf /tmp/mesa
-	apt-mark hold libegl-mesa0 libegl1-mesa libegl1 libgbm1 libgl1-mesa-dri libgl1-mesa-glx libgl1 libglapi-mesa libgles1 libgles2-mesa libglx-mesa0 libwayland-egl1 mesa-va-drivers mesa-vdpau-drivers
-}
-
-function createFirewallScript {
-echo "#!/bin/bash
-#Authore: Giulio Sorrentino <gsorre84@gmail.com>
-iptables --policy INPUT DROP
-iptables --policy FORWARD DROP" > /usr/sbin/firewall.sh
-}
-
-function createFirewallUnit {
-echo "[Unit]
-Description=Firewall rules
-
-[Service]
-# temporary safety check until all DMs are converted to correct
-# display-manager.service symlink handling
-ExecStart=/usr/sbin/firewall.sh
-Type=simple
-
-[Install]
-WantedBy=multi-user.target" > /lib/systemd/system/firewall.service
+	apt-get install libdrm*
 }
 
 function configureCmdLine {
@@ -602,18 +464,7 @@ return $?
 
 function installBriscola {
 	if [ $1 -gt 9 ]; then
-		cd /tmp
-		if [ $1 -eq 10 ]; then
-			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_buster_arm64.deb
-		else
-			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_bullseye_arm64.deb
-		fi
-		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-i18n_0.3.6_all.deb
-		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-mazzi-4k-dr-francy_0.3.6_all.deb
-		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-mazzi-4k-gatti_0.3.6_all.deb
-		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-mazzi-4k-napoletano_0.3.6_all.deb
-		dpkg -i ./wxbriscola*.deb
-		apt -f install -y
+		apt-get install wxbriscola wxbriscola-i18n wxbriscola-mazzi-hd-napoletano wxbriscola-mazzi-hd-dr-francy
 	else
  		dialog --title "Errore" \
 		--backtitle "Errore" \
@@ -621,6 +472,15 @@ function installBriscola {
 fi		
 }
 
+
+function installFirewall {
+	dialog --title "Installazione firewall" \
+--backtitle "Installazione di un firewall sperimentake" \
+--yesno "Vuoi installare un firewall sperimentale?" 7 60
+if [ $? -eq 0 ]; then
+	apt-get install firewall
+fi
+}
 
 notRoot
 
@@ -641,19 +501,19 @@ init=$?
 case $init in
 1)
 	apt-get install systemd
-	apt-get remove --purge sysvinit-core runit
+	apt-get remove --purge sysvinit-core runit-iniy
 	initstr=systemd
 ;;
 2) apt-get install sysvinit-core
-	apt-get remove --purge systemd runit
+	apt-get remove --purge systemd runit-init
 	initstr=sysvinit-core
 	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
 ;;
-3) apt-get install runit
+3) apt-get install runit-init runit-sysv
 	apt-get remove --purge systemd sysvinit-core
 	initstr=runit
-	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
+	#apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
 ;;
 *) dialog --title "Errore" \
@@ -673,8 +533,13 @@ dialog --title "Informazione" \
 	--msgbox "Adesso verra' configurato il linguaggio" 7 60
 dpkg-reconfigure locales
 
-apt-get install console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates net-tools nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades dpkg-repack $initstr -y
+apt-get install bash-completion console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades dpkg-repack gnupg2 $initstr -y
 apt-file update
+wget http://numeronesoft.ddns.net/numeronesoft.key
+apt-key add numeronesoft.key
+rm numeronesoft.key
+apt-get update
+apt-get upgrade
 
 selezionaDesktop
 desktop=$?
@@ -742,7 +607,7 @@ dialog --title "Errore" \
 			apt-get install network-manager-gnome
 		fi
 	else
-		apt-get install connman-gtk $initstr
+		apt-get install connman-gtk macchanger $initstr
 	fi
 else
 	dialog --title "Errore" \
@@ -751,7 +616,7 @@ else
 	if [ $init -eq 1 ]; then
 			apt-get install network-manager
 	else
-		apt-get install connman $initstr
+		apt-get install connman macchanger $initstr
 	fi
 fi
 
@@ -760,9 +625,9 @@ lingua=$?
         if [ $lingua -eq 0 ]; then
 
 		lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
-		apt install firefox-esr-l10n-$lang thunderbird-l10n-$lang libreoffice-l10n-$lang lightning-l10n-$lang aspell-$lang hunspell-$lang manpages-$lang libreoffice-help-$lang maint-guide-$lang fortunes-$lang debian-reference-$lang
-		if [ $desktop != 1 ]; then
-			apt-get install mythes-$lang
+		apt install aspell-$lang hunspell-$lang manpages-$lang maint-guide-$lang fortunes-$lang debian-reference-$lang
+		if [[ $desktop != 1 ]]; then
+			apt-get install  firefox-esr-l10n-$lang thunderbird-l10n-$lang libreoffice-l10n-$lang lightning-l10n-$lang libreoffice-help-$lang mythes-$lang
 		fi
 		if [[ $desktop == "task-kde-desktop" || $desktop == "task-lxqt-desktop" ]]; then
 			apt-get install kde-l10n-$lang
@@ -794,12 +659,10 @@ user=`cat /tmp/result.txt`
 rm /tmp/result.txt
 
 adduser $user
-usermod -aG video,audio,cdrom,sudo,plugdev,netdev,lpadmin,scanner,dip $user
-
-dialog --title "Informazione" \
-	--backtitle "Informazione" \
-	--msgbox "Adesso verra' configurata la password di root" 7 60
-
+usermod -aG video,audio,cdrom,sudo $user
+if [ $desktop -ne 1 ]; then
+usermod -aG plugdev,netdev,lpadmin,scanner,dip $user
+fi
 passwd
 
 selezionaInstallazioneBootLoader
@@ -808,35 +671,6 @@ if [ $boot -eq 0 ]; then
 	installaBootLoader
 fi
 
-selezionaDriver
-kms=$?
-
-if [ $kms -eq 0 ]; then
-case $sistema in
-11)
-		getLibDrmFrancyBullseye
-		dialog --title "Attenzione" \
-		--backtitle "Attenzione" \
-		--msgbox "Bullseye già include i loro chiacchio edition, per cui non bisogna installare più nulla, stai installando solo le librerie per il rendering diretto col cuda attivo.\nGrazie per la collaborazione." 7 60		
-;;
-10)
-		getLibDrmBuster
-		if [[ $desktop == "task-gnome-desktop" || $desktop == "task-kde-desktop" || $desktop == "task-lxqt-desktop" ]]; then
-			getMesaChiacchioBuster
-		else
-			getLibGlvndBuster
-			getMesaFrancyBuster
-		fi
-;;
-*)	dialog --title "Errore" \
-	--backtitle "Errore" \
-	--msgbox "Per Stretch i driver non sono disponibili perche' troppo vecchio. Grazie per la collaborazione" 7 60
-
-;;
-esac
-fi
-createFirewallScript
-createFirewallUnit
 configureCmdLine
 configureConfig
 
@@ -848,8 +682,27 @@ briscola=$?
 if [ $briscola -eq 0 ]; then
 	installBriscola $sistema
 fi
+if [ $init -eq 1 ]; then
+	installFirewall
+fi
+
+dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Adesso verrà fatto un piccolo controllo per certificare che l'init sia quello corretto" 7 60
+
+case $init in
+1) apt-get remove --purge sysvinit-core runit-init
+;;
+2) apt-get remove --purge systemd runit-init
+;;
+3) apt-get remove --purge systemd sysvinit-core
+;;
+esac
+
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
 
-rm /project_milano1.sh
+
+
+rm $0
