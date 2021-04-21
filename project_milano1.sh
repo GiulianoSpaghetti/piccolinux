@@ -479,6 +479,9 @@ function installFirewall {
 --yesno "Vuoi installare un firewall sperimentale?" 7 60
 if [ $? -eq 0 ]; then
 	apt-get install firewall
+dialog --title "Informazioni" \
+	--backtitle "Informazioni" \
+	--msgbox "Il firewall va attivato con \"systemctl enable firewall\".\nIl firewall va abilitato all'avvio del sistema con \"systemctl enable firewall\".\nLa disinstallazione del pacchetto porta iptables in uno stato inconsistente." 40 60
 fi
 }
 
@@ -684,6 +687,7 @@ if [ $briscola -eq 0 ]; then
 fi
 if [ $init -eq 1 ]; then
 	installFirewall
+
 fi
 
 dialog --title "Informazione" \
