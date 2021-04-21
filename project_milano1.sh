@@ -481,7 +481,7 @@ if [ $? -eq 0 ]; then
 	apt-get install firewall
 dialog --title "Informazioni" \
 	--backtitle "Informazioni" \
-	--msgbox "Il firewall va attivato con \"systemctl enable firewall\".\nIl firewall va abilitato all'avvio del sistema con \"systemctl enable firewall\".\nLa disinstallazione del pacchetto porta iptables in uno stato inconsistente." 40 60
+	--msgbox "Il firewall va attivato con \"systemctl enable firewall\".\nIl firewall va abilitato all'avvio del sistema con \"systemctl enable firewall\".\nLa disinstallazione del pacchetto porta iptables in uno stato inconsistente.\nPer personalizzarlo, inserire le stringhe iptables in /bin/firewall.sh, una per riga, tenendo presente che il file è sovrascritto ad ogni aggiornamento." 40 60
 fi
 }
 
