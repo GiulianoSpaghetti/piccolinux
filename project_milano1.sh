@@ -481,7 +481,7 @@ if [ $? -eq 0 ]; then
 	apt-get install firewall
 dialog --title "Informazioni" \
 	--backtitle "Informazioni" \
-	--msgbox "Il firewall va attivato con \"systemctl enable firewall\".\nIl firewall va abilitato all'avvio del sistema con \"systemctl enable firewall\".\nLa disinstallazione del pacchetto porta iptables in uno stato inconsistente.\nPer personalizzarlo, inserire le stringhe iptables in /bin/firewall.sh, una per riga, tenendo presente che il file è sovrascritto ad ogni aggiornamento." 40 60
+	--msgbox "Il firewall va attivato con \"systemctl enable firewall\".\nIl firewall va abilitato all'avvio del sistema con \"systemctl enable firewall\".\nLa disinstallazione del pacchetto porta iptables al suo stato iniziale.\nPer personalizzarlo, inserire le stringhe iptables in /bin/firewall.sh, una per riga, tenendo presente che il file è sovrascritto ad ogni aggiornamento." 40 60
 fi
 }
 
@@ -504,7 +504,7 @@ init=$?
 case $init in
 1)
 	apt-get install systemd
-	apt-get remove --purge sysvinit-core runit-iniy
+	apt-get remove --purge sysvinit-core runit-init
 	initstr=systemd
 ;;
 2) apt-get install sysvinit-core
@@ -604,10 +604,14 @@ dialog --title "Errore" \
 
 	esac
 	if [ $init -eq 1  ]; then
-		if [[ $desktop == "task-kde-desktop" || $desktop == "task-lxqt-desktop" ]]; then
+		if [[ $desktop == "task-kde-desktop" ]]; then
 			apt-get install plasma-nm
-		else
-			apt-get install network-manager-gnome
+		else 
+			if [[ $desktop == "task-lxqt-desktop" ]]; then
+				apt install connman-gtk macchanger
+		             else	
+				apt-get install network-manager-gnome
+		     fi
 		fi
 	else
 		apt-get install connman-gtk macchanger $initstr
@@ -632,7 +636,7 @@ lingua=$?
 		if [[ $desktop != 1 ]]; then
 			apt-get install  firefox-esr-l10n-$lang thunderbird-l10n-$lang libreoffice-l10n-$lang lightning-l10n-$lang libreoffice-help-$lang mythes-$lang
 		fi
-		if [[ $desktop == "task-kde-desktop" || $desktop == "task-lxqt-desktop" ]]; then
+		if [[ $desktop == "task-kde-desktop" ]]; then
 			apt-get install kde-l10n-$lang
 		fi
 	fi
@@ -663,9 +667,12 @@ rm /tmp/result.txt
 
 adduser $user
 usermod -aG video,audio,cdrom,sudo $user
-if [ $desktop -ne 1 ]; then
+if [ $desktop != 1 ]; then
 usermod -aG plugdev,netdev,lpadmin,scanner,dip $user
 fi
+dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Adesso configuriamo la password di root" 7 60
 passwd
 
 selezionaInstallazioneBootLoader
@@ -707,6 +714,3 @@ dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
 
-
-
-rm $0

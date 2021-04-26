@@ -168,7 +168,7 @@ cp ./project_milano1.sh ${1}
 	--msgbox "Eseguire lo script project_milano1.sh" 7 60
 
 chroot ${1}
-
+rm ${1}/project_milano1.sh
 umountSystem $1
 getSd
 sd=`cat /tmp/result.txt`
@@ -208,6 +208,6 @@ rmdir /media/piccolinux
 
 dialog --title "Tutto fatto" \
 	--backtitle "OK" \
-	--msgbox "La microsd e' stata smontata. Metterla nel raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nDedicato a Francesca dei centri sociali (san severino? milano? salerno?)\nHappy Hacking :)" 40 60
+	--msgbox "La microsd e' stata smontata. Metterla nel raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.Dedicato a Francesca dei centri sociali (san severino? milano? salerno?)\nHappy Hacking :)" 40 60
 
 
