@@ -7,12 +7,9 @@ apt-get install qemu-user-static debootstrap rsync wget dialog -y
 
 function notRoot {
 if [[ $EUID -ne 0 ]]; then
-	dialog --title "Errore" \
-	--backtitle "Errorei" \
-	--msgbox "Lo script deve essere avviato da root" 7 60
-   	return 1
+	echo "Lo script deve essere avviato da root"
+   	exit 1
 fi
-	return 0
 }
 
 function checkParameters {
@@ -116,11 +113,10 @@ Ad ogni modo, all'inizio è normale che dice NO_PUBKEY, la scarica in automatico
 Grazie." 40 60
 }
 
+
 notRoot
 
-if [ $? -eq 1 ]; then
-	exit 1
-fi
+installPrerequisites
 
 checkParameters $#
 
@@ -128,9 +124,8 @@ if [ $? -eq 1 ]; then
 	exit 1
 fi
 
-preambolo
 
-installPrerequisites
+preambolo
 
 selectDistro
 
