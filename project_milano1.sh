@@ -89,6 +89,13 @@ dialog --title "Installazione BootLoader" \
 return $?
 }
 
+function aggiornaSid {
+dialog --title "Aggiornamento a SID" \
+--backtitle "Aggiornamento a SID" \
+--yesno "E' caldamente consigliato l'aggionramento a debian Sid che, sebbene sperimentale, accelera il testing del nuovo wayland consentendo così una maggiore velocità di sviluppo dei futuri debian, a scapito della stabilità di sistema e della sicurezza dei propri files. Vuoi procedere?"  10 60
+return $?
+}
+
 function installaBootLoader {
 	mkdir /tmp/boot
 	cd /tmp/boot
@@ -420,6 +427,13 @@ gpu_mem=256
 hdmi_enable_4kp60=0" > /boot/config.txt
 }
 
+function abilitaNumeronesoft {
+dialog --title "Installazione repository" \
+--backtitle "Installazione repository" \
+--yesno "Vuoi installare il repository numeronesoft (Obbligatorio per buster)?" 7 60
+return $?
+}
+
 function selezionaBriscola {
 dialog --title "Installazione briscola" \
 --backtitle "Installazione briscola" \
@@ -502,7 +516,6 @@ dialog --title "Informazione" \
 dpkg-reconfigure locales
 
 apt-get install bash-completion console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades dpkg-repack gnupg2 $initstr -y
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 43BEE4A50D43CE6B
 apt-file update
 apt-get update
 apt-get upgrade
@@ -650,18 +663,33 @@ configureConfig
 apt-get autoremove
 apt-get clean
 
-selezionaBriscola
-briscola=$?
-if [ $briscola -eq 0 ]; then
-	installBriscola $sistema
+aggiornaSid
+if [ $? -eq 0 ]; then
+echo "deb http://deb.debian.org/debian/ sid main
+deb-src http://deb.debian.org/debian/ sid main" > /etc/apt/sources.list
+apt clean
+apt update
+apt upgrade -y
+else
+abilitaNumeronesoft
+if [ $? -eq 0 ]; then
+	echo "deb http://numeronesoft.ddns.net/repos/apt/debian buster main" >> /etc/apt/sources.list
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 43BEE4A50D43CE6B
+	apt-get update
+	apt-get-upgrade -y
+	apt install libegl1 libgl1 libgles2 -y
+	selezionaBriscola
+	briscola=$?
+	if [ $briscola -eq 0 ]; then
+		installBriscola $sistema
+	fi
+	if [ $init -eq 1 ]; then
+		installFirewall
+	fi
 fi
-if [ $init -eq 1 ]; then
-	installFirewall
-
 fi
-
 dialog --title "Informazione" \
-	--backtitle "Informazione" \
+		--backtitle "Informazione" \
 	--msgbox "Adesso verrà fatto un piccolo controllo per certificare che l'init sia quello corretto" 7 60
 
 case $init in

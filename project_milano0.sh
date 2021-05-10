@@ -24,10 +24,9 @@ return 0
 
 function selectDistro {
 dialog --backtitle "Quale init selezionare" \
---radiolist "Quale init selezionare:" 10 40 3 \
+--radiolist "Quale init selezionare:" 10 40 2 \
  1 "Buster" on \
- 2 "Bullseye" off \
- 3 "Stretch" off >/dev/tty 2>/tmp/result.txt 
+ 2 "Bullseye" off  >/dev/tty 2>/tmp/result.txt 
 if [ $? -eq 0 ]; then
 	quale=`cat /tmp/result.txt`
 else
@@ -76,8 +75,7 @@ deb-src http://debian.fastweb.it/debian/ ${1}-updates main contrib non-free
 deb http://security.debian.org/debian-security  ${1}/updates main contrib
 deb-src http://security.debian.org/debian-security  ${1}/updates main contrib
 deb http://debian.fastweb.it/debian ${1}-backports main contrib non-free
-deb-src http://debian.fastweb.it/debian ${1}-backports main contrib non-free
-deb http://numeronesoft.ddns.net/repos/apt/debian buster main" >> ${2}/etc/apt/sources.list
+deb-src http://debian.fastweb.it/debian ${1}-backports main contrib non-free" >> ${2}/etc/apt/sources.list
 }
 
 function getSd {
@@ -103,10 +101,10 @@ sleep $1
 function preambolo {
 dialog --title "Informazioni" \
 	--backtitle "Informazioni" \
-	--msgbox "Il sistema per buster non si basa più su file statici presenti su github, ma si basa su di un repository privato
+	--msgbox "Il sistema non si basa più su file statici presenti su github, ma si basa su di un repository privato
 che corrisponde all'indirizzo numeronesoft.ddns.net. Se non lo attaccate è meglio :)
-Ad ogni modo, all'inizio è normale che dice NO_PUBKEY, la scarica in automatico in seguito, però non sono in grado di garantire un online 
-24/h su 24n del repository, per cui se dice address not found non procede all'installazione e riprovate tra qualche ora.
+Ad ogni modo, non sono in grado di garantire un online  24/h su 24n del repository, 
+per cui se dice address not found riprovate tra qualche ora.
 Grazie." 40 60
 }
 
