@@ -73,14 +73,11 @@ echo "deb http://debian.fastweb.it/debian/ $quale main contrib non-free
 deb-src http://debian.fastweb.it/debian/ $quale main contrib non-free
 deb http://debian.fastweb.it/debian/ ${1}-updates main contrib non-free
 deb-src http://debian.fastweb.it/debian/ ${1}-updates main contrib non-free
-
 deb http://security.debian.org/debian-security  ${1}/updates main contrib
 deb-src http://security.debian.org/debian-security  ${1}/updates main contrib
-
 deb http://debian.fastweb.it/debian ${1}-backports main contrib non-free
 deb-src http://debian.fastweb.it/debian ${1}-backports main contrib non-free
-
-deb http://numeronesoft.ddns.net/repos/apt/debian ${1} main" >> ${2}/etc/apt/sources.list
+deb http://numeronesoft.ddns.net/repos/apt/debian buster main" >> ${2}/etc/apt/sources.list
 }
 
 function getSd {
@@ -204,5 +201,4 @@ rmdir /media/piccolinux
 dialog --title "Tutto fatto" \
 	--backtitle "OK" \
 	--msgbox "La microsd e' stata smontata. Metterla nel raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.Dedicato a Francesca dei centri sociali (san severino? milano? salerno?)\nHappy Hacking :)" 40 60
-
 

@@ -4,7 +4,7 @@
 function notRoot {
 if [[ $EUID -ne 0 ]]; then
 	dialog --title "Errore" \
-	--backtitle "Errorei" \
+	--backtitle "Errore" \
 	--msgbox "Lo script deve essere avviato da root" 7 60
    	return 1
 fi
@@ -343,41 +343,6 @@ function installaBootLoader {
 	rm -rf /tmp/boot
 }
 
-function selezionaDriver {
-dialog --title "Installazione driver" \
---backtitle "Installazione driver" \
---yesno "Vuoi scaricare i driver per l'accelerazione 3d?" 7 60
-return $?
-}
-
-function getLibDrmFrancyBullseye {
-		mkdir -p /tmp/libdrm
-		cd /tmp/libdrm
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-amdgpu1_2.4.104-1-francy_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-common_2.4.104-1-francy_all.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-etnaviv1_2.4.104-1-francy_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-freedreno1_2.4.104-1-francy_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-kms_2.4.104-1-francy_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-nouveau2_2.4.104-1-francy_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-radeon1_2.4.104-1-francy_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-tegra0_2.4.104-1-francy_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm-tests_2.4.104-1-francy_arm64.deb
-		wget https://github.com/numerunix/piccolinux/releases/download/2.4.104-buster-francy/libdrm2_2.4.104-1-francy_arm64.deb
-		dpkg -i /tmp/libdrm/*.deb
-		apt-get -f install
-		cd
-		rm -rf /tmp/libdrm
-		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-kms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
-		dpkg -i /tmp/libdrm/*.deb
-		apt-get -f install
-		cd
-		rm -rf /tmp/libdrm
-		apt-mark hold libdrm-amdgpu1 libdrm-common libdrm-etnaviv1 libdrm-freedreno1 libdrm-libkms libdrm-nouveau2 libdrm-radeon1 libdrm-tegra0 libdrm-tests libdrm2
-}
-
-function getLibDrmBuster {
-	apt-get install libdrm*
-}
 
 function configureCmdLine {
 echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait hdmi=1" > /boot/cmdline.txt
