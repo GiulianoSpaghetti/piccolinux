@@ -625,9 +625,7 @@ dialog --title "Informazione" \
 	--msgbox "Adesso configuriamo il fuso orario" 7 60
 dpkg-reconfigure tzdata
 
-dialog --title "Informazione" \
-	--backtitle "Informazione" \
-	--msgbox "Adesso configuriamo la tastiera" 7 60
+
 
 dpkg-reconfigure keyboard-configuration
 
@@ -665,11 +663,17 @@ apt-get clean
 
 aggiornaSid
 if [ $? -eq 0 ]; then
+mv /etc/apt/sources.list /etc/apt/sources.list.old
 echo "deb http://deb.debian.org/debian/ sid main
 deb-src http://deb.debian.org/debian/ sid main" > /etc/apt/sources.list
 apt clean
 apt update
-apt upgrade -y
+apt dist-upgrade -y
+mv /etc/apt/sources.list /etc/apt/sources.list.sid
+mv /etc/apt/sources.list.old /etc/apt/sources.list
+dialog --title "Grazie" \
+	--backtitle "Grazie" \
+	--msgbox "Grazie per l'aiuto che dai alla comunità" 7 60
 else
 abilitaNumeronesoft
 if [ $? -eq 0 ]; then
