@@ -669,9 +669,6 @@ deb-src http://deb.debian.org/debian/ sid main" > /etc/apt/sources.list
 apt-get clean
 apt-get update
 apt-get dist-upgrade -y
-mv /etc/apt/sources.list /etc/apt/sources.list.sid
-mv /etc/apt/sources.list.old /etc/apt/sources.list
-apt-get update
 dialog --title "Grazie" \
 	--backtitle "Grazie" \
 	--msgbox "Grazie per l'aiuto che dai alla comunità" 7 60
