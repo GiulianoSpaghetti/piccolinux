@@ -67,9 +67,9 @@ case $quale in
 	fi
 ;;
 2)
-	path="bullseye_di_alpha3"
+	path="bullseye_di_rc1"
 	url="cdimage"
-	nome="bullseye-DI-alpha3"
+	nome="bullseye-DI-rc1"
 	numbd=4
 ;;
 3) url="cdimage/archive"
