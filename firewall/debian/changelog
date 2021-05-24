@@ -1,5 +1,11 @@
-numfirewall (0.1-nanna) unstable; urgency=low
+firewall (0.1-4-nanna) experimental; urgency=medium
 
-  * Initial release. (Closes: #00000)
+  * added a postrm trigger with flush (Closes: #00001)
 
- --  Giulio Sorrentino <gsorre84@gmail.com>  Wed, 4 Feb 2021 23:42:00 +0200
+ -- Giulio Sorrentino <gsorre84@gmail.com>  Mon, 12 Apr 2021 15:34:59 +0200
+
+firewall (0.1-3-nanna) experimental; urgency=medium
+
+  * Initial release (Closes: #00000)
+
+ -- Giulio Sorrentino <gsorre84@gmail.com>  Mon, 12 Apr 2021 15:34:59 +0200
