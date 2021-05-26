@@ -81,9 +81,9 @@ deb-src http://debian.fastweb.it/debian ${1}-backports main contrib non-free" >>
 function getSd {
 result=1;
 while [[ $result -eq 1 ]]; do
-	dialog --title "inserire Dispostivo a blocchi" \
-	--backtitle "Inserire Dispositivo a blocchi" \
-	--inputbox "Inserire il dispositivo a blocchi relativo la scheda microsd gia' partizionata da montare." 8 60 2>/tmp/result.txt
+	dialog --title "inserire dispostivo a blocchi" \
+	--backtitle "Inserire dispositivo a blocchi" \
+	--inputbox "Inserire il nome del dispositivo a blocchi relativo la scheda microsd gia' partizionata da montare senza la path." 8 60 2>/tmp/result.txt
 	result=$?
 done
 }
