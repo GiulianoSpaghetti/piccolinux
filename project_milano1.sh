@@ -401,6 +401,7 @@ function InstallLibMesa {
 	dpkg -i *.deb
 	cd ..
 	rm -rf mesa
+	apt-get -f install
 } 
  
 
