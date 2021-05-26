@@ -85,7 +85,7 @@ return $?
 function selezionaInstallazioneBootLoader {
 dialog --title "Installazione BootLoader" \
 --backtitle "Installazione BootLoder" \
---yesno "Vuoi installare il bootloader PROPRIETARIO?" 7 60
+--yesno "Vuoi installare il bootloader PROPRIETARIO? (senza non si avvia, ma con non puoi diffondere l'immagine della microsd)" 7 60
 return $?
 }
 
@@ -355,6 +355,56 @@ function configureCmdLine {
 echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait hdmi=1" > /boot/cmdline.txt
 }
 
+function installLibDrm {
+	cd /tmp
+	mkdir lidrm
+	cd libdrm
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-amdgpu1_2.4.105-1-francy_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-common_2.4.105-1-francy_all.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-etnaviv1_2.4.105-1-francy_arm64.deb	
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-freedreno1_2.4.105-1-francy_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-libkms_2.4.105-1-francy_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-nouveau2_2.4.105-1-francy_arm64.deb	
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-radeon1_2.4.105-1-francy_arm64.deb 
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tegra0_2.4.105-1-francy_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tests_2.4.105-1-francy_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm2_2.4.105-1-francy_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-dev_2.4.105-1-francy_arm64.deb
+	dpkg -i *.deb
+	cd ..
+	rm -rf libdrm 
+	apt-get -f install
+}
+
+function InstallLibMesa {
+	cd /tmp
+	mkidr mesa
+	cd mesa
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libd3dadapter9-mesa_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libegl-mesa0_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libegl1-mesa_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libegl1_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgbm1_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1-mesa-dri_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1-mesa-glx_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libglapi-mesa_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgles2-mesa_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgles2_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libglx-mesa0_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libosmesa6_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/mesa-opencl-icd_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/mesa-va-drivers_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/mesa-vdpau-drivers_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/mesa-vulkan-drivers_20.3.5-1-chiacchio_arm64.deb
+	dpkg -r --force-depends libglvnd0 libglx0
+	dpkg -i *.deb
+	cd ..
+	rm -rf mesa
+} 
+ 
+
+
 function configureConfig {
 echo "# For more options and information see
 # http://rpf.io/configtxt
@@ -382,7 +432,8 @@ echo "# For more options and information see
 # uncomment if hdmi display is not detected and composite is being output
 #hdmi_force_hotplug=1
 
-# uncomment to force a specific HDMI mode (this will force VGA)
+# uncomment to force a specific HDMI mode (this will 
+force VGA)
 #hdmi_group=1
 #hdmi_mode=1
 
@@ -427,10 +478,10 @@ gpu_mem=256
 hdmi_enable_4kp60=0" > /boot/config.txt
 }
 
-function abilitaNumeronesoft {
-dialog --title "Installazione repository" \
---backtitle "Installazione repository" \
---yesno "Vuoi installare il repository numeronesoft (Obbligatorio per buster)?" 7 60
+function abilitaDriverVideo {
+dialog --title "Installazione driver video" \
+--backtitle "Installazione driver video" \
+--yesno "Vuoi installare i driver video (obbligatori per buster)?" 7 60
 return $?
 }
 
@@ -666,28 +717,19 @@ if [ $? -eq 0 ]; then
 mv /etc/apt/sources.list /etc/apt/sources.list.old
 echo "deb http://deb.debian.org/debian/ sid main
 deb-src http://deb.debian.org/debian/ sid main" > /etc/apt/sources.list
-apt-get clean
-apt-get update
-apt-get dist-upgrade -y
+apt clean
+apt update
+apt dist-upgrade -y
+mv /etc/apt/sources.list /etc/apt/sources.list.sid
+mv /etc/apt/sources.list.old /etc/apt/sources.list
 dialog --title "Grazie" \
 	--backtitle "Grazie" \
 	--msgbox "Grazie per l'aiuto che dai alla comunità" 7 60
 else
-abilitaNumeronesoft
+abilitaDriverVideo
 if [ $? -eq 0 ]; then
-	echo "deb http://numeronesoft.ddns.net/repos/apt/debian buster main" >> /etc/apt/sources.list
-	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 43BEE4A50D43CE6B
-	apt-get update
-	apt-get-upgrade -y
-	apt install libegl1 libgl1 libgles2 -y
-	selezionaBriscola
-	briscola=$?
-	if [ $briscola -eq 0 ]; then
-		installBriscola $sistema
-	fi
-	if [ $init -eq 1 ]; then
-		installFirewall
-	fi
+	installLibDrm
+	InstallLibMesa
 fi
 fi
 dialog --title "Informazione" \

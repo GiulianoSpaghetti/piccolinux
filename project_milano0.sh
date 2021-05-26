@@ -101,10 +101,7 @@ sleep $1
 function preambolo {
 dialog --title "Informazioni" \
 	--backtitle "Informazioni" \
-	--msgbox "Il sistema non si basa più su file statici presenti su github, ma si basa su di un repository privato
-che corrisponde all'indirizzo numeronesoft.ddns.net. Se non lo attaccate è meglio :)
-Ad ogni modo, non sono in grado di garantire un online  24/h su 24n del repository, 
-per cui se dice address not found riprovate tra qualche ora.
+	--msgbox "Grazie a Silvia Sbordone che ha distrutto le chiavi crittografiche, il sistema ritorna ad essere basato sui files scaricabili da github, per cui se vi serve qualche package dev andate a cercarvelo tra le release.
 Grazie." 40 60
 }
 
