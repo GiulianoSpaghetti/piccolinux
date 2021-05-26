@@ -23,7 +23,7 @@ notRoot
 checkSystem
 instalPrerequisites
 
-dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Adesso pulisco la cache di apt, accertarsi che il repository della numeronesoft sia disabilitato." 40 60
+dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Adesso pulisco la cache di apt." 40 60
 apt clean
 apt update
 
@@ -36,7 +36,7 @@ dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Rimuovo forza
 
 dpkg -r --force-depends `apt list --installed` | grep chiacchio | cut -d / - n 1`
 
-dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Installo la versione più nuova di libdrm e libgl che si trova nei repository (hai disabilitato quello della numeronesoft, vero?)." 40 60
+dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Installo la versione più nuova di libdrm e libgl che si trova nei repository." 40 60
 
 
 apt -f install
