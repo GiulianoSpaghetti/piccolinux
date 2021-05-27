@@ -30,7 +30,7 @@ apt update
 
 dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Rimuovo forzatamente le libdrm francy, non riavviare o chiudere questa finestra per nessun motivo." 40 60
 
-dpkg -r --force-depends `apt list --installed` | grep francy | cut -d / - n 1`
+dpkg -r --force-depends `apt list --installed` | grep libdrm*-francy* | cut -d / - n 1`
 
 dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Rimuovo forzatamente le libgl chiacchio, non riavviare o chiudere questa finestra per nessun motivo." 40 60
 
