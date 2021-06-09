@@ -6,10 +6,11 @@ apt-get install qemu-user-static debootstrap rsync wget dialog -y
 }
 
 function enableFirewall {
-iptables -A INPUT -i eth0 -j DROP
-iptables -A FORWARD -i eth0 -j DROP
-iptables -A INPUT -i wlan0 -j DROP
-iptables -A FORWARD -i wlan0 -j DROP
+iptables -A INPUT -i enp31s0 -j DROP
+iptables -A FORWARD -i enp31s0 -j DROP
+iptables -A INPUT -i wlp37s0 -j DROP
+iptables -A FORWARD -i wlp37s0 -j DROP
+
 }
 
 function notRoot {
