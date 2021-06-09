@@ -1,4 +1,7 @@
 #!/bin/sh
-#Autre Giulio Sorentino <gsorre84@gmail.com>
-iptables -A INPUT -i eth0 -j DROP
-iptables -A FORWARD -i eth0 -j DROP
+#Autore Giulio Sorentino <gsorre84@gmail.com>
+iptables -A INPUT -i enp31s0 -j DROP
+iptables -A FORWARD -i enp31s0 -j DROP
+iptables -A INPUT -i wlp37s0 -j DROP
+iptables -A FORWARD -i wlp37s0 -j DROP
+
