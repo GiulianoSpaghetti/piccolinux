@@ -37,7 +37,6 @@ function installLibDrm {
 	dpkg -i *.deb
 	cd ..
 	rm -rf libdrm 
-	apt-get -f install
 }
 
 function InstallLibMesa {
@@ -65,15 +64,16 @@ function InstallLibMesa {
 	dpkg -i *.deb
 	cd ..
 	rm -rf mesa
-	apt-get -f install
-} 
+}
 notRoot
 checkSystem
-instalPrerequisites
+installPrerequisites
 
 
-dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Eseguo le operaazioni, rimuovendo libglvnd0 e liglx0" 40 60
-InstallLibDrm
+dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Eseguo le operazioni, rimuovendo libglvnd0 e libglx0.\n
+Purtroppo raspberry sta togliendo i pacchetti necessari all'installazione dei miei dai loro repository, per cui dovete abilitare il repository backports di debian.\nFatelo prima di premere ok." 40 60
+dpkg -r --force-depends libglvnd0 libglx0
+installLibDrm
 InstallLibMesa
 apt-get -f install
 
