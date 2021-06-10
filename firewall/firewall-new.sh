@@ -1,7 +1,7 @@
 ﻿#!/bin/sh
 #Autore Giulio Sorentino <gsorre84@gmail.com>
 #Concesso in licenza secondo la GPL V3
-#dediato a franceesca salerno
+#dediato a franceesca salerno del centri sociali
 
 for i in `ls /sys/class/net`; do 
 if [[ $i != "lo" ]]; then
