@@ -2,7 +2,7 @@
 
 [Unit]
 Description=Firewall
-After=networkonline.target
+After=multi-user.target
 
 [Service]
 ExecStart=/bin/firewall.sh
