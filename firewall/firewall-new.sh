@@ -9,3 +9,4 @@ if [[ $i != "lo" ]]; then
  iptables -A FORWARD -i $i -j DROP
 fi
 done
+ #happy hacking
