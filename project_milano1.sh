@@ -482,7 +482,7 @@ hdmi_enable_4kp60=0" > /boot/config.txt
 function abilitaDriverVideo {
 dialog --title "Installazione driver video" \
 --backtitle "Installazione driver video" \
---yesno "Vuoi installare i driver video (obbligatori per buster)?" 7 60
+--yesno "Vuoi installare i driver video (obbligatori per buster, sono necessari i repository backports di debian)?" 7 60
 return $?
 }
 
@@ -506,13 +506,16 @@ fi
 
 function installFirewall {
 	dialog --title "Installazione firewall" \
---backtitle "Installazione di un firewall sperimentake" \
---yesno "Vuoi installare un firewall sperimentale?" 7 60
+--backtitle "Installazione di un firewall" \
+--yesno "Vuoi installare un firewall?" 7 60
 if [ $? -eq 0 ]; then
-	apt-get install firewall
+	cd /tmp
+	wget https://github.com/numerunix/piccolinux/releases/download/francy-version/firewall_1.0-francy_all.deb
+	dpkg -i ./firewall_1.0-francy_all.deb
+	rm -rf ./firewall_1.0-francy_all.deb
 dialog --title "Informazioni" \
 	--backtitle "Informazioni" \
-	--msgbox "Il firewall va attivato con \"systemctl enable firewall\".\nIl firewall va abilitato all'avvio del sistema con \"systemctl enable firewall\".\nLa disinstallazione del pacchetto porta iptables al suo stato iniziale.\nPer personalizzarlo, inserire le stringhe iptables in /bin/firewall.sh, una per riga, tenendo presente che il file è sovrascritto ad ogni aggiornamento." 40 60
+	--msgbox "Il firewall va attivato con \"systemctl enable firewall\".\nIl firewall va abilitato all'avvio del sistema con \"systemctl enable firewall\".\nLa disinstallazione del pacchetto porta iptables al suo stato iniziale.\nPer personalizzarlo, inserire le stringhe iptables in /bin/firewall.sh, una per riga, tenendo presente che il file è sovrascritto ad ogni aggiornamento. Tenete presente che per adesso debian arm64 liscio non ha iptables funzionante" 40 60
 fi
 }
 
