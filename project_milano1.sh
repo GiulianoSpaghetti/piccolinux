@@ -736,6 +736,7 @@ if [ $? -eq 0 ]; then
 	InstallLibMesa
 fi
 fi
+installFirewall
 dialog --title "Informazione" \
 		--backtitle "Informazione" \
 	--msgbox "Adesso verrà fatto un piccolo controllo per certificare che l'init sia quello corretto" 7 60
