@@ -496,6 +496,22 @@ return $?
 function installBriscola {
 	if [ $1 -gt 9 ]; then
 		apt-get install wxbriscola wxbriscola-i18n wxbriscola-mazzi-hd-napoletano wxbriscola-mazzi-hd-dr-francy
+		mkdir /tmp/wxbriscola
+		cd /tmp/wxbriscola
+		if [ $1 -eq 10 ]; then 
+			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_bullseye_arm64.deb
+		else
+			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_buster_arm64.deb
+		fi
+		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-i18n_0.3.6_all.deb
+		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.6/wxbriscola-mazzi-hd-napoletano_0.3.6_all.deb
+		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.6/wxbriscola-mazzi-hd-dr-francy_0.3.6_all.deb
+		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.6/wxbriscola-mazzi-hd-gatti_0.3.6_all.deb
+		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.6/wxbriscola-mazzi-hd-playing-mario_0.3.6_all.deb
+		apt-get install *.deb
+		cd ..
+		rm -rf wxbriscola
+		cd
 	else
  		dialog --title "Errore" \
 		--backtitle "Errore" \
@@ -737,6 +753,7 @@ if [ $? -eq 0 ]; then
 fi
 fi
 installFirewall
+selezionaBriscola
 dialog --title "Informazione" \
 		--backtitle "Informazione" \
 	--msgbox "Adesso verrà fatto un piccolo controllo per certificare che l'init sia quello corretto" 7 60
