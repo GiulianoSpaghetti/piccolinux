@@ -636,12 +636,12 @@ dialog --title "Errore" \
 		fi
 	fi
 	case $login in
-		1) apt-get install gdm3	 $initstr;;
-		2) apt-get install sddm $initstr;;
-		3) apt-get install lightdm  $initstr;;
-		4) apt-get install wdm 	 $initstr;;
-		5) apt-get install lxdm  $initstr;;
-		6) apt-get install xdm 	 $initstr;;
+		1) apt-get install gdm3	 $initstr; temp="gdm3";;
+		2) apt-get install sddm $initstr; temp="ssdm";;
+		3) apt-get install lightdm  $initstr; temp="lightdm";;
+		4) apt-get install wdm 	 $initstr; temp="wdm";;
+		5) apt-get install lxdm  $initstr; temp="lxdm";;
+		6) apt-get install xdm 	 $initstr; temp="xdm";;
 		*) dialog --title "Errore" \
 	--backtitle "Errore" \
 	--msgbox "Scelta non valida\nSi continua senza login grafico." 7 60
@@ -660,6 +660,11 @@ dialog --title "Errore" \
 	else
 		apt-get install connman-gtk macchanger $initstr
 	fi
+	dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Adessso rimuoviamo startx. Il nuovo modo di avviare l'interfaccia grafica manualmente systemctl start $temp" 40 60
+apt-get remove xinit -y
+
 else
 	dialog --title "Errore" \
 	--backtitle "Errore" \
@@ -767,7 +772,6 @@ case $init in
 ;;
 esac
 
-apt-get remove xinit -y
 
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
