@@ -757,7 +757,7 @@ fi
 installFirewall
 selezionaBriscola
 if [$? -eq 0 ]; then
-	Installbìbriscola
+	InstallBriscola
 fi
 dialog --title "Informazione" \
 		--backtitle "Informazione" \
