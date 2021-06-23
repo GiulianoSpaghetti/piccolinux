@@ -355,10 +355,9 @@ function configureCmdLine {
 echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait hdmi=1" > /boot/cmdline.txt
 }
 
-function installLibDrm {
-	cd /tmp
-	mkdir lidrm
-	cd libdrm
+function installLibDrm 
+	mkdir /tmp/libdrm
+	cd /tmp/libdrm
 	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-amdgpu1_2.4.105-1-francy_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-common_2.4.105-1-francy_all.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-etnaviv1_2.4.105-1-francy_arm64.deb	
@@ -376,10 +375,9 @@ function installLibDrm {
 	apt-get -f install
 }
 
-function InstallLibMesa {
-	cd /tmp
-	mkidr mesa
-	cd mesa
+function InstallLibMesa 
+	mkidr /tmp/mesa
+	cd /tmp/mesa
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libd3dadapter9-mesa_20.3.5-1-chiacchio_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libegl-mesa0_20.3.5-1-chiacchio_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libegl1-mesa_20.3.5-1-chiacchio_arm64.deb
@@ -495,7 +493,6 @@ return $?
 
 function installBriscola {
 	if [ $1 -gt 9 ]; then
-		apt-get install wxbriscola wxbriscola-i18n wxbriscola-mazzi-hd-napoletano wxbriscola-mazzi-hd-dr-francy
 		mkdir /tmp/wxbriscola
 		cd /tmp/wxbriscola
 		if [ $1 -eq 10 ]; then 
@@ -754,6 +751,9 @@ fi
 fi
 installFirewall
 selezionaBriscola
+if [$? -eq 0 ]; then
+	Installbìbriscola
+fi
 dialog --title "Informazione" \
 		--backtitle "Informazione" \
 	--msgbox "Adesso verrà fatto un piccolo controllo per certificare che l'init sia quello corretto" 7 60
@@ -766,6 +766,8 @@ case $init in
 3) apt-get remove --purge systemd sysvinit-core
 ;;
 esac
+
+apt-get remove xinit -y
 
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
