@@ -355,7 +355,7 @@ function configureCmdLine {
 echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait hdmi=1" > /boot/cmdline.txt
 }
 
-function installLibDrm 
+function installLibDrm {
 	mkdir /tmp/libdrm
 	cd /tmp/libdrm
 	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-amdgpu1_2.4.105-1-francy_arm64.deb
@@ -375,7 +375,7 @@ function installLibDrm
 	apt-get -f install
 }
 
-function InstallLibMesa 
+function InstallLibMesa {
 	mkidr /tmp/mesa
 	cd /tmp/mesa
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libd3dadapter9-mesa_20.3.5-1-chiacchio_arm64.deb
@@ -491,7 +491,7 @@ dialog --title "Installazione briscola" \
 return $?
 }
 
-function installBriscola {
+function InstallBriscola {
 	if [ $1 -gt 9 ]; then
 		mkdir /tmp/wxbriscola
 		cd /tmp/wxbriscola
@@ -756,7 +756,7 @@ fi
 fi
 installFirewall
 selezionaBriscola
-if [$? -eq 0 ]; then
+if [ $? -eq 0 ]; then
 	InstallBriscola
 fi
 dialog --title "Informazione" \
