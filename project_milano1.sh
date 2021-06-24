@@ -524,7 +524,7 @@ function installFirewall {
 --yesno "Vuoi installare un firewall?" 7 60
 if [ $? -eq 0 ]; then
 	cd /tmp
-	wget https://github.com/numerunix/piccolinux/releases/download/francy-version/firewall_1.0-francy_all.deb
+	https://github.com/numerunix/piccolinux/releases/download/francy-version/firewall_1.0-ilaria_all.deb
 	dpkg -i ./firewall_1.0-francy_all.deb
 	rm -rf ./firewall_1.0-francy_all.deb
 dialog --title "Informazioni" \
