@@ -368,7 +368,7 @@ function installLibDrm {
 	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tegra0_2.4.105-1-ilaria_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tests_2.4.105-1-ilaria_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm2_2.4.105-1-ilaria_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-dev_2.4.105-1-iaaria_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-dev_2.4.105-1-ilaria_arm64.deb
 	dpkg -i *.deb
 	cd ..
 	rm -rf libdrm 
