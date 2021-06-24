@@ -358,17 +358,17 @@ echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0
 function installLibDrm {
 	mkdir /tmp/libdrm
 	cd /tmp/libdrm
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-amdgpu1_2.4.105-1-francy_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-common_2.4.105-1-francy_all.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-etnaviv1_2.4.105-1-francy_arm64.deb	
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-freedreno1_2.4.105-1-francy_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-libkms_2.4.105-1-francy_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-nouveau2_2.4.105-1-francy_arm64.deb	
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-radeon1_2.4.105-1-francy_arm64.deb 
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tegra0_2.4.105-1-francy_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tests_2.4.105-1-francy_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm2_2.4.105-1-francy_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-dev_2.4.105-1-francy_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-amdgpu1-dbgsym_2.4.105-1-ilaria_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-common_2.4.105-1-ilaria_all.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-etnaviv1_2.4.105-1-ilria_arm64.deb	
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-freedreno1_2.4.105-1-ilaria_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-libkms_2.4.105-1-iaria_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-nouveau2_2.4.105-1-ilaria_arm64.deb	
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-radeon1_2.4.105-1-ilaria_arm64.deb 
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tegra0_2.4.105-1-ilaria_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tests_2.4.105-1-ilaria_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm2_2.4.105-1-ilaria_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-dev_2.4.105-1-iaaria_arm64.deb
 	dpkg -i *.deb
 	cd ..
 	rm -rf libdrm 
