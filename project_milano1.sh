@@ -727,6 +727,8 @@ dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Adesso configuriamo la password di root" 7 60
 passwd
+echo -n "Premere invio per continuare..."
+read dummy;
 
 selezionaInstallazioneBootLoader
 boot=$?
