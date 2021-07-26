@@ -57,9 +57,9 @@ fi
 
 case $quale in
 1)
-	path="current"
-	url="debian-cd"
-	nome="10.9.0"
+	path="10.10.0"
+	url="cdimage/release"
+	nome="10.10.0"
 	if [ $arch -eq 3 ]; then
 		numbd=3
 	else
@@ -95,7 +95,7 @@ case $quale in
 7) url="cdimage/archive"
    path="5.0.10"
    nome="5010"
-   numbd=1 	
+   numbd=1
 ;;
 esac
 
