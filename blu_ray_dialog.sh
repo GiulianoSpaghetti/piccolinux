@@ -132,7 +132,7 @@ dialog --title "Informazione" \
 	fi	
 	i=`expr $i + 1`
 done
-dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nDedicato a Francesca del centro di igiene mentale (milano? san severino? salerno?).\nHappy Hacking :)" 40 60>/dev/tty
+dialog	--msgbox "Copyright 2021 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nDedicato a Annachiara Milano.\nHappy Hacking :)" 40 60>/dev/tty
 
 
 
