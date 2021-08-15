@@ -13,8 +13,8 @@ dialog	--msgbox "Questo è quello che offre l'archivio di debian, non so se i fi
 
 dialog --backtitle "Quale sistema scegliere" \
 --radiolist "Quale sistema:" 40 40 7 \
- 1 "Buster" on \
- 2 "Bullseye" off \
+ 1 "Bullseye" on \
+ 2 "Buster" off \
  3 "Stretch" off \
  4 "Jessie" off \
  5 "Wheezy" off \
@@ -57,9 +57,9 @@ fi
 
 case $quale in
 1)
-	path="10.10.0"
-	url="cdimage/release"
+	url="cdimage/archive"
 	nome="10.10.0"
+	path=$nome
 	if [ $arch -eq 3 ]; then
 		numbd=3
 	else
@@ -67,9 +67,9 @@ case $quale in
 	fi
 ;;
 2)
-	path="bullseye_di_rc3"
-	url="cdimage"
-	nome="bullseye-DI-rc3"
+	path="11.0.0"
+	url="cdimage/release"
+	nome=$path
 	numbd=4
 ;;
 3) url="cdimage/archive"
