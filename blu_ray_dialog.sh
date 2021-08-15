@@ -57,6 +57,12 @@ fi
 
 case $quale in
 1)
+	path="11.0.0"
+	url="cdimage/release"
+	nome=$path
+	numbd=4
+;;
+2)
 	url="cdimage/archive"
 	nome="10.10.0"
 	path=$nome
@@ -65,12 +71,6 @@ case $quale in
 	else
 		numbd=4;
 	fi
-;;
-2)
-	path="11.0.0"
-	url="cdimage/release"
-	nome=$path
-	numbd=4
 ;;
 3) url="cdimage/archive"
    path="9.13.0"
