@@ -32,8 +32,8 @@ return $sistema
 function selezionaInit {
 dialog --backtitle "Quale init selezionare" \
 --radiolist "Quale init selezionare:" 10 40 3 \
- 1 "System D" on \
- 2 "SysV" off \
+ 1 "System D" off \
+ 2 "SysV" on \
  3 "runit" off >/dev/tty 2>/tmp/result.txt 
 if [ $? -eq 0 ]; then
 	init=`cat /tmp/result.txt`
