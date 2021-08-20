@@ -6,11 +6,13 @@ apt-get install qemu-user-static debootstrap rsync wget dialog -y
 }
 
 function enableFirewall {
-iptables -A INPUT -i enp31s0 -j DROP
-iptables -A FORWARD -i enp31s0 -j DROP
-iptables -A INPUT -i wlp37s0 -j DROP
-iptables -A FORWARD -i wlp37s0 -j DROP
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
 
+# Accept on localhost
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
 }
 
 function notRoot {
@@ -194,7 +196,13 @@ rmdir /media/piccolinuxboot
 
 rsync -avh --remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
 chmod 755 /media/piccolinux
-umount /dev/${sd}2
+umount /dev/${sd}2iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# Accept on localhost
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
 
 attendi 15
 
