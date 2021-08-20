@@ -11,6 +11,13 @@ fi
 	return 0
 }
 
+function Installkernel {
+dialog --title "Installazione kernel" \
+--backtitle "Installazione kernel" \
+--yesno "Vuoi installare il kernel uifficiale raspberry per avere il firewall funzionante?" 7 60
+return $?
+}
+
 function checkSystem {
 read -d / sistema < /etc/debian_version
 
@@ -533,8 +540,12 @@ iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
 
 # Allow established sessions to receive traffic
-iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Adesso viene installato il programma che farà parttire il firewall all'avvio, voi dovete solo abilittare il servizio \"netfilter persisent\" e dire che volete salvare le regole attuali quando l'installer lo chiede" 40 60
+
 apt-get install iptables-persistent
+
 fi
 }
 
@@ -565,12 +576,18 @@ case $init in
 	initstr=sysvinit-core
 	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
+        apt-mark hold sysvinit-core
+        echo "sysvinit-core hold" | sudo dpkg --set-selections
 ;;
 3) apt-get install runit-init runit-sysv
 	apt-get remove --purge systemd sysvinit-core
 	initstr=runit
 	#apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
+        apt-mark hold runit-init runit-sysv
+        echo "runit-init" | sudo dpkg --set-selections
+        echo "runit-sysv hold" | sudo dpkg --set-selections
+
 ;;
 *) dialog --title "Errore" \
 	--backtitle "Errore" \
@@ -579,10 +596,17 @@ case $init in
 	initstr=""
 ;;
 esac
-
-kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
-apt-get install u-boot-rpi $kernel -y
-
+installKernel
+if [ $? -eq 0 ]; then
+    cd /tmp
+    https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210805-1_arm64.deb
+    dpkg -i raspberrypi-kernel_1.20210805-1_arm64.deb
+    rm raspberrypi-kernel_1.20210805-1_arm64.deb
+    apt get install uboot-rpi
+else
+    kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
+    apt-get install u-boot-rpi $kernel -y
+fi
 apt-get install locales -y
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
@@ -763,22 +787,17 @@ if [ $? -eq 0 ]; then
 fi
 fi
 installFirewall
+installKernel
+if [ $? -eq 0 ]; then
+cd /tmp
+https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210805-1_arm64.deb
+dpkg -i raspberrypi-kernel_1.20210805-1_arm64.deb
+rm raspberrypi-kernel_1.20210805-1_arm64.deb
+fi
 selezionaBriscola
 if [ $? -eq 0 ]; then
 	InstallBriscola
 fi
-dialog --title "Informazione" \
-		--backtitle "Informazione" \
-	--msgbox "Adesso verrà fatto un piccolo controllo per certificare che l'init sia quello corretto" 7 60
-
-case $init in
-1) apt-get remove --purge sysvinit-core runit-init
-;;
-2) apt-get remove --purge systemd runit-init
-;;
-3) apt-get remove --purge systemd sysvinit-core
-;;
-esac
 
 
 dialog --title "Informazione" \
