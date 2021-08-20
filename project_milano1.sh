@@ -562,40 +562,7 @@ apt-get install dialog
 checkSystem
 sistema=$?
 
-selezionaInit
-init=$?
 
-case $init in
-1)
-	apt-get install systemd
-	apt-get remove --purge sysvinit-core runit-init
-	initstr=systemd
-;;
-2) apt-get install sysvinit-core
-	apt-get remove --purge systemd runit-init
-	initstr=sysvinit-core
-	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
-	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
-        apt-mark hold sysvinit-core
-        echo "sysvinit-core hold" | sudo dpkg --set-selections
-;;
-3) apt-get install runit-init runit-sysv
-	apt-get remove --purge systemd sysvinit-core
-	initstr=runit
-	#apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
-	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
-        apt-mark hold runit-init runit-sysv
-        echo "runit-init" | sudo dpkg --set-selections
-        echo "runit-sysv hold" | sudo dpkg --set-selections
-
-;;
-*) dialog --title "Errore" \
-	--backtitle "Errore" \
-	--msgbox "Scelta non corretta. Si resta con quello gia' fornito" 7 60
-	init=1
-	initstr=""
-;;
-esac
 installKernel
 if [ $? -eq 0 ]; then
     cd /tmp
@@ -793,13 +760,52 @@ cd /tmp
 https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210805-1_arm64.deb
 dpkg -i raspberrypi-kernel_1.20210805-1_arm64.deb
 rm raspberrypi-kernel_1.20210805-1_arm64.deb
-fi
+fiiptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# Accept on localhost
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
 selezionaBriscola
 if [ $? -eq 0 ]; then
 	InstallBriscola
 fi
 
+selezionaInit
+init=$?
 
+case $init in
+1)
+	apt-get install systemd
+	apt-get remove --purge sysvinit-core runit-init
+	initstr=systemd
+;;
+2) apt-get install sysvinit-core
+	apt-get remove --purge systemd runit-init
+	initstr=sysvinit-core
+	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
+	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
+        apt-mark hold sysvinit-core
+        echo "sysvinit-core hold" | sudo dpkg --set-selections
+;;
+3) apt-get install runit-init runit-sysv
+	apt-get remove --purge systemd sysvinit-core
+	initstr=runit
+	#apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
+	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
+        apt-mark hold runit-init runit-sysv
+        echo "runit-init" | sudo dpkg --set-selections
+        echo "runit-sysv hold" | sudo dpkg --set-selections
+
+;;
+*) dialog --title "Errore" \
+	--backtitle "Errore" \
+	--msgbox "Scelta non corretta. Si resta con quello gia' fornito" 7 60
+	init=1
+	initstr=""
+;;
+esac
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
