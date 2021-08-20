@@ -563,7 +563,7 @@ checkSystem
 sistema=$?
 
 
-installKernel
+Installkernel
 if [ $? -eq 0 ]; then
     cd /tmp
     https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210805-1_arm64.deb
