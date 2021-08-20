@@ -558,7 +558,7 @@ fi
 
 apt-get update
 apt-get upgrade
-apt-get install dialog wget
+apt-get install dialog wget -y
 
 checkSystem
 sistema=$?
