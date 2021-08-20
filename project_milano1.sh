@@ -558,7 +558,7 @@ fi
 
 apt-get update
 apt-get upgrade
-apt-get install dialog
+apt-get install dialog wget
 
 checkSystem
 sistema=$?
@@ -617,7 +617,7 @@ dialog --title "Informazione" \
 	--msgbox "Adesso verra' configurato il linguaggio" 7 60
 dpkg-reconfigure locales
 
-apt-get install bash-completion console-setup keyboard-configuration sudo curl wget dbus usbutils ca-certificates nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades dpkg-repack gnupg2 netcat $initstr -y
+apt-get install bash-completion console-setup keyboard-configuration sudo curl dbus usbutils ca-certificates nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades dpkg-repack gnupg2 netcat $initstr -y
 apt-file update
 apt-get update
 apt-get upgrade
