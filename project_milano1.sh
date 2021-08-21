@@ -694,10 +694,6 @@ dialog --title "Errore" \
 	else
 		apt-get install connman-gtk macchanger $initstr
 	fi
-	dialog --title "Informazione" \
-	--backtitle "Informazione" \
-	--msgbox "Adessso rimuoviamo startx. Il nuovo modo di avviare l'interfaccia grafica manualmente systemctl start $temp" 40 60
-apt-get remove xinit -y
 
 else
 	dialog --title "Errore" \
