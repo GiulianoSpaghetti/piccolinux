@@ -607,7 +607,7 @@ case $init in
         echo "sysvinit-core hold" | sudo dpkg --set-selections
 ;;
 3) initstr="runit"
-	if [ $sistema -eq 11 ]; them
+	if [ $sistema -eq 11 ]; then
 		initstr=$initstr-init
 	fi
 	apt-get install $initstr
