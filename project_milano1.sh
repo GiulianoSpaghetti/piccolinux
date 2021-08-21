@@ -77,19 +77,6 @@ function selezionaLogin {
 dialog --backtitle "Quale schermata di login utilizzare" \
 --radiolist "Quale schermata di login utilizzare" 20 40 6 \
 1 "GDM3" off \
-iptables -A OUTPUT -o lo -j ACCEPT
-selezionaBriscola
-if [ $? -eq 0 ]; then
-	InstallBriscola
-fi
-InstallMTA
-if [ $? -eq 0 ]
-	apt-get install potsfix
-fi
-dialog --title "Informazione" \
-	--backtitle "Informazione" \
-	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
-
 2 "SDDM" off \
 3 "Lightdm" on \
 4 "Wdm" off \
