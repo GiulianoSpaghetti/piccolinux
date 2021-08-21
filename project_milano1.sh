@@ -18,6 +18,15 @@ dialog --title "Installazione kernel" \
 return $?
 }
 
+
+function InstallMTA {
+dialog --title "Installazione MTA" \
+--backtitle "Installazione server di posta" \
+--yesno "Linux utilizza un sistema di messaggistica interno che viene attivato nel momento in cui viene installato (perr esempio abuso di sudo), solo che non si può leggere perfcché non c'è nessun server dui posta per ricevere l'email.\n
+VUoi tu installare postfix e selezionare solo messaggistica locale per leggere i messaggi inviati da linux?" 7 60
+return $?
+}
+
 function checkSystem {
 read -d / sistema < /etc/debian_version
 
@@ -799,7 +808,10 @@ selezionaBriscola
 if [ $? -eq 0 ]; then
 	InstallBriscola
 fi
-
+InstallMTA
+if [ $? -eq 0 ]
+	apt-get install potsfix
+fi
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
