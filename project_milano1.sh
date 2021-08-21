@@ -540,19 +540,9 @@ function installFirewall {
 --backtitle "Installazione di un firewall" \
 --yesno "Vuoi installare un firewall?" 7 60
 if [ $? -eq 0 ]; then
-# Set default chain policies
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
-
-# Accept on localhost
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A OUTPUT -o lo -j ACCEPT
-
-# Allow established sessions to receive traffic
-dialog --title "Informazione" \
+	dialog --title "Informazione" \
 	--backtitle "Informazione" \
-	--msgbox "Adesso viene installato il programma che farà parttire il firewall all'avvio, voi dovete solo abilittare il servizio \"netfilter persisent\" e dire che volete salvare le regole attuali quando l'installer lo chiede" 40 60
+	--msgbox "Adesso viene installato il programma che farà parttire il firewall all'avvio, voi dovete solo abilittare il servizio \"netfilter persisent\" e dire che N NON volete salvare le regole attuali quando l'installer lo chiede." 40 60
 
 apt-get install iptables-persistent
 if [ $init -ne 1 ]; then
@@ -560,6 +550,9 @@ if [ $init -ne 1 ]; then
 	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
 	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
 fi
+mkdir /etc7iptables
+cd /etc/iptables
+wget https://raw.githubusercontent.com/numerunix/piccolinux/main/iptables-save/rules/rules.v4
 fi
 }
 
@@ -577,17 +570,9 @@ checkSystem
 sistema=$?
 
 
-Installkernel
-if [ $? -eq 0 ]; then
-    cd /tmp
-    wget https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210805-1_arm64.deb
-    dpkg -i raspberrypi-kernel_1.20210805-1_arm64.deb
-    rm raspberrypi-kernel_1.20210805-1_arm64.deb
-    apt get install uboot-rpi
-else
-    kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
-    apt-get install u-boot-rpi $kernel -y
-fi
+kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
+apt-get install u-boot-rpi $kernel -y
+
 
 selezionaInit
 init=$?
@@ -817,6 +802,16 @@ InstallMTA
 if [ $? -eq 0 ]; then
 	apt-get install postfix
 fi
+
+Installkernel
+if [ $? -eq 0 ]; then
+    cd /tmp
+    wget https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210805-1_arm64.deb
+    dpkg -i raspberrypi-kernel_1.20210805-1_arm64.deb
+    rm raspberrypi-kernel_1.20210805-1_arm64.deb
+    apt get install uboot-rpi
+fi
+
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
