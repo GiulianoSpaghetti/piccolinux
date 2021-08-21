@@ -611,7 +611,7 @@ case $init in
 	initstr=runit-init
 	#apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
-        apt-mark hold runit-init runit-sysv
+        apt-mark hold runit-init
         echo "runit-init" | sudo dpkg --set-selections
 
 ;;
