@@ -101,7 +101,7 @@ return $?
 function selezionaInstallazioneBootLoader {
 dialog --title "Installazione BootLoader" \
 --backtitle "Installazione BootLoder" \
---yesno "Vuoi installare il bootloader PROPRIETARIO? (senza non si avvia, ma con non puoi diffondere l'immagine della microsd).\nNon è necessario se hai installato il kernel di raspberry." 7 60
+--yesno "Vuoi installare il bootloader PROPRIETARIO? (senza non si avvia, ma con non puoi diffondere l'immagine della microsd)." 7 60
 return $?
 }
 
@@ -195,8 +195,7 @@ function installaBootLoader {
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/dwc-otg.dtbo
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/dwc2.dtbo
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/enc28j60-spi2.dtbo
-	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/enc28j60.dtber
-	
+	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/enc28j60.dtb
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/exc3000.dtbo
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/fe-pi-audio.dtbo
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/goodix.dtbo
