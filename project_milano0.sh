@@ -196,14 +196,7 @@ rmdir /media/piccolinuxboot
 
 rsync -avh --remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
 chmod 755 /media/piccolinux
-umount /dev/${sd}2iptables -P INPUT DROP
-iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
-
-# Accept on localhost
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A OUTPUT -o lo -j ACCEPT
-
+umount /dev/${sd}2
 attendi 15
 
 find ${1} -type d -empty -delete
