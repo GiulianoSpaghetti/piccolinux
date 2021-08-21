@@ -606,14 +606,13 @@ case $init in
         apt-mark hold sysvinit-core
         echo "sysvinit-core hold" | sudo dpkg --set-selections
 ;;
-3) apt-get install runit-init runit-sysv
+3) apt-get install runit-init
 	apt-get remove --purge systemd sysvinit-core libsystemd0
 	initstr=runit-init
 	#apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
         apt-mark hold runit-init runit-sysv
         echo "runit-init" | sudo dpkg --set-selections
-        echo "runit-sysv hold" | sudo dpkg --set-selections
 
 ;;
 *) dialog --title "Errore" \
