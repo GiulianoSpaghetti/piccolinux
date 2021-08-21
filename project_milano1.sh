@@ -556,7 +556,7 @@ dialog --title "Informazione" \
 	--msgbox "Adesso viene installato il programma che farà parttire il firewall all'avvio, voi dovete solo abilittare il servizio \"netfilter persisent\" e dire che volete salvare le regole attuali quando l'installer lo chiede" 40 60
 
 apt-get install iptables-persistent
-if [ $init -ne 1 ]
+if [ $init -ne 1 ]; then
 	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
 	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
 	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
