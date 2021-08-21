@@ -14,7 +14,7 @@ fi
 function Installkernel {
 dialog --title "Installazione kernel" \
 --backtitle "Installazione kernel" \
---yesno "Vuoi installare il kernel uifficiale raspberry per avere il firewall funzionante?" 7 60
+--yesno "Vuoi installare il kernel ufficiale raspberry per avere il firewall funzionante?" 7 60
 return $?
 }
 
