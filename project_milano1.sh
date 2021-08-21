@@ -813,7 +813,7 @@ if [ $? -eq 0 ]; then
 	InstallBriscola
 fi
 InstallMTA
-if [ $? -eq 0 ]
+if [ $? -eq 0 ]; then
 	apt-get install postfix
 fi
 dialog --title "Informazione" \
