@@ -612,7 +612,7 @@ case $init in
 	fi
 	apt-get install $initstr
 	apt-get remove --purge systemd sysvinit-core
-	#apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
+	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
         apt-mark hold runit-init
         echo "runit-init hold" | sudo dpkg --set-selections
