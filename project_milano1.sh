@@ -606,9 +606,12 @@ case $init in
         apt-mark hold sysvinit-core
         echo "sysvinit-core hold" | sudo dpkg --set-selections
 ;;
-3) apt-get install runit-init
+3) initstr="runit"
+	if [ $sistema -eq 11 ]; them
+		initstr=$initstr-init
+	fi
+	apt-get install $initstr
 	apt-get remove --purge systemd sysvinit-core
-	initstr=runit-init
 	#apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
         apt-mark hold runit-init
