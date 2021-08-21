@@ -600,7 +600,7 @@ case $init in
 	initstr=systemd
 ;;
 2) apt-get install sysvinit-core
-	apt-get remove --purge systemd runit-init
+	apt-get remove --purge systemd runit-init libsystemd0
 	initstr=sysvinit-core
 	apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
@@ -608,7 +608,7 @@ case $init in
         echo "sysvinit-core hold" | sudo dpkg --set-selections
 ;;
 3) apt-get install runit-init runit-sysv
-	apt-get remove --purge systemd sysvinit-core
+	apt-get remove --purge systemd sysvinit-core libsystemd0
 	initstr=runit-init
 	#apt-get install --reinstall --purge $(dpkg --get-selections | grep -w 'install$' | cut -f1) $initstr -y
 	mv /sbin/start-stop-daemon.REAL /sbin/start-stop-daemon
