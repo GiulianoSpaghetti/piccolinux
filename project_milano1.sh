@@ -57,11 +57,11 @@ function selezionaDesktop {
 dialog --backtitle "Quale desktop selezionare" \
 --radiolist "Quale desktop selezionare" 20 40 9 \
 1 "Gnome" off \
-2 "Cinnamon" on \
+2 "Cinnamon" off \
 3 "KDE" off \
 4 "LXDE" off \
 5 "LXQT" off \
-6 "XFCE" off \
+6 "XFCE" on \
 7 "IceWM" off \
 8 "Openbox" off > /dev/tty 2>/tmp/result.txt
 if [ $? -eq 0 ]; then
