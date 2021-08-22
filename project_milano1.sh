@@ -542,7 +542,7 @@ function installFirewall {
 if [ $? -eq 0 ]; then
 	dialog --title "Informazione" \
 	--backtitle "Informazione" \
-	--msgbox "Adesso viene installato il programma che farà parttire il firewall all'avvio, voi dovete solo abilittare il servizio \"netfilter persisent\" e dire che N NON volete salvare le regole attuali quando l'installer lo chiede." 40 60
+	--msgbox "Adesso viene installato il programma che farà parttire il firewall all'avvio, voi dovete solo abilittare il servizio \"netfilter persisent\" e dire che NON volete salvare le regole attuali quando l'installer lo chiede." 40 60
 
 apt-get install iptables-persistent
 if [ $init -ne 1 ]; then
@@ -787,13 +787,7 @@ if [ $? -eq 0 ]; then
 fi
 fi
 installFirewall
-fiiptables -P INPUT DROP
-iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
 
-# Accept on localhost
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A OUTPUT -o lo -j ACCEPT
 selezionaBriscola
 if [ $? -eq 0 ]; then
 	InstallBriscola
