@@ -547,8 +547,8 @@ if [ $? -eq 0 ]; then
 apt-get install iptables-persistent
 if [ $init -ne 1 ]; then
 	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
-	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
-	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
+	ln -s /etc/init.d/netfilter-persistent /etc/rc4.d/S15netfilter-persistent
+	ln -s /etc/init.d/netfilter-persistent /etc/rc5.d/S15netfilter-persistent
 fi
 mkdir /etc/iptables
 cd /etc/iptables
