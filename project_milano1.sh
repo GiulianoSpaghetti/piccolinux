@@ -550,7 +550,7 @@ if [ $init -ne 1 ]; then
 	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
 	ln -s /etc/init.d/netfilter-persistent /etc/rc3.d/S15netfilter-persistent
 fi
-mkdir /etc/ptables
+mkdir /etc/iptables
 cd /etc/iptables
 wget https://raw.githubusercontent.com/numerunix/piccolinux/main/iptables-save/rules/rules.v4
 fi
