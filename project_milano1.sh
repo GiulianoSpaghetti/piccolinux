@@ -402,7 +402,7 @@ function InstallLibMesa {
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgbm1_20.3.5-1-chiacchio_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1-mesa-dri_20.3.5-1-chiacchio_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1-mesa-glx_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1_20.3.5-1-chiacchio_arm64.deb
+	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1_20.3https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210831-1_arm64.deb.5-1-chiacchio_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libglapi-mesa_20.3.5-1-chiacchio_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgles2-mesa_20.3.5-1-chiacchio_arm64.deb
 	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgles2_20.3.5-1-chiacchio_arm64.deb
@@ -634,7 +634,7 @@ dialog --title "Errore" \
 	fi
 fi 
 
-case $desktop in
+case $desktop inhttps://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210831-1_arm64.deb
 1) desktop=task-gnome-desktop
 ;;
 2) desktop=task-cinnamon-desktop
@@ -800,7 +800,7 @@ fi
 Installkernel
 if [ $? -eq 0 ]; then
     cd /tmp
-    wget https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210805-1_arm64.deb
+    wget https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210831-1_arm64.deb
     dpkg -i raspberrypi-kernel_1.20210805-1_arm64.deb
     rm raspberrypi-kernel_1.20210805-1_arm64.deb
     apt get install uboot-rpi
