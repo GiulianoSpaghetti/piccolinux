@@ -802,7 +802,7 @@ if [ $? -eq 0 ]; then
     cd /tmp
     wget https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210831-1_arm64.deb
     dpkg -i raspberrypi-kernel_1.20210805-1_arm64.deb
-    rm raspberrypi-kernel_1.20210805-1_arm64.deb
+    rm raspberrypi-kernel_*_arm64.deb
     apt get install uboot-rpi
 fi
 
