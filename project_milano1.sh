@@ -468,7 +468,7 @@ config_hdmi_boost=4
 #arm_freq=800
 
 # Uncomment some or all of these to enable the optional hardware interfaces
-#dtparam=i2c_arm=onwget https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210805-1_arm64.deb
+#dtparam=i2c_arm=on
 
 #dtparam=i2s=on
 #dtparam=spi=on
@@ -634,7 +634,7 @@ dialog --title "Errore" \
 	fi
 fi 
 
-case $desktop inhttps://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210831-1_arm64.deb
+case $desktop
 1) desktop=task-gnome-desktop
 ;;
 2) desktop=task-cinnamon-desktop
