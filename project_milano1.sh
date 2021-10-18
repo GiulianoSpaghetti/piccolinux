@@ -634,7 +634,7 @@ dialog --title "Errore" \
 	fi
 fi 
 
-case $desktop
+case $desktop in
 1) desktop=task-gnome-desktop
 ;;
 2) desktop=task-cinnamon-desktop
