@@ -78,14 +78,14 @@ echo "${1}-rpi64" >> ${2}/etc/hostname
 }
 
 function createaptsource {
-echo "deb http://debian.fastweb.it/debian/ $quale main contrib non-free
-deb-src http://debian.fastweb.it/debian/ $quale main contrib non-free
-deb http://debian.fastweb.it/debian/ ${1}-updates main contrib non-free
-deb-src http://debian.fastweb.it/debian/ ${1}-updates main contrib non-free
+echo "deb http://deb.debian.org/debian/ $quale main contrib non-free
+deb-src http://deb.debian.org/debian/ $quale main contrib non-free
+deb http://debi.debian.org/debian/ ${1}-updates main contrib non-free
+deb-src http://deb.debian,.org/debian/ ${1}-updates main contrib non-free
 deb http://security.debian.org/debian-security  ${1}/updates main contrib
 deb-src http://security.debian.org/debian-security  ${1}/updates main contrib
-deb http://debian.fastweb.it/debian ${1}-backports main contrib non-free
-deb-src http://debian.fastweb.it/debian ${1}-backports main contrib non-free" >> ${2}/etc/apt/sources.list
+deb http://deb.debian.org/debian ${1}-backports main contrib non-free
+deb-src http://deb.debian.org/debian ${1}-backports main contrib non-free" >> ${2}/etc/apt/sources.list
 }
 
 function getSd {
