@@ -160,13 +160,13 @@ createhostname $quale $1
 createaptsource $quale $1
 
 
-cp ./project_peonobio1.sh ${1}
+cp ./project_parnassus1.sh ${1}
 	dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Eseguire lo script project_pronobio1.sh" 7 60
 
 chroot ${1}
-rm ${1}/project_pronobio1.sh
+rm ${1}/project_parnassus1.sh
 umountSystem $1
 getSd
 sd=`cat /tmp/result.txt`
