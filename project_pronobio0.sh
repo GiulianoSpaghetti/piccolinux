@@ -163,7 +163,7 @@ createaptsource $quale $1
 cp ./project_peonobio1.sh ${1}
 	dialog --title "Informazione" \
 	--backtitle "Informazione" \
-	--msgbox "Eseguire lo script project_milano1.sh" 7 60
+	--msgbox "Eseguire lo script project_pronobio1.sh" 7 60
 
 chroot ${1}
 rm ${1}/project_pronobio1.sh
