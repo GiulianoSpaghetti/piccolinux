@@ -28,5 +28,5 @@ sudo dpkg -i ~/Scaricati/unrar_*.deb
 dialog --title "Tutto Fatto" \
 	--backtitle "OK" \
 	--msgbox "Il pacchetto unrar nonfree è già stato installato, ed è disponibile nella cartella download, tuttavia non può essere passato a terzi.
-Se ti è piaciuto questo software considera una donazione.
-Dedicato ad Annachiara Milano" 10 60 
+Se ti è piaciuto questo software considera una donazione.", 40 60
+
