@@ -42,4 +42,4 @@ dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Installo la v
 apt -f install
 
 
-dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Copyright 2021 Gulio Sorrentino\nConcesso in licenza secondo la GPL v3 o, secondo la tua opinione, qualsiasi versione successiva.\nIlsoftware viene concesso per come è, senza nessuna garanzia, né implicita né esplicita.\nSe ti è sembrato interessante considera una donazione su paypal.\nDedicato a Annachiara Milano" 40 60
+dialog --title "Informazioni" --backtitle "Informazioni" --msgbox "Copyright 2021 Gulio Sorrentino\nConcesso in licenza secondo la GPL v3 o, secondo la tua opinione, qualsiasi versione successiva.\nIlsoftware viene concesso per come è, senza nessuna garanzia, né implicita né esplicita.\nSe ti è sembrato interessante considera una donazione su paypal." 40 60
