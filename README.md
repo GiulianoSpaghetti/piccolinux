@@ -1,7 +1,6 @@
-# ATTENZIONE
-La raspberrry spia i propri clienti.
-Personalmente mi sono trovatato con 5 matrix nei miei due raspberry pi 4 e tre matrix nel computer che uso per scrivere software.
-
-La cosa è inaccettabile.
-
-IL progetto piccolinux entra in dismissione.
+# piccolinux
+Semplice script per l'installazione di Debian sui sistemi arm64, con particolare riferimento al Raspberry.
+Il sistema offre come personalizzazione l'installazione dei driver mesa, non più attuale.
+È possibile installare diverse distribuzioni Linux semplicemente cambiando la dicitura nella riga che comincia per debootstrap.
+Per ulteriori informazioni fare riferimento a man debootstrap, per ottenere una lista delle distro installabili fare riferimento alla directory /usr/share/debostrap/scripts.
+È possibile cambiare anche la piattaforma di riferimento sostituendo arm64 con una di quelle elencate nel man, tipo amd64, PowerPC o x32.
