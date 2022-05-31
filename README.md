@@ -12,4 +12,4 @@ Avviando gli script su gnu/Linux mettendo come prefisso la stringa "bash -x" si 
 # Bug noti
 Quando viene avviata la grafica, viene creato un file temporaneo /tmp/result.txt per ogni schermata
  
-Andando a modificare manualmente quel file il risultato può uscire falsato, ma è questa la sintassi corretta per la:utilizzo del framework dialog.
+Andando a modificare manualmente quel file il risultato può uscire falsato, ma è questa la sintassi corretta per l'utilizzo del framework dialog.
