@@ -8,3 +8,8 @@ Per ulteriori informazioni fare riferimento a man debootstrap, per ottenere una 
 # Modalità interattiva di bash
 
 Avviando gli script su gnu/Linux mettendo come prefisso la stringa "bash -x" si avvia la modalità di debug di bash, permettendo di studiare meglio il codice.
+
+# Bug noti
+Quando viene avviata la grafica, viene creato un file temporaneo /tmp/result.txt per ogni schermata
+ 
+Andando a modificare manualmente quel file il risultato può uscire falsato, ma è questa la sintassi corretta per la:utilizzo del framework dialog.
