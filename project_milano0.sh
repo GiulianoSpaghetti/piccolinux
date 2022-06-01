@@ -5,16 +5,6 @@ function installPrerequisites {
 apt-get install qemu-user-static debootstrap rsync wget dialog -y
 }
 
-function enableFirewall {
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
-
-# Accept on localhost
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A OUTPUT -o lo -j ACCEPT
-}
-
 function notRoot {
 if [[ $EUID -ne 0 ]]; then
 	echo "Lo script deve essere avviato da root"
@@ -125,8 +115,6 @@ checkParameters $#
 if [ $? -eq 1 ]; then
 	exit 1
 fi
-
-enableFirewall
 
 preambolo
 
