@@ -13,3 +13,7 @@ Avviando gli script su gnu/Linux mettendo come prefisso la stringa "bash -x" si 
 Quando viene avviata la grafica, viene creato un file temporaneo /tmp/result.txt per ogni schermata
  
 Andando a modificare manualmente quel file il risultato può uscire falsato, ma è questa la sintassi corretta per l'utilizzo del framework dialog.
+ 
+# Donazione
+
+[![paypal](https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=H4ZHTFRCETWXG)
