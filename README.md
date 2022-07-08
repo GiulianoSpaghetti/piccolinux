@@ -17,3 +17,5 @@ Andando a modificare manualmente quel file il risultato può uscire falsato, ma 
 # Donazione
 
 [![paypal](https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=H4ZHTFRCETWXG)
+
+oppure puoi fare una donazione tra,ite carta hype.
