@@ -6,6 +6,7 @@
 -A INPUT -i lo -j ACCEPT
 -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A OUTPUT -o lo -j ACCEPT
+-A FORWARD -p udp --dport 53 -j DROP
 COMMIT
 # Completed on Tue Jul  6 06:34:18 2021
 #
