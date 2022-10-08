@@ -11,7 +11,7 @@ sudo apt install -y dialog jigdo-file coreutils;
 
 dialog	--msgbox "Questo è quello che offre l'archivio di debian, non so se i files necessari per costruire l'iso voluta ci sono tutti o meno, casomai provate più repository." 40 60>/dev/tty
 
-dialog --backtitle "Quale sistema scegliere" \
+quale=$(dialog --output-fd 1 --backtitle "Quale sistema scegliere" \
 --radiolist "Quale sistema:" 40 40 7 \
  1 "Bullseye" on \
  2 "Buster" off \
@@ -19,27 +19,19 @@ dialog --backtitle "Quale sistema scegliere" \
  4 "Jessie" off \
  5 "Wheezy" off \
  6 "Squeeze" off \
- 7 "Lenny" off>/dev/tty 2>/tmp/result.txt 
+ 7 "Lenny" off)
 if [ $? -eq 1 ]; then
 	exit 1;
-else
-	quale=`cat /tmp/result.txt`
 fi
 
-rm /tmp/result.txt
-
-dialog --backtitle "Quale architettura scegliere" \
+arch=$(dialog --output-fd 1 --backtitle "Quale architettura scegliere" \
 --radiolist "Quale architettura:" 10 40 3 \
  1 "1386" off \
  2 "AMD64" off \
- 3 "Sorgenti" on>/dev/tty 2>/tmp/result.txt 
+ 3 "Sorgenti" on)
 if [ $? -eq 1 ]; then
 	exit 1;
-else
-	arch=`cat /tmp/result.txt`
 fi
-
-rm /tmp/result.txt
 
 if [ $quale -lt 7 ]; then
 	dialog --title "Download blu ray" \
