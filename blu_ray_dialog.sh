@@ -64,7 +64,7 @@ case $quale in
 ;;
 2)
 	url="cdimage/archive"
-	nome="10.10.0"
+	nome="10.13.0"
 	path=$nome
 	if [ $arch -eq 3 ]; then
 		numbd=3
