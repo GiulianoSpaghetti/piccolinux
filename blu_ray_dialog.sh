@@ -57,7 +57,7 @@ fi
 
 case $quale in
 1)
-	path="11.1.0"
+	path="11.5.0"
 	url="cdimage/release"
 	nome=$path
 	numbd=4
