@@ -1,21 +1,18 @@
 #! /bin/bash
 
 function selectDistro {
-dialog --backtitle "Quale prodotto selezionare" \
+quale=$(dialog --output-fd 1 --backtitle "Quale prodotto selezionare" \
 --radiolist "Quale debian selezionare:" 15 40 7 \
  1 "Woody" off \
- 2 "Sarge" on \
+ 2 "Sarge" off \
  3 "Etch" off \
  4 "Lenny" off \
  5 "Squeeze" off \
  6 "Wheezy" off \
- 7 "Jessie" on >/dev/tty 2>/tmp/result.txt 
-if [ $? -eq 0 ]; then
-	quale=`cat /tmp/result.txt`
-else
+ 7 "Jessie" on)
+if [ $? -eq 1 ]; then
 	exit 1
 fi
-rm /tmp/result.txt
 return $quale
 }
 
@@ -46,7 +43,7 @@ piattaforma=i386
 tipo=dvd
 numero=2
 suffisso1=binary-
-$suffisso2=""
+suffisso2=""
 ;;
 3) path=4.0_r9
 nome=debian-40r9
@@ -55,7 +52,7 @@ tipo=dvd
 numero=3
 suffisso=dvd-
 suffisso1=`echo $suffisso | tr [:lower:] [:upper:]`
-$suffisso2=""
+suffisso2=""
 ;;
 4) path=5.0.10
 nome=debian5010
@@ -64,7 +61,7 @@ tipo
 numero=5
 suffisso=dvd-
 suffisso1=`echo $suffisso | tr [:lower:] [:upper:]`
-$suffisso2=""
+suffisso2=""
 ;;
 5) path=6.0.10
 nome=debian-6.0.10
@@ -73,7 +70,7 @@ tipo=dvd
 numero=8
 suffisso=dvd-
 suffisso1=`echo $suffisso | tr [:lower:] [:upper:]`
-$suffisso2=""
+suffisso2=""
 ;;
 6) path=7.11.0
 nome=debian-7.11.0
@@ -82,7 +79,7 @@ tipo=dvd
 numero=10
 suffisso=dvd-
 suffisso1=`echo $suffisso | tr [:lower:] [:upper:]`
-$suffisso2=""
+suffisso2=""
 ;;
 7) path=8.11.1
 nome=debian-8.11.1
@@ -91,7 +88,7 @@ tipo=dvd
 numero=13
 suffisso=dvd-
 suffisso1=`echo $suffisso | tr [:lower:] [:upper:]`
-$suffisso2=""
+suffisso2=""
 ;;
 esac
 
