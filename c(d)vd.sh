@@ -13,7 +13,7 @@ dialog --title "Download DVD" \
 --yesno "Vuoi scaricare i DVD?" 7 60
 if [ $? -eq 1 ]; then
 	sl="cd"
-	dialog --backtitle "Quale archiettura scegliere" \
+	quale=$(dialog --output-fd 1 --backtitle "Quale archiettura scegliere" \
 	--radiolist "Quale architettura:" 10 40 9 \
 	 1 "AMD64" off \
 	 2 "arm64" off \
@@ -25,9 +25,8 @@ if [ $? -eq 1 ]; then
 	 8 "mipsel" off \
 	 9 "ppc64el" off \
 	 10 "s390x" off \
-	 11 "multi-arch" on>/dev/tty 2>/tmp/result.txt 
-	$temp=`cat /tmp/result.txt`
-	if [ $temp -ne 11 ]; then
+	 11 "multi-arch" on)
+	if [ $quale -ne 11 ]; then
 		dialog --title "Download netinst" \
 		--backtitle "Download netinst" \
 		--yesno "Vuoi scaricare il netinst?" 7 60
@@ -41,7 +40,7 @@ if [ $? -eq 1 ]; then
 	fi
 else
 	sl="dvd"
-	dialog --backtitle "Quale archiettura scegliere" \
+	quale=$(dialog --output-fd 1 --backtitle "Quale archiettura scegliere" \
 	--radiolist "Quale architettura:" 10 40 9 \
 	 1 "AMD64" of \
 	 2 "arm64" off \
@@ -53,10 +52,8 @@ else
 	 8 "mipsel" off \
 	 9 "ppc64el" off \
 	 10 "s390x" off \
-	 12 "source" on>/dev/tty 2>/tmp/result.txt 
+	 12 "source" on)
 fi
-quale=`cat /tmp/result.txt`
-rm /tmp/result.txt
 
 case $quale in
 1) 
