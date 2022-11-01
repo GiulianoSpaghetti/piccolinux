@@ -7,7 +7,5 @@ RUN echo "it_IT.UTF-8 UTF-8" >> /etc/locale.gen
 RUN locale-gen it_IT.UTF8
 RUN apt-get update && apt-get install -y \
 	task-xfce-desktop \
-	kbd \
 	tightvncserver
-RUN loadkeys it
 ENTRYPOINT [ "bash" ]
