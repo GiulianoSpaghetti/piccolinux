@@ -5,10 +5,9 @@ function aggiungiRepo {
 case $sistema in
 	12) dialog --title "Repository non disponibile" \
 --backtitle "Repository non disponibile" \
---yesno "Il repository non è disponibile per bookworm" 7 60
-	return
+--msgbox "Il repository non è disponibile per bookworm" 7 60
+	return 0
 	;;
-
 	11) repo="bullseye"
 	;; 
 	10) repo="buster";;
@@ -16,6 +15,7 @@ case $sistema in
 esac
 echo "deb http://numeronesoft.ddns.net/ ${repo} main "> /etc/apt/sources.list.d/numeronesoft.list
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 52B68EEB
+return 1
 }
 
 function notRoot {
@@ -33,7 +33,7 @@ function InstallMTA {
 dialog --title "Installazione MTA" \
 --backtitle "Installazione server di posta" \
 --yesno "Linux utilizza un sistema di messaggistica interno che viene attivato nel momento in cui viene installato (perr esempio abuso di sudo), solo che non si può leggere perfcché non c'è nessun server dui posta per ricevere l'email.\n
-VUoi tu installare postfix e selezionare solo messaggistica locale per leggere i messaggi inviati da linux?" 7 60
+VUoi tu installare postfix e selezionare solo messaggistica locale per leggere i messaggi inviati da linux?" 15 60
 return $?
 }
 
@@ -390,18 +390,21 @@ function installLibDrm {
 if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
 	aggiungiRepo
 fi
+if [ $? -eq 1 ]; then
 apt update
 apt upgrade
+fi
 }
 
 function InstallLibMesa {
 if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
 	aggiungiRepo
 fi
+if [ $? -eq 1 ]
 apt update
 apt upgrade
 apt install libegl1 libgl1 libgles2
-
+fi
 } 
  
 
@@ -498,8 +501,10 @@ function InstallBriscola {
 if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
 	aggiungiRepo
 fi
+if [ $? -eq 1 ]; then
 apt update
 apt install wxbriscola wxbriscola-i18n wxbriscola-mazzi-hd-napoletano wxbriscola-mazzi-hd-dr-francy wxbriscola-mazzi-hd-gatti wxbriscola-mazzi-hd-playing-mario
+fi
 }
 
 
