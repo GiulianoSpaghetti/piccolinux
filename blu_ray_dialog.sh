@@ -52,7 +52,7 @@ case $quale in
 1)
 	path="bookworm_di_alpha1"
 	url="cdimage/"
-	nome=$path
+	nome=bookworm-DI-alpha1
 	numbd=5
 	;;
 2)
