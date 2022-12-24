@@ -68,7 +68,7 @@ deb http://deb.debian.org/debian/ ${1}-updates main contrib non-free
 deb-src http://deb.debian.org/debian/ ${1}-updates main contrib non-free
 deb http://deb.debian.org/debian ${1}-backports main contrib non-free
 deb-src http://deb.debian.org/debian ${1}-backports main contrib non-free">> ${2}/etc/apt/sources.list
-if [ $quale=="bullseye" ]; then
+if [ $quale = "bullseye" ]; then
 echo "deb http://security.debian.org/debian-security  ${1}-security main contrib
 deb-src http://security.debian.org/debian-security  ${1}-security main contrib">> ${2}/etc/apt/sources.list
 else
@@ -145,7 +145,7 @@ dialog --title "Informazione" \
 	--msgbox "Eseguire lo script project_milano1.sh" 7 60
 
 chroot ${1}
-rm ${1}/project_milano.sh
+rm ${1}/project_milano1.sh
 umountSystem $1
 getSd
 sd=`cat /tmp/result.txt`
