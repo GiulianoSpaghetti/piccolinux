@@ -579,7 +579,7 @@ dialog --title "Informazione" \
 	--msgbox "Adesso verra' configurato il linguaggio" 7 60
 dpkg-reconfigure locales
 
-apt install apt-file ntp -y
+apt install apt-file ntp firmware-reaòtek-nonfree -y
 apt-file update
 apt-get update
 apt-get upgrade
