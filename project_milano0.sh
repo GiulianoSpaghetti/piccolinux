@@ -23,16 +23,10 @@ return 0
 }
 
 function selectDistro {
-dialog --backtitle "Quale init selezionare" \
---radiolist "Quale init selezionare:" 10 40 2 \
+quale=$(dialog --output-fd 1 --backtitle "Quale versione selezionare" \
+--radiolist "Quale versione selezionare:" 10 40 2 \
  1 "Buster" off \
- 2 "Bullseye" on  >/dev/tty 2>/tmp/result.txt 
-if [ $? -eq 0 ]; then
-	quale=`cat /tmp/result.txt`
-else
-	quale=0
-fi
-rm /tmp/result.txt
+ 2 "Bullseye" on) 
 return $quale
 }
 
@@ -70,12 +64,12 @@ echo "${1}-rpi64" >> ${2}/etc/hostname
 function createaptsource {
 echo "deb http://deb.debian.org/debian/ $quale main contrib non-free
 deb-src http://deb.debian.org/debian/ $quale main contrib non-free
-deb http://debi.debian.org/debian/ ${1}-updates main contrib non-free
-deb-src http://deb.debian,.org/debian/ ${1}-updates main contrib non-free
+deb http://deb.debian.org/debian/ ${1}-updates main contrib non-free
+deb-src http://deb.debian.org/debian/ ${1}-updates main contrib non-free
 deb http://security.debian.org/debian-security  ${1}/updates main contrib
 deb-src http://security.debian.org/debian-security  ${1}/updates main contrib
 deb http://deb.debian.org/debian ${1}-backports main contrib non-free
-deb-src http://deb.debian.org/debian ${1}-backports main contrib non-free" >> ${2}/etc/apt/sources.list
+deb-src http://deb.debian.org/debian ${1}-backports main contrib non-free">> ${2}/etc/apt/sources.list
 }
 
 function getSd {
@@ -98,14 +92,6 @@ echo "Attendi $1 secondi"
 sleep $1
 }
 
-function preambolo {
-dialog --title "Informazioni" \
-	--backtitle "Informazioni" \
-	--msgbox "Grazie a Silvia Sbordone che ha distrutto le chiavi crittografiche, il sistema ritorna ad essere basato sui files scaricabili da github, per cui se vi serve qualche package dev andate a cercarvelo tra le release.
-Grazie." 40 60
-}
-
-
 notRoot
 
 installPrerequisites
@@ -116,7 +102,6 @@ if [ $? -eq 1 ]; then
 	exit 1
 fi
 
-preambolo
 
 selectDistro
 
@@ -148,8 +133,8 @@ createhostname $quale $1
 createaptsource $quale $1
 
 
-cp ./project_parnassus1.sh ${1}
-	dialog --title "Informazione" \
+cp ./project_milano1.sh ${1}
+dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Eseguire lo script project_milano1.sh" 7 60
 
@@ -194,5 +179,5 @@ rmdir /media/piccolinux
 
 dialog --title "Tutto fatto" \
 	--backtitle "OK" \
-	--msgbox "La microsd e' stata smontata. Metterla nel raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nHappy Hacking :)" 40 60
+	--msgbox "La microsd e' stata smontata. Metterla nel raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nCopyright 2022 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nHappy Hacking :)" 40 60
 

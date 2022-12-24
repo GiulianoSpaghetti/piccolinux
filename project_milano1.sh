@@ -1,6 +1,17 @@
 #! /bin/bash
 # Autore: Giulio Sorrentino <gsorre84@gmail.com>
 
+function aggiungiRepo {
+case $sistema in
+	11) repo="bullseye"
+	;; 
+	10) repo="buster";;
+	*) repo="strech";;
+esac
+echo "deb http://numeronesoft.ddns.net/ ${repo} main "> /etc/apt/sources.list.d/numeronesoft.list
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 52B68EEB
+}
+
 function notRoot {
 if [[ $EUID -ne 0 ]]; then
 	dialog --title "Errore" \
@@ -9,13 +20,6 @@ if [[ $EUID -ne 0 ]]; then
    	return 1
 fi
 	return 0
-}
-
-function Installkernel {
-dialog --title "Installazione kernel" \
---backtitle "Installazione kernel" \
---yesno "Vuoi installare il kernel ufficiale raspberry per avere il firewall funzionante?" 7 60
-return $?
 }
 
 
@@ -39,22 +43,21 @@ return $sistema
 }
 
 function selezionaInit {
-dialog --backtitle "Quale init selezionare" \
+quale=$(dialog --output-fd 1 --backtitle "Quale init selezionare" \
 --radiolist "Quale init selezionare:" 10 40 3 \
  1 "System D" off \
  2 "SysV" on \
- 3 "runit" off >/dev/tty 2>/tmp/result.txt 
+ 3 "runit" off)
 if [ $? -eq 0 ]; then
-	init=`cat /tmp/result.txt`
+	init=$quale
 else
-	init=1
+	init=0
 fi
-rm /tmp/result.txt
 return $init
 }
 
 function selezionaDesktop {
-dialog --backtitle "Quale desktop selezionare" \
+quale=$(dialog --output-fd 1 --backtitle "Quale desktop selezionare" \
 --radiolist "Quale desktop selezionare" 20 40 9 \
 1 "Gnome" off \
 2 "Cinnamon" off \
@@ -63,31 +66,29 @@ dialog --backtitle "Quale desktop selezionare" \
 5 "LXQT" off \
 6 "XFCE" on \
 7 "IceWM" off \
-8 "Openbox" off > /dev/tty 2>/tmp/result.txt
+8 "Openbox" off)
 if [ $? -eq 0 ]; then
-	desktop=`cat /tmp/result.txt`
+	desktop=$quale
 else
 	desktop=0
 fi
-rm /tmp/result.txt
 return $desktop
 }
 
 function selezionaLogin {
-dialog --backtitle "Quale schermata di login utilizzare" \
+quale=$(dialog --output-fd 1 --backtitle "Quale schermata di login utilizzare" \
 --radiolist "Quale schermata di login utilizzare" 20 40 6 \
 1 "GDM3" off \
 2 "SDDM" off \
 3 "Lightdm" on \
 4 "Wdm" off \
 5 "LXdm" off \
-6 "Xdm" off > /dev/tty 2>/tmp/result.txt
+6 "Xdm" off)
 if [ $? -eq 0 ]; then
-	login=`cat /tmp/result.txt`
+	login=$quale
 else
 	login=0
 fi
-rm /tmp/result.txt
 return $login
 }
 
@@ -108,7 +109,7 @@ return $?
 function aggiornaSid {
 dialog --title "Aggiornamento a SID" \
 --backtitle "Aggiornamento a SID" \
---yesno "E' caldamente consigliato l'aggionramento a debian Sid che, sebbene sperimentale, accelera il testing del nuovo wayland consentendo così una maggiore velocità di sviluppo dei futuri debian, a scapito della stabilità di sistema e della sicurezza dei propri files. Vuoi procedere?"  10 60
+--yesno "E' caldamente consigliato l'aggiornamento a debian Sid che, sebbene sperimentale, accelera il testing del nuovo wayland consentendo così una maggiore velocità di sviluppo dei futuri debian, a scapito della stabilità di sistema e della sicurezza dei propri files. Vuoi procedere?"  10 60
 return $?
 }
 
@@ -372,51 +373,21 @@ echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0
 }
 
 function installLibDrm {
-	mkdir /tmp/libdrm
-	cd /tmp/libdrm
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-amdgpu1_2.4.105-1-ilaria_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-amdgpu1-dbgsym_2.4.105-1-ilaria_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-common_2.4.105-1-ilaria_all.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-etnaviv1_2.4.105-1-ilaria_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-freedreno1_2.4.105-1-ilaria_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-libkms_2.4.105-1-iaria_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-nouveau2_2.4.105-1-ilaria_arm64.deb	
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-radeon1_2.4.105-1-ilaria_arm64.deb 
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tegra0_2.4.105-1-ilaria_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-tests_2.4.105-1-ilaria_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm2_2.4.105-1-ilaria_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/2.4.105-francy/libdrm-dev_2.4.105-1-ilaria_arm64.deb
-	dpkg -i *.deb
-	cd ..
-	rm -rf libdrm 
-	apt-get -f install
+if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
+	aggiungiRepo
+fi
+apt update
+apt upgrade
 }
 
 function InstallLibMesa {
-	mkidr /tmp/mesa
-	cd /tmp/mesa
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libd3dadapter9-mesa_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libegl-mesa0_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libegl1-mesa_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libegl1_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgbm1_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1-mesa-dri_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1-mesa-glx_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgl1_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libglapi-mesa_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgles2-mesa_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libgles2_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libglx-mesa0_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/libosmesa6_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/mesa-opencl-icd_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/mesa-va-drivers_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/mesa-vdpau-drivers_20.3.5-1-chiacchio_arm64.deb
-	wget https://github.com/numerunix/piccolinux/releases/download/20.3.5-chiacchio/mesa-vulkan-drivers_20.3.5-1-chiacchio_arm64.deb
-	dpkg -r --force-depends libglvnd0 libglx0
-	dpkg -i *.deb
-	cd ..
-	rm -rf mesa
-	apt-get -f install
+if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
+	aggiungiRepo
+fi
+apt update
+apt upgrade
+apt install libegl1 libgl1 libgles2
+
 } 
  
 
@@ -510,28 +481,11 @@ return $?
 }
 
 function InstallBriscola {
-	if [ $1 -gt 9 ]; then
-		mkdir /tmp/wxbriscola
-		cd /tmp/wxbriscola
-		if [ $1 -eq 10 ]; then 
-			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_bullseye_arm64.deb
-		else
-			wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola_0.3.6_buster_arm64.deb
-		fi
-		wget https://github.com/numerunix/wxBriscola/releases/download/4k/wxbriscola-i18n_0.3.6_all.deb
-		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.6/wxbriscola-mazzi-hd-napoletano_0.3.6_all.deb
-		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.6/wxbriscola-mazzi-hd-dr-francy_0.3.6_all.deb
-		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.6/wxbriscola-mazzi-hd-gatti_0.3.6_all.deb
-		wget https://github.com/numerunix/wxBriscola/releases/download/0.3.6/wxbriscola-mazzi-hd-playing-mario_0.3.6_all.deb
-		apt-get install *.deb
-		cd ..
-		rm -rf wxbriscola
-		cd
-	else
- 		dialog --title "Errore" \
-		--backtitle "Errore" \
-		--msgbox "La briscola non e' disponibile per stretch perche' e' troppo vecchio. Grazie per la collaborazione." 7 60
-fi		
+if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
+	aggiungiRepo
+fi
+apt update
+apt install wxbriscola wxbriscola-i18n wxbriscola-mazzi-hd-napoletano wxbriscola-mazzi-hd-dr-francy wxbriscola-mazzi-hd-gatti wxbriscola-mazzi-hd-playing-mario
 }
 
 
@@ -556,6 +510,7 @@ wget https://raw.githubusercontent.com/numerunix/piccolinux/main/iptables-save/r
 fi
 }
 
+
 notRoot
 
 if [ $? -eq 1 ]; then
@@ -570,7 +525,7 @@ checkSystem
 sistema=$?
 
 
-kernel=`apt-cache search ^linux-image-5.[0-9] [0-9]+-arm64$ | cut -d\  -f1`
+kernel=`apt-cache search ^linux-image-[5-6].[0-9] [0-9]+-arm64$ | cut -d\  -f1`
 apt-get install u-boot-rpi $kernel -y
 
 
@@ -617,7 +572,6 @@ dialog --title "Informazione" \
 	--msgbox "Adesso verra' configurato il linguaggio" 7 60
 dpkg-reconfigure locales
 
-apt-get install bash-completion console-setup keyboard-configuration sudo curl dbus usbutils ca-certificates nano less fbset debconf-utils avahi-daemon fake-hwclock nfs-common apt-utils man-db pciutils ntfs-3g apt-listchanges wpasupplicant wireless-tools firmware-atheros firmware-brcm80211 firmware-libertas firmware-misc-nonfree firmware-realtek net-tools apt-file tzdata apt-show-versions unattended-upgrades dpkg-repack gnupg2 netcat $initstr -y
 apt-file update
 apt-get update
 apt-get upgrade
@@ -734,15 +688,12 @@ dpkg-reconfigure keyboard-configuration
 
 result=1
 while [[ $result -eq 1 ]]; do
-dialog --title "inserire Nome Utente" \
+result=$(dialog --output-fd 1 --title "inserire Nome Utente" \
 --backtitle "Inserire nome Utente" \
---inputbox "Inserire il nome utente dell'utente non privilegiato da aggiungere" 8 60 2>/tmp/result.txt
-result=$?
+--inputbox "Inserire il nome utente dell'utente non privilegiato da aggiungere" 8 60)
 done
-user=`cat /tmp/result.txt`
-rm /tmp/result.txt
 
-adduser $user
+adduser $result
 usermod -aG video,audio,cdrom,sudo $user
 if [ $desktop != 1 ]; then
 usermod -aG plugdev,netdev,lpadmin,scanner,dip $user
@@ -797,16 +748,10 @@ if [ $? -eq 0 ]; then
 	apt-get install postfix
 fi
 
-Installkernel
-if [ $? -eq 0 ]; then
-    cd /
-    wget https://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/raspberrypi-kernel_1.20210831-1_arm64.deb
-    dpkg -i raspberrypi-kernel_1.20210805-1_arm64.deb
-    rm raspberrypi-kernel_*_arm64.deb
-    apt get install uboot-rpi
-fi
+apt get install uboot-rpi
+
 
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
-	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2020 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
+	--msgbox "Debian e' pronto. Puoi applicare cambiamenti, tipo installare ulteriore software tramite apt e quando hai finito digita exit.\nCopyright 2022 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal." 40 60
 
