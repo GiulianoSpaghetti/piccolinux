@@ -106,6 +106,13 @@ dialog --title "Installazione BootLoader" \
 return $?
 }
 
+function selezionaInstallazioneWallpapers {
+dialog --title "Installazione Wallpapers" \
+--backtitle "Installazione Wallpaprs" \
+--yesno "Vuoi installare i wallpaper sotto licenza ShareALike 4.0 international?" 7 60
+return $?
+}
+
 function aggiornaSid {
 dialog --title "Aggiornamento a SID" \
 --backtitle "Aggiornamento a SID" \
@@ -745,9 +752,13 @@ if [ $? -eq 0 ]; then
 fi
 InstallMTA
 if [ $? -eq 0 ]; then
-	apt-get install postfix
+	apt install postfix
 fi
 
+selezionaInstallazioneWallpapers
+if [ $? -eq 0 ]; then
+	apt install numeronesoft-backgrounds-cornetti
+fi 
 apt get install uboot-rpi
 
 

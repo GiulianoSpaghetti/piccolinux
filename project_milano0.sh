@@ -15,7 +15,7 @@ fi
 function checkParameters {
 if [ $1 -ne 1 ]; then
 	dialog --title "Errore" \
-	--backtitle "Errorei" \
+	--backtitle "Errori" \
 	--msgbox "Bisogna specificare la directory d'installazione come parametro.\nIl programma sara' terminato" 7 60
 	return 1
 fi
@@ -66,11 +66,17 @@ echo "deb http://deb.debian.org/debian/ $quale main contrib non-free
 deb-src http://deb.debian.org/debian/ $quale main contrib non-free
 deb http://deb.debian.org/debian/ ${1}-updates main contrib non-free
 deb-src http://deb.debian.org/debian/ ${1}-updates main contrib non-free
-deb http://security.debian.org/debian-security  ${1}/updates main contrib
-deb-src http://security.debian.org/debian-security  ${1}/updates main contrib
 deb http://deb.debian.org/debian ${1}-backports main contrib non-free
 deb-src http://deb.debian.org/debian ${1}-backports main contrib non-free">> ${2}/etc/apt/sources.list
+if [ $quale=="bullseye" ]; then
+echo "deb http://security.debian.org/debian-security  ${1}-security main contrib
+deb-src http://security.debian.org/debian-security  ${1}-security main contrib">> ${2}/etc/apt/sources.list
+else
+echo "deb http://security.debian.org/debian-security  ${1}/updates main contrib
+deb-src http://security.debian.org/debian-security  ${1}/updates main contrib">> ${2}/etc/apt/sources.list
+fi
 }
+
 
 function getSd {
 result=1;
