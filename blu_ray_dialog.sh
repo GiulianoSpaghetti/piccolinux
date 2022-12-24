@@ -13,13 +13,14 @@ dialog	--msgbox "Questo è quello che offre l'archivio di debian, non so se i fi
 
 quale=$(dialog --output-fd 1 --backtitle "Quale sistema scegliere" \
 --radiolist "Quale sistema:" 40 40 7 \
- 1 "Bullseye" on \
- 2 "Buster" off \
- 3 "Stretch" off \
- 4 "Jessie" off \
- 5 "Wheezy" off \
- 6 "Squeeze" off \
- 7 "Lenny" off)
+ 1 "Bookworm" off \
+ 2 "Bullseye" on \
+ 3 "Buster" off \
+ 4 "Stretch" off \
+ 5 "Jessie" off \
+ 6 "Wheezy" off \
+ 7 "Squeeze" off \
+ 8 "Lenny" off)
 if [ $? -eq 1 ]; then
 	exit 1;
 fi
@@ -49,12 +50,17 @@ fi
 
 case $quale in
 1)
+	path="bookworm_di_alpha1"
+	url="cdimage/release"
+	nome=$path
+	numbd=5
+2)
 	path="11.6.0"
 	url="cdimage/release"
 	nome=$path
 	numbd=4
 ;;
-2)
+3)
 	url="cdimage/archive"
 	nome="10.13.0"
 	path=$nome
@@ -64,27 +70,27 @@ case $quale in
 		numbd=4;
 	fi
 ;;
-3) url="cdimage/archive"
+4) url="cdimage/archive"
    path="9.13.0"
    nome=$path
    numbd=3
 ;;
-4) url="cdimage/archive"
+5) url="cdimage/archive"
    path="8.11.1"
    nome=$path
    numbd=3
 ;;
-5) url="cdimage/archive"
+6) url="cdimage/archive"
    path="7.11.0"
    nome=$path
    numbd=2
 ;;
-6) url="cdimage/archive"
+7) url="cdimage/archive"
    path="6.0.10"
    nome=$path
    numbd=2
 ;;
-7) url="cdimage/archive"
+8) url="cdimage/archive"
    path="5.0.10"
    nome="5010"
    numbd=1
