@@ -24,9 +24,11 @@ return 0
 
 function selectDistro {
 quale=$(dialog --output-fd 1 --backtitle "Quale versione selezionare" \
---radiolist "Quale versione selezionare:" 10 40 2 \
- 1 "Buster" off \
- 2 "Bullseye" on) 
+--radiolist "Quale versione selezionare:" 10 70 4 \
+ 1 "Bookworm (necessario per il PI 400)" off \
+ 2 "bullseye" on \
+ 3 "Buster" off \
+ 4 "Stretch" off) 
 return $quale
 }
 
@@ -68,7 +70,10 @@ deb http://deb.debian.org/debian/ ${1}-updates main contrib non-free
 deb-src http://deb.debian.org/debian/ ${1}-updates main contrib non-free
 deb http://deb.debian.org/debian ${1}-backports main contrib non-free
 deb-src http://deb.debian.org/debian ${1}-backports main contrib non-free">> ${2}/etc/apt/sources.list
-if [ $quale = "bullseye" ]; then
+if [ $quale = "bookworm" ]; then
+echo "deb http://security.debian.org/debian-security  ${1}-security main contrib
+deb-src http://security.debian.org/debian-security  ${1}-security main contrib">> ${2}/etc/apt/sources.list
+elif [ $quale = "bullseye" ]; then
 echo "deb http://security.debian.org/debian-security  ${1}-security main contrib
 deb-src http://security.debian.org/debian-security  ${1}-security main contrib">> ${2}/etc/apt/sources.list
 else
@@ -113,12 +118,14 @@ selectDistro
 
 case $? in
 
-1) quale=buster
+1) quale=bookworm
 ;;
 
 2) quale=bullseye
 ;;
-3) quale=stretch
+3) quale=buster
+;;
+4) quale=stretch
 ;;
 *)
 	dialog --title "Errore" \
@@ -145,7 +152,7 @@ dialog --title "Informazione" \
 	--msgbox "Eseguire lo script project_milano1.sh" 7 60
 
 chroot ${1}
-rm ${1}/project_milano1.sh
+rm ${1}/project_milano.sh
 umountSystem $1
 getSd
 sd=`cat /tmp/result.txt`
