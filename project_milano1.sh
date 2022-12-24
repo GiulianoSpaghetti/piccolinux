@@ -3,6 +3,12 @@
 
 function aggiungiRepo {
 case $sistema in
+	12) dialog --title "Repository non disponibile" \
+--backtitle "Repository non disponibile" \
+--yesno "Il repository non è disponibile per bookworm" 7 60
+	return
+	;;
+
 	11) repo="bullseye"
 	;; 
 	10) repo="buster";;
