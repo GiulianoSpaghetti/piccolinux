@@ -39,7 +39,7 @@ return $?
 
 function checkSystem {
 read -d / sistema < /etc/debian_version
-if [ $sistema = "bookworm/sid" ]; then
+if [ $sistema = "bookworm" ]; then
 	sistema=12
 elif [ $sistema = "bullseye" ]; then
 	sistema=11
