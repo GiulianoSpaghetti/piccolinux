@@ -400,7 +400,7 @@ function InstallLibMesa {
 if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
 	aggiungiRepo
 fi
-if [ $? -eq 1 ]
+if [ $? -eq 1 ]; then
 apt update
 apt upgrade
 apt install libegl1 libgl1 libgles2
