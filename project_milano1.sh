@@ -753,6 +753,11 @@ dialog --title "Grazie" \
 else
 abilitaDriverVideo
 if [ $? -eq 0 ]; then
+	dialog --title "Informazione" \
+	--backtitle "Informazione" \
+	--msgbox "Adesso bisogna assicurarsi che il repository numeronesoft.ddns.net funzioni e che si abbia scelto buster. I mesa verranno upgradati, bisogna togliere i vecchi pacchetti e mettere i nuovi." 40 60
+
+
 	installLibDrm
 	InstallLibMesa
 fi
