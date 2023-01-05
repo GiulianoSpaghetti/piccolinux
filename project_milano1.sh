@@ -376,9 +376,19 @@ function installaBootLoader {
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/w1-gpio.dtbo
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/w5500.dtbo
 	wget https://raw.githubusercontent.com/raspberrypi/firmware/master/boot/overlays/wittypi.dtbo
-
+	
 	cp  -r /tmp/boot/* /boot
 	rm -rf /tmp/boot
+	mkdir /tmp/brcm
+	cd /tmp/brcm
+	wget https://github.com/armbian/firmware/raw/master/brcm/BCM4345C5.hcd
+	wget https://github.com/armbian/firmware/raw/master/BCM4345C0.hcdc
+	
+	cp -r /tmp/brcm /lib/firmware
+	cd ..
+	rm -rf /tmp/brcm
+	
+	apt install bluez blueman
 }
 
 
