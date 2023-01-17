@@ -256,7 +256,7 @@ dialog --title "Informazione" \
 	--msgbox "Adesso verra' configurato il linguaggio" 7 60
 dpkg-reconfigure locales
 
-apt install apt-file ntp kbd sudo
+apt install apt-file ntp kbd sudo $initstr
 apt-file update
 apt-get update
 apt-get upgrade
@@ -350,7 +350,7 @@ lingua=$?
         if [ $lingua -eq 0 ]; then
 
 		lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
-		apt install aspell-$lang hunspell-$lang manpages-$lang maint-guide-$lang fortunes-$lang debian-reference-$lang
+		apt-get install aspell-$lang hunspell-$lang manpages-$lang maint-guide-$lang fortunes-$lang debian-reference-$lang
 		if [[ $desktop != 1 ]]; then
 			apt-get install  firefox-esr-l10n-$lang thunderbird-l10n-$lang libreoffice-l10n-$lang lightning-l10n-$lang libreoffice-help-$lang mythes-$lang
 		fi
@@ -390,14 +390,14 @@ passwd
 echo -n "Premere invio per continuare..."
 read dummy;
 
-apt install unzip
+apt-get install unzip firmware-realtek $initstr
 cd /tmp
 wget https://github.com/pftf/RPi4/releases/download/v1.34/RPi4_UEFI_Firmware_v1.34.zip
 unzip ./RPi4_UEFI_Firmware_v1.34.zip -d /boot
 rm ./RPi4_UEFI_Firmware_v1.34.zip
 cd ..
 
-apt install grub-efi-arm64
+apt-get install grub-efi-arm64 $initstr
 grub-install
 update-grub
 
@@ -409,9 +409,9 @@ if [ $? -eq 0 ]; then
 mv /etc/apt/sources.list /etc/apt/sources.list.old
 echo "deb http://deb.debian.org/debian/ sid main
 deb-src http://deb.debian.org/debian/ sid main" > /etc/apt/sources.list
-apt clean
-apt update
-apt dist-upgrade -y
+apt-get clean
+apt-get update
+apt-get dist-upgrade -y
 mv /etc/apt/sources.list /etc/apt/sources.list.sid
 mv /etc/apt/sources.list.old /etc/apt/sources.list
 dialog --title "Grazie" \
@@ -432,12 +432,12 @@ if [ $? -eq 0 ]; then
 fi
 InstallMTA
 if [ $? -eq 0 ]; then
-	apt install postfix
+	apt-get install postfix $initstr
 fi
 
 selezionaInstallazioneWallpapers
 if [ $? -eq 0 ]; then
-	apt install numeronesoft-backgrounds-cornetti
+	apt-get install numeronesoft-backgrounds-cornetti $initstr
 fi 
 
 
