@@ -107,9 +107,9 @@ done
 }
 
 function umountsdd {
-umount /dev/${1}3
-umount /dev/${1}2
-umount /dev/${1}1
+umount /dev/${sdd}3
+umount /dev/${sdd}2
+umount /dev/${sdd}1
 }
 
 
@@ -174,7 +174,7 @@ dialog --title "Informazione" \
 	--msgbox "Eseguire lo script project_milano1.sh" 7 60
 
 chroot ${1}
-rm ${1}/project_milano.sh
+rm ${1}/project_milano1.sh
 umountSystem $1
 
 #attendi 10
