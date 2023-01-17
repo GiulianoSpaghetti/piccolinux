@@ -31,7 +31,7 @@ function preambolo {
 function postambolo {
 	dialog --title "Informazioni" \
 	--backtitle "Informazioni" \
-	--msgbox "Adesso bisogna premere esc quando appare il logo del raspberry, andare in BOOT MAINTENCE MANAGER  e selezionare BOOT OPTION e poi ADD BOOT OPTION, selezionare la seconda partizione e scegliere la path EFI/DEBIAN/GRUBAA64.efi, indicare come descrizione Debian e salvare. Poi premete esc per andare indietro e andate in CHANGE BOOT ORDER, premete invio usate i tasti direzionali per spostarvi su debian e premete + finché non sarà la prima opzione. A questo punto premete f10 per salvare e premete sempre esc. Se il kernel dà errore fsck.ext4 not found non preoccupatevi. Enjoy " 15 60
+	--msgbox "Adesso bisogna premere esc quando appare il logo del raspberry, andare in BOOT MAINTENCE MANAGER  e selezionare BOOT OPTION e poi ADD BOOT OPTION, selezionare la seconda partizione e scegliere la path EFI/DEBIAN/GRUBAA64.efi, indicare come descrizione Debian e salvare. Poi premete esc per andare indietro e andate in CHANGE BOOT ORDER, premete invio usate i tasti direzionali per spostarvi su debian e premete + finché non sarà la prima opzione. A questo punto premete f10 per salvare e premete sempre esc. Se il kernel dà errore fsck.ext4 va reinstallato. Enjoy " 15 60
 }
 
 function selectDistro {
