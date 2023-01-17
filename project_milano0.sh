@@ -16,10 +16,22 @@ function checkParameters {
 if [ $1 -ne 1 ]; then
 	dialog --title "Errore" \
 	--backtitle "Errori" \
-	--msgbox "Bisogna specificare la directory d'installazione come parametro.\nIl programma sara' terminato" 7 60
+	--msgbox "Bisogna specificare la directory d'installazione come parametro.\nIl programma sarà terminato" 7 60
 	return 1
 fi
 return 0
+}
+
+function preambolo {
+	dialog --title "Informazioni" \
+	--backtitle "Informazioni" \
+	--msgbox "Prima bisogna aggionare il boot loader del raspberry all'ultima versione, poi bisogna partizionare un hard disk come segue: una partizione boot da almeno 1 gb all'inizio del disco creata come prima partizione, una partizione ext4 root come seconda partizione ed una partizione fat32 con flag esp come terza partizione. Premere ok per continuare." 15 60
+}
+
+function postambolo {
+	dialog --title "Informazioni" \
+	--backtitle "Informazioni" \
+	--msgbox "Adesso bisogna premere esc quando appare il logo del raspberry, andare in BOOT MAINTENCE MANAGER  e selezionare BOOT OPTION e poi ADD BOOT OPTION, selezionare la seconda partizione e scegliere la path EFI/DEBIAN/GRUBAA64.efi, indicare come descrizione Debian e salvare. Poi premete esc per andare indietro e andate in CHANGE BOOT ORDER, premete invio usate i tasti direzionali per spostarvi su debian e premete + finché non sarà la prima opzione. A questo punto premete f10 per salvare e premete sempre esc. Se il kernel dà errore fsck.ext4 not found non preoccupatevi. Enjoy " 15 60
 }
 
 function selectDistro {
@@ -55,8 +67,9 @@ rm ${1}/etc/apt/sources.list
 
 function createfstab {
 echo "proc            /proc           proc    defaults          0       0
-/dev/mmcblk0p1  /boot           vfat    defaults          0       2
-/dev/mmcblk0p2  /               ext4    defaults,noatime  0       1" >> ${1}/etc/fstab
+/dev/sda1  /boot           vfat    defaults          0       2
+/dev/sda2  /               ext4    defaults,noatime  0       1
+/dev/sda3 /boot/efi	vfat	umask=0077 	0	1" >> ${1}/etc/fstab
 }
 
 function createhostname {
@@ -83,31 +96,40 @@ fi
 }
 
 
-function getSd {
+function getSdd {
 result=1;
 while [[ $result -eq 1 ]]; do
 	dialog --title "inserire dispostivo a blocchi" \
 	--backtitle "Inserire dispositivo a blocchi" \
-	--inputbox "Inserire il nome del dispositivo a blocchi relativo la scheda microsd gia' partizionata da montare senza la path." 8 60 2>/tmp/result.txt
+	--inputbox "Inserire il nome del dispositivo a blocchi relativo l'hard disk gia' partizionato da montare senza la path." 8 60 2>/tmp/result.txt
 	result=$?
 done
 }
 
-function umountsd {
-umount /dev/${1}1
+function umountsdd {
+umount /dev/${1}3
 umount /dev/${1}2
+umount /dev/${1}1
 }
 
-function attendi {
-echo "Attendi $1 secondi"
-sleep $1
-}
 
 notRoot
 
 installPrerequisites
 
 checkParameters $#
+
+preambolo
+
+getSdd
+sdd=`cat /tmp/result.txt`
+rm /tmp/result.txt
+
+mount /dev/${sdd}2 ${1}
+mkdir ${1}/boot
+mount /dev/${sdd}1 ${1}/boot
+mkdir ${1}/boot/efi
+mount /dev/${sdd}3 ${1}/boot/efi
 
 if [ $? -eq 1 ]; then
 	exit 1
@@ -154,43 +176,16 @@ dialog --title "Informazione" \
 chroot ${1}
 rm ${1}/project_milano.sh
 umountSystem $1
-getSd
-sd=`cat /tmp/result.txt`
-rm /tmp/result.txt
 
-attendi 10
+#attendi 10
 
-umountsd $sd
+chmod 755 ${1}
+chown root:root ${1}
+umountsdd 
 
-attendi 5
-
-mkdir /media/piccolinux
-mkdir /media/piccolinuxboot
-
-mount /dev/${sd}1 /media/piccolinuxboot
-mount /dev/${sd}2 /media/piccolinux
-
-dialog --title "Informazioni" \
-	--backtitle "Informazioni" \
-	--msgbox "Il software potrebbe dare l'impressione di andare in blocco. E' normale.\nAttendere la fine dell'esecuzione, senza andare in paranoia. Grazie :)" 40 60
-
-rsync -a --info=progress2 --remove-source-files ${1}/boot/* /media/piccolinuxboot
-umount /dev/${sd}1
-
-attendi 5
-rmdir /media/piccolinuxboot
-
-rsync -avh --remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
-chmod 755 /media/piccolinux
-chown root:root /media/piccolinux
-umount /dev/${sd}2
-attendi 15
-
-find ${1} -type d -empty -delete
-mkdir ${1}
-rmdir /media/piccolinux
+postambolo
 
 dialog --title "Tutto fatto" \
 	--backtitle "OK" \
-	--msgbox "La microsd e' stata smontata. Metterla nel raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nCopyright 2022 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nHappy Hacking :)" 40 60
+	--msgbox "L'hard disk è stato smontato. Collegarlo al raspberry per vederne i risultati.\nRicordatevi di chiudere e disabilitare le socket systemd-initctl e systemd-udevd-control.\nCopyright 2023 Giulio Sorrentino <gsorre84@gmail.com>\nIl software viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nHappy Hacking :)" 40 60
 
