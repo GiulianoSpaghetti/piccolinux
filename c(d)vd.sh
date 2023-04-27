@@ -6,7 +6,16 @@ exit 1
 fi
 
 echo "Installiamo le librerie necessarie al funzionamento dello script"
-#sudo apt install -y dialog jigdo-lite core-utils;
+sudo apt install -y dialog jigdo-lite core-utils;
+
+
+if [ $# -ne 1 ]; then
+dialog --title "Errore nel numero dei parametri" \
+--backtitle "Errore nel numero dei parametri" \
+--yesno "Deve essere passato esattamente un parametro" 7 60
+exit 1
+fi
+
 
 dialog --title "Download DVD" \
 --backtitle "Download DVD" \
@@ -95,7 +104,7 @@ case $quale in
 *) echo $quale;;
 esac
 
-suffisso=debian-`cat /etc/debian_version`.0
+suffisso=debian-${1}
 
 
 if [ $sl = "cd" ]; then
@@ -123,7 +132,7 @@ dialog --title "Informazione" \
 	if [ -f $nome.iso ]; then
 		dialog	--msgbox "Il file $i di $numbd esiste già. Si passa al successivo." 40 60 >/dev/tty
 	else 
-		jigdo-lite https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/$nome.jigdo
+		jigdo-lite https://cdimage.debian.org/debian-cd/${1}/$arch/jigdo-$sl/$nome.jigdo
 		if [ $? -eq 1 ]; then
 			dialog	--msgbox "Si è verificato un errore, il file https://cdimage.debian.org/debian-cd/`cat /etc/debian_version`.0/$arch/jigdo-$sl/debian-`cat /etc/debian_version`.0-$arch-${sl1}-$i.jigdo non è stato trovato. Il programma termina." 40 60 >/dev/tty
 			exit 1
