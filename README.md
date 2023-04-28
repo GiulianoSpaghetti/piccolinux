@@ -9,6 +9,12 @@ Per ulteriori informazioni fare riferimento a man debootstrap, per ottenere una 
 
 Avviando gli script su gnu/Linux mettendo come prefisso la stringa "bash -x" si avvia la modalità di debug di bash, permettendo di studiare meglio il codice.
 
+# Partizionamento del disco
+/dev/sda1 è /boot
+/dev/sda2 è /
+/dev/sda3 è /boot/efi
+
+
 # Bug noti
 Quando viene avviata la grafica, viene creato un file temporaneo /tmp/result.txt per ogni schermata
  
