@@ -4,7 +4,7 @@
 sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc git
 
 if [ $# -ne 2 ]; then
-echo "Non sono stati passati due parametri, il programma termina."
+echo "Bisogna passare due parametri: il primo il numero di processori da utilizzare, il secondo il nome della propria home directory di windows. Il programma termina."
 exit
 fi
 
