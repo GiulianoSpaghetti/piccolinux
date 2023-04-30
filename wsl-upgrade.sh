@@ -1,5 +1,6 @@
 # Copyright 2023 Giulio Sorrentino, Some Right Reserved
 # This script is under GPL v3 or, in your humble opinion, any later version 
+# Parameters: number of processors to use and path of the windows home directort
 # original source: https://gist.github.com/charlie-x/96a92aaaa04346bdf1fb4c3621f3e392#file-gistfile1-txt-L31
 #!/bin/bash
 sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc wget
