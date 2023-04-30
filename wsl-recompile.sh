@@ -8,7 +8,7 @@ echo "Bisogna passare due parametri: il primo il numero di processori da utilizz
 exit
 fi
 
-wget https://github.com/microsoft/WSL2-Linux-Kernel/archive/refs/tags/linux--msft-wsl-$(uname -r | cut -d - -f 1).tar.gz
+wget https://github.com/microsoft/WSL2-Linux-Kernel/archive/refs/tags/linux--msft-wsl-$(uname -r | cut -d -f 1).tar.gz
 
 tar -xfv linux-msft-wsl-$(uname -r | cut -d - -f 1).tar.gz
 cat /proc/config.gz | gunzip > .config
