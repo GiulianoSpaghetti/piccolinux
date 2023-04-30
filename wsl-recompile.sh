@@ -20,4 +20,4 @@ make -j $1
 sudo make install
 
 echo "[network]
-generateResolvConf = false" > /etc/wsl.conf
+generateResolvConf = false" | sudo tee -a /etc/wls.conf > /dev/null
