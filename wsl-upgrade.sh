@@ -8,18 +8,22 @@ echo "Bisogna passare due parametri: il primo il numero di processori da utilizz
 exit
 fi
 
-git clone https://github.com/microsoft/WSL2-Linux-Kernel.git
+#git clone https://github.com/microsoft/WSL2-Linux-Kernel.git
 
 
 cd WSL2-Linux-Kernel/
 cat /proc/config.gz | gunzip > .config
-make oldconfig
-make prepare modules_prepare
+#make oldconfig
+#make prepare modules_prepare
 
-make -j $1
-sudo make install
+#make -j $1
+#sudo make install
 
-cp vmlinux /mnt/c/Users/${2}/
+#cp vmlinux /mnt/c/Users/${2}/
+if [ -f /mnt/c/Users/${2}/.wslconfig ]; then
+mv /mnt/c/Users/${2}/.wslconfig /mnt/c/Users/${2}/wslconfig.old
+echo "Backuppato il vecchio wslconfig"
+fi
 echo "[wsl2]
-kernel=C:\\Users\\${2}\\vmlinux" | sudo tee -a /mnt/c/Users/${2}/.wslconfig > /dev/null
-
+kernel=C:\\\\Users\\\\${2}\\\\vmlinux" | sudo tee -a /mnt/c/Users/${2}/.wslconfig > /dev/null
+ 
