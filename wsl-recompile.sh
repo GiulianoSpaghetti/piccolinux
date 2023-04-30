@@ -1,27 +1,21 @@
 # Copyright 2023 Giulio Sorrentino, Some Right Reserved
-# Parameters: number of processors to use, name of the windows home directory
+# Parameters: number of processors to use
 #!/bin/bash
 sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc git
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 1 ]; then
 echo "Bisogna passare due parametri: il primo il numero di processori da utilizzare, il secondo il nome della propria home directory di windows. Il programma termina."
 exit
 fi
 
-git clone https://github.com/microsoft/WSL2-Linux-Kernel.git
+wget https://github.com/microsoft/WSL2-Linux-Kernel/archive/refs/tags/linux--msft-wsl-$(uname -r | cut -d - -f 1).tar.gz
 
-
-cd WSL2-Linux-Kernel/
-cat /proc/config.gz | gunzip > .config
+tar -xfv linux-msft-wsl-$(uname -r | cut -d - -f 1).tar.gzcat /proc/config.gz | gunzip > .config
 make oldconfig
 make prepare modules_prepare
 
 make -j $1
 sudo make install
-
-cp vmlinux /mnt/c/Users/{$2}/
-echo "[wsl2]
-kernel=C:\\Users\\<yourwindowsloginname>\\vmlinux" > /mnt/c/Users/<yourwindowsloginname>/.wslconfig
 
 echo "[network]
 generateResolvConf = false" > /etc/wsl.conf
