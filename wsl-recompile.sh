@@ -5,7 +5,7 @@
 sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc wget
 
 if [ $# -ne 1 ]; then
-echo "Bisogna passare due parametri: il primo il numero di processori da utilizzare, il secondo il nome della propria home directory di windows. Il programma termina."
+echo "Bisogna un parametro: il numero di processori da utilizzare. Il programma termina."
 exit
 fi
 
