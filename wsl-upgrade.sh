@@ -21,7 +21,7 @@ sudo make install
 
 cp vmlinux /mnt/c/Users/${2}/
 echo "[wsl2]
-kernel=C:\\Users\\<yourwindowsloginname>\\vmlinux" > /mnt/c/Users/<yourwindowsloginname>/.wslconfig
+kernel=C:\\Users\\${2}\\vmlinux" > /mnt/c/Users/${2}/.wslconfig
 
 echo "[network]
 generateResolvConf = false" > /etc/wsl.conf
