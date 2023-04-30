@@ -16,10 +16,10 @@ cat /proc/config.gz | gunzip > .config
 make oldconfig
 make prepare modules_prepare
 
-make -j nproc (a numero, non a variabile)
+make -j $1
 sudo make install
 
-cp vmlinux /mnt/c/Users/<yourwindowsloginname>/
+cp vmlinux /mnt/c/Users/${2}/
 echo "[wsl2]
 kernel=C:\\Users\\<yourwindowsloginname>\\vmlinux" > /mnt/c/Users/<yourwindowsloginname>/.wslconfig
 
