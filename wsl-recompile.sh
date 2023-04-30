@@ -10,7 +10,8 @@ fi
 
 wget https://github.com/microsoft/WSL2-Linux-Kernel/archive/refs/tags/linux--msft-wsl-$(uname -r | cut -d - -f 1).tar.gz
 
-tar -xfv linux-msft-wsl-$(uname -r | cut -d - -f 1).tar.gzcat /proc/config.gz | gunzip > .config
+tar -xfv linux-msft-wsl-$(uname -r | cut -d - -f 1).tar.gz
+cat /proc/config.gz | gunzip > .config
 make oldconfig
 make prepare modules_prepare
 
