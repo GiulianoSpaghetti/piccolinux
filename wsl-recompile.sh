@@ -23,5 +23,3 @@ make prepare modules_prepare
 make -j $1
 sudo make install
 
-echo "[network]
-generateResolvConf = false" | sudo tee -a /etc/wsl.conf > /dev/null
