@@ -8,6 +8,10 @@ echo "Bisogna passare due parametri: il primo il numero di processori da utilizz
 exit
 fi
 
+if [ -f linux-msft-wsl-6.1.21.1.tar.gz ]; then
+rm linux-msft-wsl-6.1.21.1.tar.gz
+fi
+
 wget https://github.com/microsoft/WSL2-Linux-Kernel/archive/refs/tags/linux-msft-wsl-6.1.21.1.tar.gz
 
 
