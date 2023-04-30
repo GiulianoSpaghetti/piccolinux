@@ -15,7 +15,7 @@ fi
 wget https://github.com/microsoft/WSL2-Linux-Kernel/archive/refs/tags/linux-msft-wsl-6.1.21.1.tar.gz
 tar -xfv linux-msft-wsl-6.1.21.1.tar.gz
 
-cd WSL2-Linux-Kernel-linux-msft-wsl-6.1.21.1.tar.gz
+cd WSL2-Linux-Kernel-linux-msft-wsl-6.1.21.1
 cat /proc/config.gz | gunzip > .config
 make oldconfig
 make prepare modules_prepare
