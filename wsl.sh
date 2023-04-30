@@ -1,4 +1,5 @@
 # Copyrigth 2023 Giulio Sorrentino, Some Right Reserved
+# Parameters: number of processors to use
 #!/bin/bash
 sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc git
 
