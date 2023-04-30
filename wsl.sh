@@ -1,5 +1,5 @@
 # Copyrigth 2023 Giulio Sorrentino, Some Right Reserved
-# Parameters: number of processors to use
+# Parameters: number of processors to use, name of the windows home directory
 #!/bin/bash
 sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc git
 
@@ -14,7 +14,7 @@ make prepare modules_prepare
 make -j $1
 sudo make install
 
-cp vmlinux /mnt/c/Users/<yourwindowsloginname>/
+cp vmlinux /mnt/c/Users/$2/
 echo "[wsl2]
 kernel=C:\\Users\\<yourwindowsloginname>\\vmlinux" > /mnt/c/Users/<yourwindowsloginname>/.wslconfig
 
