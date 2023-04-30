@@ -3,6 +3,11 @@
 #!/bin/bash
 sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc git
 
+if [ $# -ne 2 ]; then
+echo "Non sono stati passati due parametri, il programma termina."
+exit
+fi
+
 git clone https://github.com/microsoft/WSL2-Linux-Kernel.git
 
 
