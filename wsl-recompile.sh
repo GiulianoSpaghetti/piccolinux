@@ -9,9 +9,13 @@ echo "Bisogna un parametro: il numero di processori da utilizzare. Il programma 
 exit
 fi
 
+if  [ -f  linux-msft-wsl-$(uname -r | cut -d - -f 1).tar.gz ]; then
+	rm  linux-msft-wsl-$(uname -r | cut -d - -f 1).tar.gz
+fi
 wget https://github.com/microsoft/WSL2-Linux-Kernel/archive/refs/tags/linux-msft-wsl-$(uname -r | cut -d - -f 1).tar.gz
 
-tar -xfv linux-msft-wsl-$(uname -r | cut -d - -f 1).tar.gz
+tar -xvf  linux-msft-wsl-$(uname -r | cut -d - -f 1).tar.gz
+cd WSL2-Linux-Kernel-linux-msft-wsl-$(uname -r | cut -d - -f 1)
 cat /proc/config.gz | gunzip > .config
 make menuconfig
 make prepare modules_prepare
