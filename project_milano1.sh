@@ -370,6 +370,7 @@ dpkg-reconfigure tzdata
 
 
 dpkg-reconfigure keyboard-configuration
+setupcon
 
 result=1
 while [[ $result -eq 1 ]]; do
