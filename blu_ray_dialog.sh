@@ -53,10 +53,10 @@ case $quale in
 	path="bookworm_di_rc2"
 	url="cdimage/"
 	nome=bookworm-DI-rc2
-	numbd=4
+	numbd=5
 	;;
 2)
-	path="11.6.0"
+	path="11.7.0"
 	url="cdimage/release"
 	nome=$path
 	numbd=4
