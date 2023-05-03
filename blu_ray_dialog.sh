@@ -50,9 +50,9 @@ fi
 
 case $quale in
 1)
-	path="bookworm_di_rc1"
+	path="bookworm_di_rc2"
 	url="cdimage/"
-	nome=bookworm-DI-rc1
+	nome=bookworm-DI-rc2
 	numbd=4
 	;;
 2)
