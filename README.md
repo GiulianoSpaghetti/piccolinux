@@ -9,6 +9,11 @@ Per ulteriori informazioni fare riferimento a man debootstrap, per ottenere una 
 
 Avviando gli script su gnu/Linux mettendo come prefisso la stringa "bash -x" si avvia la modalità di debug di bash, permettendo di studiare meglio il codice.
 
+# Gli script
+oem2chiacchio traduce i mesa em in mesa di chiacchio, è necessario il reboot. Legacy.
+blu ray dialog scarica i blu ray single layer o double layer di debian.
+
+
 # Partizionamento del disco
 /dev/sda1 è /boot
 /dev/sda2 è /
