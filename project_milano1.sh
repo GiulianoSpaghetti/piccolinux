@@ -393,9 +393,9 @@ read dummy;
 
 apt-get install unzip firmware-realtek unattended-upgrades grub-efi-arm64 $initstr
 cd /tmp
-wget https://github.com/pftf/RPi4/releases/download/v1.34/RPi4_UEFI_Firmware_v1.34.zip
-unzip ./RPi4_UEFI_Firmware_v1.34.zip -d /boot
-rm ./RPi4_UEFI_Firmware_v1.34.zip
+wget https://github.com/pftf/RPi4/releases/download/v1.35/RPi4_UEFI_Firmware_v1.35.zip
+unzip ./RPi4_UEFI_Firmware_v1.35.zip -d /boot
+rm ./RPi4_UEFI_Firmware_v1.35.zip
 cd ..
 
 grub-install
