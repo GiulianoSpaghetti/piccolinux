@@ -11,8 +11,30 @@ Avviando gli script su gnu/Linux mettendo come prefisso la stringa "bash -x" si 
 
 # Gli script
 oem2chiacchio traduce i mesa em in mesa di chiacchio, è necessario il reboot. Legacy.
+
 blu ray dialog scarica i blu ray single layer o double layer di debian.
 
+c(d)vd scarica i cd o i dvd della versione in uso di debian
+
+c(d)vd_resumed scarica i dvd o i cd di qualsiasi versione di debian, potrebbero non essere disponibiiì tutti i file
+
+chiacchio2oem traduce i mesa chiacchio in mesa oem, legacy.
+
+debianvnc_o.3 dovrebbe essere un tentativo di un docker grafico, non funziona.
+
+project milano 0 e 1 sono gli script ufficiali, vanno usati in coppia (lo 0 richiama l) e necessita di un hard disk usb opportunamente configurato come riportato
+
+unr4r ricompila il winrar
+
+wsl-recompile ricompila il kernel in uso sul wsl di windows
+
+wsl upgradetalla un kernel vecchio o nuovo per il wsl di windows
+
+firewall è un firewall legacy
+
+iptables save sono i salvataggi incompleti del firewall trovato online.
+
+piccolinux sono i sorgenti dei package legacy di salsa.debian.org modificati.
 
 # Partizionamento del disco
 /dev/sda1 è /boot
