@@ -3,15 +3,13 @@
 
 function aggiungiRepo {
 case $sistema in
-	12) dialog --title "Repository non disponibile" \
+	12) repo=<"bookworm";;
+	11) repo="bullseye";; 
+	10) repo="buster";;
+	*) dialog --title "Repository non disponibile" \
 --backtitle "Repository non disponibile" \
 --msgbox "Il repository non è disponibile per bookworm" 7 60
 	return 0
-	;;
-	11) repo="bullseye"
-	;; 
-	10) repo="buster";;
-	*) repo="strech";;
 esac
 echo "deb http://numeronesoft.ddns.net/ ${repo} main "> /etc/apt/sources.list.d/numeronesoft.list
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 52B68EEB
@@ -106,13 +104,6 @@ dialog --title "Installazione traduzioni" \
 return $?
 }
 
-function selezionaInstallazioneBootLoader {
-dialog --title "Installazione BootLoader" \
---backtitle "Installazione BootLoder" \
---yesno "Vuoi installare il bootloader PROPRIETARIO? (senza non si avvia, ma con non puoi diffondere l'immagine della microsd)." 7 60
-return $?
-}
-
 function selezionaInstallazioneWallpapers {
 dialog --title "Installazione Wallpapers" \
 --backtitle "Installazione Wallpaprs" \
@@ -126,52 +117,6 @@ dialog --title "Aggiornamento a SID" \
 --yesno "E' caldamente consigliato l'aggiornamento a debian Sid che, sebbene sperimentale, accelera il testing del nuovo wayland consentendo così una maggiore velocità di sviluppo dei futuri debian, a scapito della stabilità di sistema e della sicurezza dei propri files. Vuoi procedere?"  10 60
 return $?
 }
-
-function installLibDrm {
-if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
-	aggiungiRepo
-fi
-if [ $? -eq 1 ]; then
-apt update
-apt upgrade
-fi
-}
-
-function InstallLibMesa {
-if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
-	aggiungiRepo
-fi
-if [ $? -eq 1 ]; then
-apt update
-apt upgrade
-apt install libegl1 libgl1 libgles2
-fi
-} 
-
-function abilitaDriverVideo {
-dialog --title "Installazione driver video" \
---backtitle "Installazione driver video" \
---yesno "Vuoi installare i driver video (obbligatori per buster, sono necessari i repository backports di debian)?" 7 60
-return $?
-}
-
-function selezionaBriscola {
-dialog --title "Installazione briscola" \
---backtitle "Installazione briscola" \
---yesno "Vuoi installare la briscola?" 7 60
-return $?
-}
-
-function InstallBriscola {
-if [ ! -f /etc/apt/souces.list.d/numeronesoft.list ]; then
-	aggiungiRepo
-fi
-if [ $? -eq 1 ]; then
-apt update
-apt install wxbriscola wxbriscola-i18n wxbriscola-mazzi-hd-napoletano wxbriscola-mazzi-hd-dr-francy wxbriscola-mazzi-hd-gatti wxbriscola-mazzi-hd-playing-mario
-fi
-}
-
 
 function installFirewall {
 	dialog --title "Installazione firewall" \
@@ -401,35 +346,10 @@ cd ..
 grub-install
 update-grub
 
-apt-get autoremove
-apt-get clean
+apt-get autoremoe
 
-aggiornaSid
-if [ $? -eq 0 ]; then
-mv /etc/apt/sources.list /etc/apt/sources.list.old
-echo "deb http://deb.debian.org/debian/ sid main
-deb-src http://deb.debian.org/debian/ sid main" > /etc/apt/sources.list
-apt-get clean
-apt-get update
-apt-get dist-upgrade -y
-mv /etc/apt/sources.list /etc/apt/sources.list.sid
-mv /etc/apt/sources.list.old /etc/apt/sources.list
-dialog --title "Grazie" \
-	--backtitle "Grazie" \
-	--msgbox "Grazie per l'aiuto che dai alla comunità" 7 60
-else
-abilitaDriverVideo
-if [ $? -eq 0 ]; then
-	installLibDrm
-	InstallLibMesa
-fi
-fi
 installFirewall
 
-selezionaBriscola
-if [ $? -eq 0 ]; then
-	InstallBriscola
-fi
 InstallMTA
 if [ $? -eq 0 ]; then
 	apt-get install postfix $initstr
