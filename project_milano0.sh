@@ -37,10 +37,9 @@ function postambolo {
 function selectDistro {
 quale=$(dialog --output-fd 1 --backtitle "Quale versione selezionare" \
 --radiolist "Quale versione selezionare:" 10 70 4 \
- 1 "Bookworm (necessario per il PI 400)" off \
- 2 "bullseye" on \
+ 1 "Bookworm (necessario per il PI 400)" on \
+ 2 "bullseye" off \
  3 "Buster" off \
- 4 "Stretch" off) 
 return $quale
 }
 
