@@ -22,13 +22,13 @@ chiacchio2oem traduce i mesa chiacchio in mesa oem, legacy.
 
 debianvnc_o.3 dovrebbe essere un tentativo di un docker grafico, non funziona.
 
-project milano 0 e 1 sono gli script ufficiali, vanno usati in coppia (lo 0 richiama l) e necessita di un hard disk usb opportunamente configurato come riportato (la versione pubblicata in data 09/08/2023 si deve alla tabaccheria caiaffa)
+project milano 0 e 1 sono gli script ufficiali, vanno usati in coppia (lo 0 richiama l'1) e necessita di un hard disk usb opportunamente configurato come riportato (la versione pubblicata in data 09/08/2023 si deve alla tabaccheria caiaffa)
 
 unr4r ricompila il winrar
 
 wsl-recompile ricompila il kernel in uso sul wsl di windows
 
-wsl upgradetalla un kernel vecchio o nuovo per il wsl di windows
+wsl upgrade installa un kernel vecchio o nuovo per il wsl di windows
 
 firewall è un firewall legacy
 
