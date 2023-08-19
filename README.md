@@ -1,4 +1,10 @@
 # piccolinux
+
+# Attenzione
+
+il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (https://github.com/pftf/RPi4/releases) ed installarlo secondo le modalità indicate e farsi una pennetta con debian arm64 per bootare un sistema efi compliant ed installare il sostema in memo di metà del tempo.
+
+# Informazioni
 Semplice script per l'installazione di Debian sui sistemi arm64, con particolare riferimento al Raspberry.
 Il sistema offre come personalizzazione l'installazione dei driver mesa, non più attuale.
 È possibile installare diverse distribuzioni Linux semplicemente cambiando la dicitura nella riga che comincia per debootstrap.
