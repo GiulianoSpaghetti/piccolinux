@@ -6,6 +6,8 @@ il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (http
 
 ![IMG_20230821_191345_HDR](https://github.com/numerunix/piccolinux/assets/49764967/f135994e-92ac-41ef-99d4-8cd650a7c397)
 
+https://youtu.be/edBtoWvWphk
+
 
 # Informazioni
 Semplice script per l'installazione di Debian sui sistemi arm64, con particolare riferimento al Raspberry.
