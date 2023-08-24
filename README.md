@@ -1,5 +1,7 @@
 # piccolinux
 
+# in loving Memory of Giuseppe
+
 # Attenzione
 
 il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (https://github.com/pftf/RPi4/releases) ed installarlo secondo le modalità indicate e farsi una pennetta con debian arm64 per bootare un sistema efi compliant ed installare il sostema in meno di metà del tempo.
