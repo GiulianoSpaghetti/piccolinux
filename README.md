@@ -1,6 +1,6 @@
 # piccolinux
 
-# in loving Memory of Giuseppe
+# in loving Memory of the doorkeeper Giuseppe
 
 # Attenzione
 
