@@ -3,7 +3,7 @@
 # Parameters: version of kernel, number of processors to use and path of the windows home directory
 # original source: https://gist.github.com/charlie-x/96a92aaaa04346bdf1fb4c3621f3e392#file-gistfile1-txt-L31
 #!/bin/bash
-sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc wget
+sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc wget python3
 
 if [ $# -ne 3 ]; then
 echo "Bisogna passare tre parametri: il primo è il numero di kernel, il secondo è il numero di processori da utilizzare, il secondo il nome della propria home directory di windows. Il programma termina."
