@@ -52,7 +52,7 @@ case $quale in
 1)
 	path="12.2.0"
 	url="cdimage/release"
-	nome=""
+	nome=$path
 	numbd=4
 	;;
 2)
