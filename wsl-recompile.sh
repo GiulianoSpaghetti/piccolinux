@@ -3,7 +3,7 @@
 # original source: https://gist.github.com/charlie-x/96a92aaaa04346bdf1fb4c3621f3e392#file-gistfile1-txt-L31
 # Parameters: number of processors to use
 #!/bin/bash
-sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc wget libncurses-dev
+sudo apt install build-essential flex bison dwarves libssl-dev libelf-dev bc wget libncurses-dev python3
 
 if [ $# -ne 1 ]; then
 echo "Bisogna un parametro: il numero di processori da utilizzare. Il programma termina."
