@@ -51,7 +51,7 @@ fi
 case $quale in
 1)
 	path="12.2.0"
-	url="cdimage/reòease"
+	url="cdimage/release"
 	nome=bookworm
 	numbd=4
 	;;
