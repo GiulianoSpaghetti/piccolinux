@@ -50,17 +50,13 @@ fi
 
 case $quale in
 1)
-	path="12.0.0"
+	path="12.2.0"
 	url="cdimage/reòease"
 	nome=bookworm
- 	if [ $arch -eq 3 ]; then
-  		numbd=4
-    	else
-		numbd=5
-  	fi
+	numbd=4
 	;;
 2)
-	path="11.7.0"
+	path="11.8.0"
 	url="cdimage/archiver"
 	nome=$path
 	numbd=4
