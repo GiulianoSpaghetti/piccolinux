@@ -57,7 +57,7 @@ case $quale in
 	;;
 2)
 	path="11.8.0"
-	url="cdimage/archiver"
+	url="cdimage/archive"
 	nome=$path
 	numbd=4
 ;;
