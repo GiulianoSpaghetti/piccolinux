@@ -11,6 +11,21 @@ il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (http
 https://youtu.be/edBtoWvWphk
 
 
+# Descrizione del problema
+Era una tranquilla mattina di mezza primavera, dopo l'8 marzo, in pieno lockdown.
+Per youtube davano l'immunità di gregge di checco zalone, quando ebbi la malsana idea di procurarmi un raspberry pi 4 di prima generazione.
+Leggendo le specifiche ho notato che il processore era a 64 bit, mentre il sistema operativo, il raspbian all'epoca era a 32 bit, uno scandalo.
+Così ebbi la malsana idea di cercare sistemi operativi a 64 bit per il pi 4 e non trovandoli ho deciso che era il caso di farmene uno.
+Perché non partire da debian? Ho trovato solo istruzioni confusionarie in rete, fino a quando non ho trovato su github gli script di un certo Chris64, che davano un sistema testuale in inglese, ed io sapevo tradurmelo in italiano ed addobare l'interfaccia grafica.
+In poco tempo ottenni la prima sd funzionante che avrei provato l'indomani, mettendo come sfondo del lightdm proprio quella grandissima ma... dama di scarlett johansson.
+Una volta provato, ebbi con mia estrema sopresa il messaggio che diceva che cinnamon era in esecuzione in modalità solo software, quindi ho provato ad attivare l'accelerazione 3d.
+Il mio fido google mi ha portato a dire che andavano ricompilati i mesa, perché quelli ufficiali di stretch si basavano sulle opengl di nvidia, che sui sistemi embedded sono compatibili, per cui ho visto con mia grande sopresa che i mesa avevano delle librerie sperimentali, che sono riuscito ad attivare.
+Il tempo di cucinare il tutto ed ho pubblicato la prima versione del piccolinux, una tagata immane, su gdrive, aveva solo un piccolo particolare: la ventola parlava, ed aveva all'interno i files binari ufficiali della raspberry pi foundation, ma chi non risica non rosica.
+
+Una volta ottenuto il sistema, il punto adesso era renderlo a prova di bomba, così mi sono scaricato i sorgenti mesa di debian, ho messo quelli ufficiali e li ho pacchettizzati, poi ho eliminato il codice proprietario, ed infine mi sono detto: "dal momento che parla, al posto di rischiare di nuovo l'immissione di virus, perché non creare degli script come quelli di chris solo più potenti?". Così dopo una notte passata a studiare dialog mi sono messo sotto ed ho scritto il piccolinux, ribattezzato milano edition per scusarmi di come la mia amica è stata tratta a rivisondoli.
+
+Il resto è storia, compreso l'encomio ed il riconoscimento di google: l'encomio è stato barbaramente assassinato da mio fratello, mentre su google è ancora disponibile l'attestato.
+
 # Informazioni
 Semplice script per l'installazione di Debian sui sistemi arm64, con particolare riferimento al Raspberry.
 Il sistema offre come personalizzazione l'installazione dei driver mesa, non più attuale.
