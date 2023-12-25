@@ -92,5 +92,5 @@ if [ $? -eq 0 ]; then
   	dpkg -i /tmp/packages-microsoft-prod.deb
    	rm /tmp/packages-microsoft-prod.deb
    	apt update
-	apt-get install diario.avalonia
+	apt-get install diario
 fi
