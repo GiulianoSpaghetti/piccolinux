@@ -19,7 +19,7 @@ case $sistema in
 esac
 
 selezionaMicrosoft
-if [ $? -eq 1 ]; then
+if [ $? -eq 0 ]; then
 	cd /tmp
  	wget https://packages.microsoft.com/config/debian/$sistema/packages-microsoft-prod.deb
   	dpkg -i /tmp/packages-microsoft-prod.deb
