@@ -37,6 +37,14 @@ dialog --title "Installazione wxBriscola" \
 return $?
 }
 
+function selezionaInstallazioneDiario {
+dialog --title "Installazione Diario" \
+--backtitle "Installazione Diario" \
+--yesno "Vuoi installare il diario in avalonia?" 7 60
+return $?
+}
+
+
 function checkSystem {
 read -d / sistema < /etc/debian_version
 if [ $sistema = "bookworm" ]; then
@@ -70,10 +78,19 @@ apt-get upgrade
 
 selezionaInstallazioneWallpapers
 if [ $? -eq 0 ]; then
-	apt-get install numeronesoft-backgrounds-cornetti numeronesoft-backgrounds numeronesoft-backgrounds-otto
+	apt-get install numeronesoft-backgrounds numeronesoft-backgrounds-otto
 fi 
 
 selezionaInstallazioneBriscola
 if [ $? -eq 0 ]; then
 	apt-get install wxbriscola
 fi 
+selezionaInstallazioneDiario
+if [ $? -eq 0 ]; then
+	cd /tmp
+ 	wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
+  	dpkg -i /tmp/packages-microsoft-prod.deb
+   	rm /tmp/packages-microsoft-prod.deb
+   	apt update
+	apt-get install diario.avalonia
+fi
