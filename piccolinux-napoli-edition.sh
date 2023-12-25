@@ -1,14 +1,32 @@
 #! /bin/bash
 # Autore: Giulio Sorrentino <gsorre84@gmail.com>
 
+function selezionaMicrosoft {
+dialog --title "Installazione Repository Microsoft" \
+--backtitle "Installazione Repository Microsoft" \
+--yesno "Vuoi installare il repo microsoft?" 7 60
+return $?
+}
+
 function aggiungiRepo {
 case $sistema in
 	12) repo="bookworm";;
+	11) repo="bullseye";;
 	*) dialog --title "Repository non disponibile" \
 --backtitle "Repository non disponibile" \
 --msgbox "Il repository non è disponibile perquesta versione" 7 60
 	return 0
 esac
+
+selezionaMicrosoft
+if [ $# -eq 1 ]; then
+	cd /tmp
+ 	wget https://packages.microsoft.com/config/debian/$sistema/packages-microsoft-prod.deb
+  	dpkg -i /tmp/packages-microsoft-prod.deb
+   	rm /tmp/packages-microsoft-prod.deb
+	cd
+ fi
+
 sudo gpg --homedir /tmp --no-default-keyring --keyring /usr/share/keyrings/numeronesoft.gpg --keyserver keyserver.ubuntu.com --recv-keys 37A40DBA52B68EEB
 echo "deb [signed-by=/usr/share/keyrings/numeronesoft.gpg] http://numeronesoft.ddns.net $repo main
 deb-src [signed-by=/usr/share/keyrings/numeronesoft.gpg] http://numeronesoft.ddns.net $repo main" | sudo tee /etc/apt/sources.list.d/numeronesoft.list > /dev/null
@@ -87,10 +105,6 @@ if [ $? -eq 0 ]; then
 fi 
 selezionaInstallazioneDiario
 if [ $? -eq 0 ]; then
-	cd /tmp
- 	wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
-  	dpkg -i /tmp/packages-microsoft-prod.deb
-   	rm /tmp/packages-microsoft-prod.deb
    	apt update
 	apt-get install diario
 fi
