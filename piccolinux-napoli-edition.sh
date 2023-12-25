@@ -62,7 +62,7 @@ dialog --title "Installazione Diario" \
 return $?
 }
 
-function  {
+function selezionaInstallazioneFortune {
 dialog --title "Installazione numerone's fortune" \
 --backtitle "Installazione numerone's fortune" \
 --yesno "Vuoi installare il numerone's fortune in avalonia (serve il repo microsoft)?" 7 60
