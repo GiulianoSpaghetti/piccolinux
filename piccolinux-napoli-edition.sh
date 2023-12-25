@@ -58,10 +58,16 @@ return $?
 function selezionaInstallazioneDiario {
 dialog --title "Installazione Diario" \
 --backtitle "Installazione Diario" \
---yesno "Vuoi installare il diario in avalonia?" 7 60
+--yesno "Vuoi installare il diario in avalonia (serve il repo microsoft)?" 7 60
 return $?
 }
 
+function  {
+dialog --title "Installazione numerone's fortune" \
+--backtitle "Installazione numerone's fortune" \
+--yesno "Vuoi installare il numerone's fortune in avalonia (serve il repo microsoft)?" 7 60
+return $?
+}
 
 function checkSystem {
 read -d / sistema < /etc/debian_version
@@ -107,4 +113,9 @@ selezionaInstallazioneDiario
 if [ $? -eq 0 ]; then
    	apt update
 	apt-get install diario
+fi
+selezionaInstallazioneFortune
+if [ $? -eq 0 ]; then
+   	apt update
+	apt-get install numfortune.avalonia
 fi
