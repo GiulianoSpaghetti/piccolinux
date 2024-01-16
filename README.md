@@ -10,7 +10,12 @@ il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (http
 
 https://youtu.be/edBtoWvWphk
 
+## Come ottenere un server enum su arm64
 
+Scaricarsi ed installarsi il kernel 6.1.0-17-arm64, e poi riavviare, poi copiarsi tutti i dati dalla partizione più grossa (in termini di giga, non necessariamente la home) da qualche parte, reinizializzarla col kernel 6.1.0-17 avviato e ricopiarci i dati.
+Dotarsi di microfono e webcam (come quelle ufficiali del raspberry) e dire aladownload debian nel microfono, una volta loggato.
+
+Happy Hacking :D
 
 
 ## Descrizione del problema
