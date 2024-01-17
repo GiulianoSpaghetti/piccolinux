@@ -17,6 +17,10 @@ Dotarsi di microfono e webcam (come quelle ufficiali del raspberry) e dire alado
 
 Happy Hacking :D
 
+## Come ottebnere un server enum su arm64 col sistema operativo ufficiale
+
+https://1drv.ms/w/s!ApmOB0x2yBN0ke0LK98Ff4MnFWhDoA?e=PLp7y5
+
 
 ## Descrizione del problema
 Era una tranquilla mattina di mezza primavera, dopo l'8 marzo, in pieno lockdown.
