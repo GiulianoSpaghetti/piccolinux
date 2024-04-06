@@ -183,23 +183,23 @@ dialog --title "Informazioni" \
 	--backtitle "Informazioni" \
 	--msgbox "Il software potrebbe dare l'impressione di andare in blocco. E' normale.\nAttendere la fine dell'esecuzione, senza andare in paranoia. Grazie :)" 40 60
 
-rsync -a --info=progress2 --remove-source-files ${1}/boot/efi/* /media/piccolinuxefi
-umount /dev/${sdd}3
+#rsync -a --info=progress2 --remove-source-files ${1}/boot/efi/* /media/piccolinuxefi
+#umount /dev/${sdd}3
 
 rmdir /media/piccolinuxefi
 
-rsync -a --info=progress2 --remove-source-files ${1}/boot/* /media/piccolinuxboot
-umount /dev/${sdd}1
+#rsync -a --info=progress2 --remove-source-files ${1}/boot/* /media/piccolinuxboot
+#umount /dev/${sdd}1
 
-rmdir /media/piccolinuxboot
+#rmdir /media/piccolinuxboot
 
-rsync -avh --remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
-chmod 755 /media/piccolinux
-umount /dev/${sdd}2
+#rsync -avh --remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
+#chmod 755 /media/piccolinux
+#umount /dev/${sdd}2
 
-find ${1} -type d -empty -delete
-mkdir ${1}
-rmdir /media/piccolinux
+#find ${1} -type d -empty -delete
+#mkdir ${1}
+#rmdir /media/piccolinux
 
 postambolo
 
