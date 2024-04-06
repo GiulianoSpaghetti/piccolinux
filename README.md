@@ -8,7 +8,8 @@ il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (http
 
 ![IMG_20230821_191345_HDR](https://github.com/numerunix/piccolinux/assets/49764967/f135994e-92ac-41ef-99d4-8cd650a7c397)
 
-https://youtu.be/edBtoWvWphk
+La copia dei files su sd (penna usb) non viene garantita, perché una cosa è usare il sistema con debian 12, una cosa è il filesystem di debian 9.
+Sta a voi capire quando aggiornare, perché il computer è vostro.
 
 ## Come ottenere un server enum su arm64
 
