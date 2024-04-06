@@ -170,16 +170,16 @@ rm /tmp/result.txt
 umountsdd 
 
 
-mkdir /media/piccolinux
-mkdir /media/piccolinuxboot
-mkdir /media/piccolinuxefi
+#mkdir /media/piccolinux
+#mkdir /media/piccolinuxboot
+#mkdir /media/piccolinuxefi
 
-mount /dev/${sdd}1 /media/piccolinuxboot
-mount /dev/${sdd}2 /media/piccolinux
+#mount /dev/${sdd}1 /media/piccolinuxboot
+#mount /dev/${sdd}2 /media/piccolinux
 
-mount /dev/${sdd}3 /media/piccolinuxefi
+#mount /dev/${sdd}3 /media/piccolinuxefi
 
-dialog --title "Informazioni" \
+#dialog --title "Informazioni" \
 	--backtitle "Informazioni" \
 	--msgbox "Il software potrebbe dare l'impressione di andare in blocco. E' normale.\nAttendere la fine dell'esecuzione, senza andare in paranoia. Grazie :)" 40 60
 
