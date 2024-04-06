@@ -39,7 +39,7 @@ quale=$(dialog --output-fd 1 --backtitle "Quale versione selezionare" \
 --radiolist "Quale versione selezionare:" 10 70 4 \
  1 "Bookworm (necessario per il PI 400)" on \
  2 "bullseye" off \
- 3 "Buster" off \
+ 3 "Buster" off )
 return $quale
 }
 
@@ -120,21 +120,6 @@ checkParameters $#
 
 preambolo
 
-getSdd
-sdd=`cat /tmp/result.txt`
-rm /tmp/result.txt
-
-mount /dev/${sdd}2 ${1}
-mkdir ${1}/boot
-mount /dev/${sdd}1 ${1}/boot
-mkdir ${1}/boot/efi
-mount /dev/${sdd}3 ${1}/boot/efi
-
-if [ $? -eq 1 ]; then
-	exit 1
-fi
-
-
 selectDistro
 
 case $? in
@@ -176,11 +161,45 @@ chroot ${1}
 rm ${1}/project_milano1.sh
 umountSystem $1
 
-#attendi 10
-
 chmod 755 ${1}
 chown root:root ${1}
+getSdd
+sdd=`cat /tmp/result.txt`
+rm /tmp/result.txt
+
 umountsdd 
+
+
+mkdir /media/piccolinux
+mkdir /media/piccolinuxboot
+mkdir /media/piccolinuxefi
+
+mount /dev/${sdd}1 /media/piccolinuxboot
+mount /dev/${sdd}2 /media/piccolinux
+
+mount /dev/${sdd}3 /media/piccolinuxefi
+
+dialog --title "Informazioni" \
+	--backtitle "Informazioni" \
+	--msgbox "Il software potrebbe dare l'impressione di andare in blocco. E' normale.\nAttendere la fine dell'esecuzione, senza andare in paranoia. Grazie :)" 40 60
+
+rsync -a --info=progress2 --remove-source-files ${1}/boot/efi/* /media/piccolinuxefi
+umount /dev/${sdd}3
+
+rmdir /media/piccolinuxefi
+
+rsync -a --info=progress2 --remove-source-files ${1}/boot/* /media/piccolinuxboot
+umount /dev/${sdd}1
+
+rmdir /media/piccolinuxboot
+
+rsync -avh --remove-source-files --exclude "${1}/dev:${1}/sys:${1}/proc" ${1}/* /media/piccolinux
+chmod 755 /media/piccolinux
+umount /dev/${sdd}2
+
+find ${1} -type d -empty -delete
+mkdir ${1}
+rmdir /media/piccolinux
 
 postambolo
 
