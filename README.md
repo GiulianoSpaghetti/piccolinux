@@ -2,6 +2,8 @@
 
 # in loving Memory of the doorkeeper Giuseppe
 
+:it: Made in Italy. Siamo andati a rompere le palle ai francesci aprendo il raspberry alle vere interfacce grafiche, semplicemente ricompilando i mesa ed affibiandoci le versioni alla gatto di cane.
+
 ## Attenzione
 
 il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (https://github.com/pftf/RPi4/releases) ed installarlo secondo le modalità indicate e farsi una pennetta con debian arm64 per bootare un sistema efi compliant ed installare il sostema in meno di metà del tempo.
