@@ -6,7 +6,7 @@
 
 ## Attenzione
 
-il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (https://github.com/pftf/RPi4/releases) ed installarlo secondo le modalità indicate e farsi una pennetta con debian arm64 per bootare un sistema efi compliant ed installare il sostema in meno di metà del tempo.
+il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (https://github.com/pftf/RPi4/releases) ed installarlo secondo le modalità indicate e farsi una pennetta con debian arm64 per bootare un sistema efi compliant ed installare il sistema in meno di metà del tempo.
 
 ![IMG_20230821_191345_HDR](https://github.com/numerunix/piccolinux/assets/49764967/f135994e-92ac-41ef-99d4-8cd650a7c397)
 
