@@ -4,7 +4,7 @@
 function selezionaMicrosoft {
 dialog --title "Installazione Repository Microsoft" \
 --backtitle "Installazione Repository Microsoft" \
---yesno "Vuoi installare il repo microsoft?" 7 60
+--yesno "Vuoi installare il repo microsoft? (serve solo per amd64)" 7 60
 return $?
 }
 
@@ -58,14 +58,14 @@ return $?
 function selezionaInstallazioneDiario {
 dialog --title "Installazione Diario" \
 --backtitle "Installazione Diario" \
---yesno "Vuoi installare il diario in avalonia (serve il repo microsoft)?" 7 60
+--yesno "Vuoi installare il diario in avalonia (per bookworm arm64 NON serve il repo microsoft)?" 7 60
 return $?
 }
 
 function selezionaInstallazioneFortune {
 dialog --title "Installazione numerone's fortune" \
 --backtitle "Installazione numerone's fortune" \
---yesno "Vuoi installare il numerone's fortune in avalonia (serve il repo microsoft)?" 7 60
+--yesno "Vuoi installare il numerone's fortune in avalonia (per bookworm arm64 NON serve il repo microsoft)?" 7 60
 return $?
 }
 
