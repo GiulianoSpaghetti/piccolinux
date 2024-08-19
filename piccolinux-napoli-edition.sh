@@ -8,6 +8,14 @@ dialog --title "Installazione Repository Microsoft" \
 return $?
 }
 
+function selezionaFreedesktopNotificationDaemon {
+dialog --title "Installazione Demone Notifiche Freedesktop" \
+--backtitle "Installazione Demone Notifiche Freedesktop" \
+--yesno "Le notifiche ti vengono gia mostrate a video? (si nella maggior parte dei casi, ma non sul raspberry)" 7 60
+return $?
+}
+
+
 function aggiungiRepo {
 case $sistema in
 	12) repo="bookworm";;
@@ -99,6 +107,12 @@ aggiungiRepo
 
 apt-get update
 apt-get upgrade
+
+selezionaFreedesktopNotificationDaemon
+if [ $? -eq 1 ]; then
+	apt-get install dunst
+fi 
+
 
 selezionaInstallazioneWallpapers
 if [ $? -eq 0 ]; then
