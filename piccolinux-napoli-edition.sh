@@ -59,9 +59,17 @@ return $?
 function selezionaInstallazioneBriscola {
 dialog --title "Installazione wxBriscola" \
 --backtitle "Installazione wxBriscola" \
---yesno "Vuoi installare la wxBriscola?" 7 60
+--yesno "Vuoi installare la wxBriscola (sconsigliata su raspberry con schermo autonomo)?" 7 60
 return $?
 }
+
+function selezionaInstallazioneCBriscola	 {
+dialog --title "Installazione CBriscola" \
+--backtitle "Installazione CBriscola" \
+--yesno "Vuoi installare la cbriscola in avalonia (per bookworm arm64 NON serve il repo microsoft)?" 7 60
+return $?
+}
+
 
 function selezionaInstallazioneDiario {
 dialog --title "Installazione Diario" \
@@ -122,6 +130,11 @@ fi
 selezionaInstallazioneBriscola
 if [ $? -eq 0 ]; then
 	apt-get install wxbriscola
+else
+	selezionaInstallazioneCBriscola	
+ 	if [ $? -eq 0 ]; then
+		apt-get install cbriscola.avalonia
+ 	fi
 fi 
 selezionaInstallazioneDiario
 if [ $? -eq 0 ]; then
