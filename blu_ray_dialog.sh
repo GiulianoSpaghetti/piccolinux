@@ -13,8 +13,8 @@ dialog	--msgbox "Questo è quello che offre l'archivio di debian, non so se i fi
 
 quale=$(dialog --output-fd 1 --backtitle "Quale sistema scegliere" \
 --radiolist "Quale sistema:" 40 40 7 \
- 1 "Bookworm" off \
- 2 "Bullseye" on \
+ 1 "Bookworm" on \
+ 2 "Bullseye" off \
  3 "Buster" off \
  4 "Stretch" off \
  5 "Jessie" off \
@@ -50,13 +50,17 @@ fi
 
 case $quale in
 1)
-	path="12.2.0"
+	path="12.8.0"
 	url="cdimage/release"
 	nome=$path
-	numbd=4
+	if [ $arch -eq 3 ]; then
+		numbd=4
+	else
+		numbd=5;
+	fi
 	;;
 2)
-	path="11.8.0"
+	path="11.11.0"
 	url="cdimage/archive"
 	nome=$path
 	numbd=4
@@ -65,12 +69,8 @@ case $quale in
 	url="cdimage/archive"
 	nome="10.13.0"
 	path=$nome
-	if [ $arch -eq 3 ]; then
-		numbd=3
-	else
-		numbd=4;
-	fi
-;;
+	numbd=4
+ ;;
 4) url="cdimage/archive"
    path="9.13.0"
    nome=$path
