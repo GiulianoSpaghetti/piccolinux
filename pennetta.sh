@@ -39,7 +39,7 @@ esac
 dialog --title "Informazione" \
 	--backtitle "Informazione" \
 	--msgbox "Adesso verra' scaricata la pennetta $arch.Il programma adesso chiedera' se ci sono iso precedenti che possono essere utili per ricavare i files necessari (la iso precedente include altri file, non conta).\nIn caso positivo montatela e date il punto di mount, in caso negativo premete semplicemente invio.\nIn seguito verra' chiesto quale mirror apt usare per scaricare i files non trovati.Poi andate a farvi un giro :)" 40 60
-	if [ -f debian-$nome-amd64-STICK16G-1.iso ]; then
+	if [ -f debian-$nome-amd64-STICK16GB-1.iso ]; then
 		dialog	--msgbox "Il file esiste già. Il programma termina." 40 60 >/dev/tty
 	else 
 		jigdo-lite https://cdimage.debian.org/$url/$path/amd64/jigdo-16G/debian-$nome-amd64-STICK16GB-1.jigdo
