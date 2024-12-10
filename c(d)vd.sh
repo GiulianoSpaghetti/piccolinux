@@ -67,40 +67,37 @@ fi
 case $quale in
 1) 
 	arch="amd64"
-	numbd=17;;
+	numbd=21;;
 2) 
 	arch="arm64"
-	numbd=15;;
+	numbd=21;;
 3) 
 	arch="armel"
-	numbd=14;;
+	numbd=18;;
 4)
 	arch="armhf"
-	numbd=14;;
+	numbd=19;;
 5) 
 	arch="i386"
-	numbd=16;;
+	numbd=21;;
 6) 
-	arch="mpis"
-	numbd=14;;
-7) 
 	arch="mpis64el"
-	numbd=15;;
-8)
+	numbd=20;
+7)
 	arch="mipsel"
-	numbd=15;;
-9) 
+	numbd=19;;
+8) 
 	arch="ppc64el"
-	numbd=15;;
-10) 
+	numbd=20;;
+9) 
 	arch="s390x"
-	numbd=14;;
-11) 
+	numbd=19;;
+10) 
 	arch="multi-arch"
 	numbd=1;;
-12) 
+11) 
 	arch="source"
-	numbd=14;;
+	numbd=20;;
 *) echo $quale;;
 esac
 
