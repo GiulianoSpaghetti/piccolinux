@@ -62,7 +62,9 @@ c(d)vd_resumed scarica i dvd o i cd di qualsiasi versione di debian, potrebbero 
 
 chiacchio2oem traduce i mesa chiacchio in mesa oem, legacy.
 
-debianvnc_o.3 dovrebbe essere un tentativo di un docker grafico, non funziona.
+debianvnc_0.3 dovrebbe essere un tentativo di un docker grafico, non funziona.
+
+pennetta permette di scaricare la pennetta da 16G di debian.
 
 project milano 0 e 1 sono gli script ufficiali, vanno usati in coppia (lo 0 richiama l'1) e necessita di un hard disk usb opportunamente configurato come riportato (la versione pubblicata in data 09/08/2023 si deve alla tabaccheria caiaffa)
 
