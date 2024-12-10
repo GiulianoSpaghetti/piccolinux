@@ -29,13 +29,12 @@ if [ $? -eq 1 ]; then
 	 3 "armel" off \
 	 4 "armhf" off \
 	 5 "i386" off \
-	 6 "mips" off \
-	 7 "mips64el" off \
-	 8 "mipsel" off \
-	 9 "ppc64el" off \
-	 10 "s390x" off \
-	 11 "multi-arch" on)
-	if [ $quale -ne 11 ]; then
+	 6 "mips64el" off \
+	 7 "mipsel" off \
+	 8 "ppc64el" off \
+	 9 "s390x" off \
+	 10 "multi-arch" on)
+	if [ $quale -ne 10 ]; then
 		dialog --title "Download netinst" \
 		--backtitle "Download netinst" \
 		--yesno "Vuoi scaricare il netinst?" 7 60
@@ -56,12 +55,11 @@ else
 	 3 "armel" off \
 	 4 "armhf" off \
 	 5 "i386" off \
-	 6 "mips" off \
-	 7 "mips64el" off \
-	 8 "mipsel" off \
-	 9 "ppc64el" off \
-	 10 "s390x" off \
-	 12 "source" on)
+	 6 "mips64el" off \
+	 7 "mipsel" off \
+	 8 "ppc64el" off \
+	 9 "s390x" off \
+	 11 "source" on)
 fi
 
 case $quale in
