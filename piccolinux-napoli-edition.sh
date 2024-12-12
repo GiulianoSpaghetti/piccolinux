@@ -35,7 +35,7 @@ if [ $? -eq 0 ]; then
 	cd
  fi
 
-sudo gpg --homedir /tmp --no-default-keyring --keyring /usr/share/keyrings/numeronesoft.gpg --keyserver keyserver.ubuntu.com --recv-keys 37A40DBA52B68EEB
+sudo gpg --homedir /tmp --no-default-keyring --keyring /usr/share/keyrings/numeronesoft.gpg --keyserver keyserver.ubuntu.com --recv-keys 92025AED631C9E07
 echo "deb [signed-by=/usr/share/keyrings/numeronesoft.gpg] http://numeronesoft.ddns.net:8080/apt/debian $repo main
 deb-src [signed-by=/usr/share/keyrings/numeronesoft.gpg] http://numeronesoft.ddns.net:8080/apt/debian $repo main" | sudo tee /etc/apt/sources.list.d/numeronesoft.list > /dev/null
 return 1
