@@ -71,10 +71,10 @@ return $?
 }
 
 
-function selezionaInstallazioneDiario {
-dialog --title "Installazione Diario" \
---backtitle "Installazione Diario" \
---yesno "Vuoi installare il diario in avalonia (per bookworm arm64 NON serve il repo microsoft)?" 7 60
+function selezionaInstallazioneWheelOfNumFortune {
+dialog --title "Installazione Wheel of numerone's fortune" \
+--backtitle "Installazione Wheel of numerone\'s fortune" \
+--yesno "Vuoi installare il wheel of numerone\'s fortune (per bookworm arm64 NON serve il repo microsoft)?" 7 60
 return $?
 }
 
@@ -136,10 +136,10 @@ else
 		apt-get install cbriscola.avalonia
  	fi
 fi 
-selezionaInstallazioneDiario
+selezionaInstallazioneWheelOfNumFortune
 if [ $? -eq 0 ]; then
    	apt update
-	apt-get install diario
+	apt-get install wheelofnumfortune.avalonia
 fi
 selezionaInstallazioneFortune
 if [ $? -eq 0 ]; then
