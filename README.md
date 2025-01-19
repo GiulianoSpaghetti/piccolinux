@@ -4,7 +4,7 @@
 
 :it: Made in Italy. Siamo andati a rompere le palle ai francesci aprendo il raspberry alle vere interfacce grafiche, semplicemente ricompilando i mesa ed affibiandoci le versioni alla gatto di cane.
 
-Siamo andati, con la pubblica richiesta di aggiornare strecth a sid a velocizzare lo sviluppo di wayland.
+Siamo andati, con la pubblica richiesta di aggiornare strecth a sid, a velocizzare lo sviluppo di wayland.
 
 ## Attenzione
 
