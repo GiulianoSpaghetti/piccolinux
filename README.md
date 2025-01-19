@@ -4,6 +4,8 @@
 
 :it: Made in Italy. Siamo andati a rompere le palle ai francesci aprendo il raspberry alle vere interfacce grafiche, semplicemente ricompilando i mesa ed affibiandoci le versioni alla gatto di cane.
 
+Siamo andati, con la pubblica richiesta di aggiornare strecth a sid a velocizzare lo sviluppo di wayland.
+
 ## Attenzione
 
 il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (https://github.com/pftf/RPi4/releases) ed installarlo secondo le modalità indicate e farsi una pennetta con debian arm64 per bootare un sistema efi compliant ed installare il sistema in meno di metà del tempo.
@@ -37,6 +39,8 @@ Il mio fido google mi ha portato a dire che andavano ricompilati i mesa, perché
 Il tempo di cucinare il tutto ed ho pubblicato la prima versione del piccolinux, una tagata immane, su gdrive, aveva solo un piccolo particolare: la ventola parlava, ed aveva all'interno i files binari ufficiali della raspberry pi foundation, ma chi non risica non rosica.
 
 Una volta ottenuto il sistema, il punto adesso era renderlo a prova di bomba, così mi sono scaricato i sorgenti mesa di debian, ho messo quelli ufficiali e li ho pacchettizzati, poi ho eliminato il codice proprietario, ed infine mi sono detto: "dal momento che parla, al posto di rischiare di nuovo l'immissione di virus, perché non creare degli script come quelli di chris solo più potenti?". Così dopo una notte passata a studiare dialog mi sono messo sotto ed ho scritto il piccolinux, ribattezzato milano edition per scusarmi di come la mia amica è stata tratta a rivisondoli.
+
+Adesso il piccolinux è napoli edition, e vuole essere un inno al mio repository debian, non più ai mesa o al raspberry-
 
 Il resto è storia, compreso l'encomio ed il riconoscimento di google: l'encomio è stato barbaramente assassinato da mio fratello, mentre su google è ancora disponibile l'attestato.
 
