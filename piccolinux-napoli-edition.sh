@@ -81,9 +81,18 @@ return $?
 function selezionaInstallazioneFortune {
 dialog --title "Installazione numerone's fortune" \
 --backtitle "Installazione numerone's fortune" \
---yesno "Vuoi installare il numerone's fortune in avalonia (per bookworm arm64 NON serve il repo microsoft)?" 7 60
+--yesno "Vuoi installare il numerone's fortune in avalonia coi cookie americani (per bookworm arm64 NON serve il repo microsoft)?" 7 60
 return $?
 }
+
+function selezionaInstallazioneFortuna {
+dialog --title "Installazione Il fortune di numerone" \
+--backtitle "Installazione Il fortune di numerone" \
+--yesno "Vuoi installare il fortune di numerone in avalonia coi cookie italiani (per bookworm arm64 NON serve il repo microsoft)?" 7 60
+return $?
+}
+
+
 
 function checkSystem {
 read -d / sistema < /etc/debian_version
@@ -146,3 +155,11 @@ if [ $? -eq 0 ]; then
    	apt update
 	apt-get install numfortune.avalonia
 fi
+
+selezionaInstallazioneFortuna
+if [ $? -eq 0 ]; then
+   	apt update
+	apt-get install ilfortunedinumerone
+fi
+
+dialog	--msgbox "Copyright 2025 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software scelto è disponibile nel menù applicazioni.\nHappy Hacking :)" 40 60
