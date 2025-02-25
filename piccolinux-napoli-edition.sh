@@ -73,8 +73,8 @@ return $?
 
 function selezionaInstallazioneWheelOfNumFortune {
 dialog --title "Installazione Wheel of numerone's fortune" \
---backtitle "Installazione Wheel of numerone\'s fortune" \
---yesno "Vuoi installare il wheel of numerone\'s fortune (per bookworm arm64 NON serve il repo microsoft)?" 7 60
+--backtitle "Installazione Wheel of numerone's fortune" \
+--yesno "Vuoi installare il wheel of numerone's fortune (per bookworm arm64 NON serve il repo microsoft)?" 7 60
 return $?
 }
 
