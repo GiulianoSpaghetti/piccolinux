@@ -97,8 +97,6 @@ function checkSystem {
 read -d / sistema < /etc/debian_version
 if [ $sistema = "bookworm" ]; then
 	sistema=12
-elif [ $sistema = "bullseye" ]; then
-	sistema=11
 else
 	read -d . sistema < /etc/debian_version
 fi
