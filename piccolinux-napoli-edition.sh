@@ -19,7 +19,6 @@ return $?
 function aggiungiRepo {
 case $sistema in
 	12) repo="bookworm";;
-	11) repo="bullseye";;
 	*) dialog --title "Repository non disponibile" \
 --backtitle "Repository non disponibile" \
 --msgbox "Il repository non è disponibile perquesta versione" 7 60
