@@ -101,7 +101,7 @@ return $?
 function selezionaInstallazioneFortunacuidotnet {
 dialog --title "Installazione Il fortune di numerone cui dotnet" \
 --backtitle "Installazione Il fortune di numerone" \
---yesno "Vuoi installare il fortune di numerone in c testuale coi cookie italiani (non c'è per raspberry)?" 7 60
+--yesno "Vuoi installare il fortune di numerone in dotnet testuale coi cookie italiani (non c'è per raspberry)?" 7 60
 return $?
 }
 
