@@ -91,7 +91,19 @@ dialog --title "Installazione Il fortune di numerone" \
 return $?
 }
 
+function selezionaInstallazioneFortunacuic {
+dialog --title "Installazione Il fortune di numerone cui c" \
+--backtitle "Installazione Il fortune di numerone" \
+--yesno "Vuoi installare il fortune di numerone in c testuale coi cookie italiani (non c'è per raspberry)?" 7 60
+return $?
+}
 
+function selezionaInstallazioneFortunacuidotnet {
+dialog --title "Installazione Il fortune di numerone cui dotnet" \
+--backtitle "Installazione Il fortune di numerone" \
+--yesno "Vuoi installare il fortune di numerone in c testuale coi cookie italiani (non c'è per raspberry)?" 7 60
+return $?
+}
 
 function checkSystem {
 read -d / sistema < /etc/debian_version
@@ -157,6 +169,18 @@ selezionaInstallazioneFortuna
 if [ $? -eq 0 ]; then
    	apt update
 	apt-get install ilfortunedinumerone
+fi
+
+selezionaInstallazioneFortunacuic
+if [ $? -eq 0 ]; then
+   	apt update
+	apt-get install il-fortune-di-numerone-c
+fi
+
+selezionaInstallazioneFortunacuidotnet
+if [ $? -eq 0 ]; then
+   	apt update
+	apt-get install il-fortune-di-numerone-cui
 fi
 
 dialog	--msgbox "Copyright 2025 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software scelto è disponibile nel menù applicazioni.\nHappy Hacking :)" 40 60
