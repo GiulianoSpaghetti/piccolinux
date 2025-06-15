@@ -142,7 +142,7 @@ fi
 
 selezionaInstallazioneWallpapers
 if [ $? -eq 0 ]; then
-	apt-get install numeronesoft-backgrounds numeronesoft-backgrounds-otto
+	apt-get install numeronesoft-backgrounds numeronesoft-backgrounds-otto numeronesoft-pixel9fold numeronesoft-android16
 fi 
 
 selezionaInstallazioneBriscola
