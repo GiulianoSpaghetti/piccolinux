@@ -72,6 +72,8 @@ pennetta permette di scaricare la pennetta da 16G di debian.
 
 project milano 0 e 1 sono gli script ufficiali, vanno usati in coppia (lo 0 richiama l'1) e necessita di un hard disk usb opportunamente configurato come riportato (la versione pubblicata in data 09/08/2023 si deve alla tabaccheria caiaffa)
 
+reinstall è uno script che permette la reinstallazione dell'intero pacco software installato tramite apt/dpkg, compreso il sistema, basta che i pacchetti siano disponibili su apt al momento dell'avvio.
+
 unr4r ricompila il winrar
 
 wsl-recompile ricompila il kernel in uso sul wsl di windows
