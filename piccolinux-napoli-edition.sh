@@ -18,6 +18,7 @@ return $?
 
 function aggiungiRepo {
 case $sistema in
+	13) repo="trixie"::
 	12) repo="bookworm";;
 	*) dialog --title "Repository non disponibile" \
 --backtitle "Repository non disponibile" \
@@ -34,9 +35,16 @@ if [ $? -eq 0 ]; then
 	cd
  fi
 
-sudo gpg --homedir /tmp --no-default-keyring --keyring /usr/share/keyrings/numeronesoft.gpg --keyserver keyserver.ubuntu.com --recv-keys 92025AED631C9E07
-echo "deb [signed-by=/usr/share/keyrings/numeronesoft.gpg] http://numeronesoft.ddns.net:8080/apt/debian $repo main
+if [[ $sistema -eq 13 ]]; then
+	apt install sq
+ 	sudo sq network keyserver --server hkps://keyserver.ubuntu.com search "7EB78BB0B36CE2AC" --output /usr/share/keyrings/numeronesoft.gpg
+	echo "deb [signed-by=/usr/share/keyrings/numeronesoft.gpg] http://numeronesoft.ddns.net:8080/apt/debian trixie main
+deb-src [signed-by=/usr/share/keyrings/numeronesoft.gpg] http://numeronesoft.ddns.net:8080/apt/debian trixie main" | sudo tee /etc/apt/sources.list.d/numeronesoft.list > /dev/null
+else
+	sudo gpg --homedir /tmp --no-default-keyring --keyring /usr/share/keyrings/numeronesoft.gpg --keyserver keyserver.ubuntu.com --recv-keys 92025AED631C9E07
+	echo "deb [signed-by=/usr/share/keyrings/numeronesoft.gpg] http://numeronesoft.ddns.net:8080/apt/debian $repo main
 deb-src [signed-by=/usr/share/keyrings/numeronesoft.gpg] http://numeronesoft.ddns.net:8080/apt/debian $repo main" | sudo tee /etc/apt/sources.list.d/numeronesoft.list > /dev/null
+fi
 return 1
 }
 
