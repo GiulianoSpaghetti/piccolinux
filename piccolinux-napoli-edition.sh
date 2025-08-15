@@ -147,48 +147,51 @@ if [ $? -eq 1 ]; then
 	apt-get install dunst
 fi 
 
+if [ $sistema -eq 12]; then
+	selezionaInstallazioneWallpapers
+	if [ $? -eq 0 ]; then
+		apt-get install numeronesoft-backgrounds numeronesoft-backgrounds-otto numeronesoft-pixel9fold numeronesoft-android16
+	fi 
 
-selezionaInstallazioneWallpapers
-if [ $? -eq 0 ]; then
-	apt-get install numeronesoft-backgrounds numeronesoft-backgrounds-otto numeronesoft-pixel9fold numeronesoft-android16
-fi 
+	selezionaInstallazioneBriscola
+	if [ $? -eq 0 ]; then
+		apt-get install wxbriscola
+	else
+		selezionaInstallazioneCBriscola	
+ 		if [ $? -eq 0 ]; then
+			apt-get install cbriscola.avalonia
+	 	fi
+	fi
+	selezionaInstallazioneWheelOfNumFortune
+	if [ $? -eq 0 ]; then
+   		apt update
+		apt-get install wheelofnumfortune.avalonia
+	fi
+	selezionaInstallazioneFortune
+	if [ $? -eq 0 ]; then
+   		apt update
+		apt-get install numfortune.avalonia
+	fi
 
-selezionaInstallazioneBriscola
-if [ $? -eq 0 ]; then
-	apt-get install wxbriscola
-else
-	selezionaInstallazioneCBriscola	
- 	if [ $? -eq 0 ]; then
-		apt-get install cbriscola.avalonia
- 	fi
-fi 
-selezionaInstallazioneWheelOfNumFortune
-if [ $? -eq 0 ]; then
-   	apt update
-	apt-get install wheelofnumfortune.avalonia
+	selezionaInstallazioneFortuna
+	if [ $? -eq 0 ]; then
+   		apt update
+		apt-get install ilfortunedinumerone
+	fi
+
+	selezionaInstallazioneFortunacuic
+	if [ $? -eq 0 ]; then
+	   	apt update
+		apt-get install il-fortune-di-numerone-c
+	fi
+	
+	selezionaInstallazioneFortunacuidotnet
+	if [ $? -eq 0 ]; then
+   		apt update
+		apt-get install il-fortune-di-numerone-cui
+	fi
+
+	dialog	--msgbox "Copyright 2025 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software scelto è disponibile nel menù applicazioni.\nHappy Hacking :)" 40 60
+elif [ $sistema -eq 13 ]; then
+	dialog	--msgbox "Copyright 2025 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software è disponibile su pling.com, il repository vuole essere di supporto a pling.\nHappy Hacking :)" 40 60
 fi
-selezionaInstallazioneFortune
-if [ $? -eq 0 ]; then
-   	apt update
-	apt-get install numfortune.avalonia
-fi
-
-selezionaInstallazioneFortuna
-if [ $? -eq 0 ]; then
-   	apt update
-	apt-get install ilfortunedinumerone
-fi
-
-selezionaInstallazioneFortunacuic
-if [ $? -eq 0 ]; then
-   	apt update
-	apt-get install il-fortune-di-numerone-c
-fi
-
-selezionaInstallazioneFortunacuidotnet
-if [ $? -eq 0 ]; then
-   	apt update
-	apt-get install il-fortune-di-numerone-cui
-fi
-
-dialog	--msgbox "Copyright 2025 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software scelto è disponibile nel menù applicazioni se su bookworm, se su trixie bisogna scaricarlo da pling.com.\nHappy Hacking :)" 40 60
