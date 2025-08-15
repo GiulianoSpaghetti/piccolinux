@@ -18,7 +18,7 @@ return $?
 
 function aggiungiRepo {
 case $sistema in
-	13) repo="trixie"::
+	13) repo="trixie";;
 	12) repo="bookworm";;
 	*) dialog --title "Repository non disponibile" \
 --backtitle "Repository non disponibile" \
