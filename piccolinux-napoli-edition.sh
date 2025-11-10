@@ -1,5 +1,8 @@
 #! /bin/bash
 # Autore: Giulio Sorrentino <gsorre84@gmail.com>
+function ShowPling {
+dialog --msgbox "Siccome sono sotto root non posso aprire firefox, ad ogni modo ti rimando alla mia pagina pling dove puoi scaricare il software aggiornato e altro nuovo software: https://www.pling.com/u/numerone" 40 60
+}
 
 function selezionaMicrosoft {
 dialog --title "Installazione Repository Microsoft" \
@@ -132,7 +135,7 @@ fi
 
 apt-get update
 apt-get upgrade
-apt-get install dialog wget -y
+apt-get install dialog wget xdg-utils -y
 
 
 checkSystem
@@ -147,7 +150,7 @@ if [ $? -eq 1 ]; then
 	apt-get install dunst
 fi 
 
-if [ $sistema -eq 12]; then
+if [ $sistema -eq 12 ]; then
 	selezionaInstallazioneWallpapers
 	if [ $? -eq 0 ]; then
 		apt-get install numeronesoft-backgrounds numeronesoft-backgrounds-otto numeronesoft-pixel9fold numeronesoft-android16
@@ -191,7 +194,10 @@ if [ $sistema -eq 12]; then
 		apt-get install il-fortune-di-numerone-cui
 	fi
 
+	ShowPling
+
 	dialog	--msgbox "Copyright 2025 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software scelto è disponibile nel menù applicazioni.\nHappy Hacking :)" 40 60
 elif [ $sistema -eq 13 ]; then
+	ShowPling
 	dialog	--msgbox "Copyright 2025 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software è disponibile su pling.com, il repository vuole essere di supporto a pling.\nHappy Hacking :)" 40 60
 fi
