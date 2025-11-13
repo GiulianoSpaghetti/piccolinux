@@ -15,17 +15,12 @@ il poccolinux viene dismesso. Oggi é sufficiente scaricare il boot loader (http
 La copia dei files su sd (penna usb) non viene garantita, perché una cosa è usare il sistema con debian 12, una cosa è il filesystem di debian 9.
 Sta a voi capire quando aggiornare, perché il computer è vostro.
 
-## Come ottenere un server enum su arm64
+## Come ottenere un server semantico su arm64
 
 Scaricarsi ed installarsi il kernel 6.1.0-17-arm64, e poi riavviare, poi copiarsi tutti i dati dalla partizione più grossa (in termini di giga, non necessariamente la home) da qualche parte, reinizializzarla col kernel 6.1.0-17 avviato e ricopiarci i dati.
 Dotarsi di microfono e webcam (come quelle ufficiali del raspberry) e dire aladownload debian nel microfono, una volta loggato.
 
 Happy Hacking :D
-
-## Come ottebnere un server enum su arm64 col sistema operativo ufficiale
-
-https://1drv.ms/w/s!ApmOB0x2yBN0ke0LK98Ff4MnFWhDoA?e=PLp7y5
-
 
 ## Descrizione del problema
 Era una tranquilla mattina di mezza primavera, dopo l'8 marzo, in pieno lockdown.
