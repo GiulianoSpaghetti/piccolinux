@@ -128,8 +128,8 @@ fi
 
 apt-get update
 apt-get upgrade
-apt-get install dialog wget xdg-utils -y
-
+apt-get install dialog wget xdg-utils libice6 libsm6 -y
+export LD_PRELOAD=`sudo ldconfig -p | grep freetype| cut -d \  -f 4`
 
 checkSystem
 sistema=$?
