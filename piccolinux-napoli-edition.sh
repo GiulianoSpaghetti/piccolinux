@@ -7,7 +7,7 @@ dialog --msgbox "Siccome sono sotto root non posso aprire firefox, ad ogni modo 
 function selezionaMicrosoft {
 dialog --title "Installazione Repository Microsoft" \
 --backtitle "Installazione Repository Microsoft" \
---yesno "Vuoi installare il repo microsoft? (serve solo per amd64)" 7 60
+--yesno "Vuoi installare il repo microsoft?" 7 60
 return $?
 }
 
@@ -76,7 +76,7 @@ return $?
 function selezionaInstallazioneCBriscola	 {
 dialog --title "Installazione CBriscola" \
 --backtitle "Installazione CBriscola" \
---yesno "Vuoi installare la cbriscola in avalonia (per bookworm arm64 NON serve il repo microsoft)?" 7 60
+--yesno "Vuoi installare la cbriscola in avalonia?" 7 60
 return $?
 }
 
@@ -84,37 +84,24 @@ return $?
 function selezionaInstallazioneWheelOfNumFortune {
 dialog --title "Installazione Wheel of numerone's fortune" \
 --backtitle "Installazione Wheel of numerone's fortune" \
---yesno "Vuoi installare il wheel of numerone's fortune (per bookworm arm64 NON serve il repo microsoft)?" 7 60
+--yesno "Vuoi installare il wheel of numerone's fortune?" 7 60
 return $?
 }
 
 function selezionaInstallazioneFortune {
 dialog --title "Installazione numerone's fortune" \
 --backtitle "Installazione numerone's fortune" \
---yesno "Vuoi installare il numerone's fortune in avalonia coi cookie americani (per bookworm arm64 NON serve il repo microsoft)?" 7 60
+--yesno "Vuoi installare il numerone's fortune in avalonia coi cookie americani?" 7 60
 return $?
 }
 
 function selezionaInstallazioneFortuna {
 dialog --title "Installazione Il fortune di numerone" \
 --backtitle "Installazione Il fortune di numerone" \
---yesno "Vuoi installare il fortune di numerone in avalonia coi cookie italiani (per bookworm arm64 NON serve il repo microsoft)?" 7 60
+--yesno "Vuoi installare il fortune di numerone in avalonia coi cookie italiani?" 7 60
 return $?
 }
 
-function selezionaInstallazioneFortunacuic {
-dialog --title "Installazione Il fortune di numerone cui c" \
---backtitle "Installazione Il fortune di numerone" \
---yesno "Vuoi installare il fortune di numerone in c testuale coi cookie italiani (non c'è per raspberry)?" 7 60
-return $?
-}
-
-function selezionaInstallazioneFortunacuidotnet {
-dialog --title "Installazione Il fortune di numerone cui dotnet" \
---backtitle "Installazione Il fortune di numerone" \
---yesno "Vuoi installare il fortune di numerone in dotnet testuale coi cookie italiani (non c'è per raspberry)?" 7 60
-return $?
-}
 
 function checkSystem {
 read -d / sistema < /etc/debian_version
@@ -150,54 +137,35 @@ if [ $? -eq 1 ]; then
 	apt-get install dunst
 fi 
 
-if [ $sistema -eq 12 ]; then
-	selezionaInstallazioneWallpapers
-	if [ $? -eq 0 ]; then
-		apt-get install numeronesoft-backgrounds numeronesoft-backgrounds-otto numeronesoft-pixel9fold numeronesoft-android16
-	fi 
+selezionaInstallazioneWallpapers
+if [ $? -eq 0 ]; then
+	apt-get install numeronesoft-backgrounds numeronesoft-backgrounds-otto numeronesoft-pixel9fold numeronesoft-android16
+fi 
 
-	selezionaInstallazioneBriscola
+selezionaInstallazioneBriscola
+if [ $? -eq 0 ]; then
+	apt-get install wxbriscola
+else
+	selezionaInstallazioneCBriscola	
 	if [ $? -eq 0 ]; then
-		apt-get install wxbriscola
-	else
-		selezionaInstallazioneCBriscola	
- 		if [ $? -eq 0 ]; then
-			apt-get install cbriscola.avalonia
-	 	fi
-	fi
-	selezionaInstallazioneWheelOfNumFortune
-	if [ $? -eq 0 ]; then
-   		apt update
-		apt-get install wheelofnumfortune.avalonia
-	fi
-	selezionaInstallazioneFortune
-	if [ $? -eq 0 ]; then
-   		apt update
-		apt-get install numfortune.avalonia
-	fi
-
-	selezionaInstallazioneFortuna
-	if [ $? -eq 0 ]; then
-   		apt update
-		apt-get install ilfortunedinumerone
-	fi
-
-	selezionaInstallazioneFortunacuic
-	if [ $? -eq 0 ]; then
-	   	apt update
-		apt-get install il-fortune-di-numerone-c
-	fi
-	
-	selezionaInstallazioneFortunacuidotnet
-	if [ $? -eq 0 ]; then
-   		apt update
-		apt-get install il-fortune-di-numerone-cui
-	fi
-
-	ShowPling
-
-	dialog	--msgbox "Copyright 2025 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software scelto è disponibile nel menù applicazioni.\nHappy Hacking :)" 40 60
-elif [ $sistema -eq 13 ]; then
-	ShowPling
-	dialog	--msgbox "Copyright 2025 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software è disponibile su pling.com, il repository vuole essere di supporto a pling.\nHappy Hacking :)" 40 60
+		apt-get install cbriscola.avalonia
+ 	fi
 fi
+selezionaInstallazioneWheelOfNumFortune
+if [ $? -eq 0 ]; then
+	apt update
+	apt-get install wheelofnumfortune.avalonia
+fi
+selezionaInstallazioneFortune
+if [ $? -eq 0 ]; then
+	apt update
+	apt-get install numfortune.avalonia
+fi
+selezionaInstallazioneFortuna
+if [ $? -eq 0 ]; then
+	apt update
+	apt-get install ilfortunedinumerone
+fi
+ShowPling
+
+dialog	--msgbox "Copyright 2025-2026 Giulio Sorrentino <numerone @fastwebnet.it>\nQuesto script viene concesso in licenza secondo la GPL v3 o, secondo la tua opionione, qualsiasi versione successiva.\nIl software viene concesso per COME E', senza NESSUNA GARANZIA ne' implicita ne' esplicita.\nSe ti piace, considera una donazione tramite paypal.\nIl software scelto è disponibile nel menù applicazioni.\nHappy Hacking :)" 40 60
