@@ -102,6 +102,12 @@ dialog --title "Installazione Il fortune di numerone" \
 return $?
 }
 
+function selezionaInstallazioneFortuneStandard {
+dialog --title "Installazione Il fortune di numerone da console" \
+--backtitle "Installazione Il fortune di numerone da console" \
+--yesno "Vuoi installare il fortune di numerone standard coi cookie italiani?" 7 60
+return $?
+}
 
 function checkSystem {
 read -d / sistema < /etc/debian_version
@@ -165,6 +171,11 @@ selezionaInstallazioneFortuna
 if [ $? -eq 0 ]; then
 	apt update
 	apt-get install ilfortunedinumerone
+fi
+selezionaInstallazioneFortuneStandard
+if [ $? -eq 0 ]; then
+	apt update
+	apt-get install xcowsay-numeronesoft
 fi
 ShowPling
 
